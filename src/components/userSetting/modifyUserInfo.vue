@@ -1,10 +1,11 @@
 <template>
-    
+
 </template>
 
 <script>
     export default {
-        name: "modify-user-info"
+        name: "modify-user-info",
+
     }
 </script>
 

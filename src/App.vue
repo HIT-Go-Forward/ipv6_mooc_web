@@ -39,7 +39,7 @@ export default {
       -moz-appearance: textfield;
     }
     .main{
-        min-height: 600px;
+        min-height: 900px;
     }
     .el-dialog__headerbtn{
         display: none;

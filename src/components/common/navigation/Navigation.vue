@@ -4,7 +4,7 @@
                 :defult-active="activeIndex" mode="horizontal" class="el-menu"
                 background-color="#333" text-color="#fff" active-text-color="#ffd04b">
             <el-menu-item index="1">
-                <img alt="Vue logo" src="../../../assets/logo.png">
+                <img alt="Vue logo" src="../../../assets/image/logo.png">
             </el-menu-item>
             <el-menu-item index="2">课程</el-menu-item>
             <el-menu-item index="3">名校</el-menu-item>

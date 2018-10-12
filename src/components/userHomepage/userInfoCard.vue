@@ -3,7 +3,7 @@
         <el-row type="flex" justify="space-around">
             <el-col :span="10" class="info">
                 <div class="userImg">
-                    <img src="../../assets/avatar.jpg" alt="">
+                    <img src="../../assets/image/avatar.jpg" alt="">
                 </div>
                 <div class="userInfo">
                     <div class="name">
@@ -14,6 +14,9 @@
                     <span> | </span>
                         <span>哈尔滨工业大学</span>
                     </div>
+                </div>
+                <div class="intro">
+                    <span>个人简介：计算机学院信息安全专业</span>
                 </div>
             </el-col>
             <el-col :span="10">
@@ -40,7 +43,7 @@
 <style scoped>
     .userInfoCard {
         height: 200px;
-        background-image: url("../../assets/show3.jpg");
+        background-image: url("../../assets/image/show3.jpg");
         color: #fff;
     }
     .userImg {
@@ -55,14 +58,17 @@
     }
     .info{
         display: inline-block;
-        margin-top: 4%;
+        margin-top: 40px;
         text-align: left;
+    }
+    .intro{
+        margin-left: 20%;
     }
     .name{
         font-size: 200%;
     }
     .userInfo{
-        margin: 2%;
+        margin: 15px;
         display: inline-block;
     }
 </style>

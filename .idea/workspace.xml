@@ -4,19 +4,15 @@
     <list default="true" id="abb8433c-127a-4873-a9f4-1e8197c16e88" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/src/App.vue" afterPath="$PROJECT_DIR$/src/App.vue" />
-      <change beforePath="$PROJECT_DIR$/src/components/Footer.vue" afterPath="$PROJECT_DIR$/src/components/common/Footer.vue" />
-      <change beforePath="$PROJECT_DIR$/src/components/LoginDialog.vue" afterPath="$PROJECT_DIR$/src/components/common/navigation/LoginDialog.vue" />
-      <change beforePath="$PROJECT_DIR$/src/components/Navigation.vue" afterPath="$PROJECT_DIR$/src/components/common/navigation/Navigation.vue" />
-      <change beforePath="$PROJECT_DIR$/src/components/RegisterDialog.vue" afterPath="$PROJECT_DIR$/src/components/common/navigation/RegisterDialog.vue" />
-      <change beforePath="$PROJECT_DIR$/src/components/UserHomepageBar.vue" afterPath="$PROJECT_DIR$/src/components/userHomepage/UserHomepageBar.vue" />
-      <change beforePath="$PROJECT_DIR$/src/components/VerifyCode.vue" afterPath="$PROJECT_DIR$/src/components/common/VerifyCode.vue" />
-      <change beforePath="$PROJECT_DIR$/src/components/modifyUserInfo.vue" afterPath="$PROJECT_DIR$/src/components/userSetting/modifyUserInfo.vue" />
-      <change beforePath="$PROJECT_DIR$/src/components/userInfoCard.vue" afterPath="$PROJECT_DIR$/src/components/userHomepage/userInfoCard.vue" />
-      <change beforePath="$PROJECT_DIR$/src/components/userInfoDropdown.vue" afterPath="$PROJECT_DIR$/src/components/common/navigation/userInfoDropdown.vue" />
-      <change beforePath="$PROJECT_DIR$/src/router.js" afterPath="$PROJECT_DIR$/src/router.js" />
-      <change beforePath="$PROJECT_DIR$/src/views/Home.vue" afterPath="$PROJECT_DIR$/src/views/Homepage.vue" />
-      <change beforePath="$PROJECT_DIR$/src/views/UserHomepage.vue" afterPath="$PROJECT_DIR$/src/views/UserHomepage.vue" />
-      <change beforePath="$PROJECT_DIR$/tests/unit/example.spec.js" afterPath="$PROJECT_DIR$/tests/unit/example.spec.js" />
+      <change beforePath="$PROJECT_DIR$/src/assets/avatar.jpg" afterPath="$PROJECT_DIR$/src/assets/image/avatar.jpg" />
+      <change beforePath="$PROJECT_DIR$/src/assets/logo.png" afterPath="$PROJECT_DIR$/src/assets/image/logo.png" />
+      <change beforePath="$PROJECT_DIR$/src/assets/show3.jpg" afterPath="$PROJECT_DIR$/src/assets/image/show3.jpg" />
+      <change beforePath="$PROJECT_DIR$/src/components/common/navigation/Navigation.vue" afterPath="$PROJECT_DIR$/src/components/common/navigation/Navigation.vue" />
+      <change beforePath="$PROJECT_DIR$/src/components/common/navigation/userInfoDropdown.vue" afterPath="$PROJECT_DIR$/src/components/common/navigation/userInfoDropdown.vue" />
+      <change beforePath="$PROJECT_DIR$/src/components/userHomepage/UserHomepageBar.vue" afterPath="$PROJECT_DIR$/src/components/userHomepage/UserHomepageBar.vue" />
+      <change beforePath="$PROJECT_DIR$/src/components/userHomepage/userInfoCard.vue" afterPath="$PROJECT_DIR$/src/components/userHomepage/userInfoCard.vue" />
+      <change beforePath="$PROJECT_DIR$/src/components/userSetting/modifyUserInfo.vue" afterPath="$PROJECT_DIR$/src/components/userSetting/modifyUserInfo.vue" />
+      <change beforePath="$PROJECT_DIR$/src/views/UserSetting.vue" afterPath="$PROJECT_DIR$/src/views/UserSetting.vue" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -33,7 +29,7 @@
       <file leaf-file-name="Navigation.vue" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/common/navigation/Navigation.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="92">
+            <state relative-caret-position="-460">
               <caret line="4" column="58" lean-forward="false" selection-start-line="4" selection-start-column="58" selection-end-line="4" selection-end-column="58" />
               <folding>
                 <element signature="n#style#0;n#el-menu-item#0;n#div#0;n#el-menu#0;n#div#0;n#template#0;n#!!top" expanded="true" />
@@ -45,24 +41,22 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="VerifyCode.vue" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/components/common/VerifyCode.vue">
+      <file leaf-file-name="UserSetting.vue" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/views/UserSetting.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="230">
-              <caret line="25" column="73" lean-forward="false" selection-start-line="25" selection-start-column="73" selection-end-line="25" selection-end-column="73" />
+            <state relative-caret-position="69">
+              <caret line="3" column="38" lean-forward="false" selection-start-line="3" selection-start-column="38" selection-end-line="3" selection-end-column="38" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="LoginDialog.vue" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/components/common/navigation/LoginDialog.vue">
+      <file leaf-file-name="UserHomepageBar.vue" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/components/userHomepage/UserHomepageBar.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2185">
-              <caret line="9" column="18" lean-forward="true" selection-start-line="9" selection-start-column="18" selection-end-line="9" selection-end-column="18" />
-              <folding>
-                <element signature="e#1717#1748#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="23">
+              <caret line="1" column="33" lean-forward="true" selection-start-line="1" selection-start-column="33" selection-end-line="1" selection-end-column="33" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -70,21 +64,11 @@
       <file leaf-file-name="userInfoDropdown.vue" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/common/navigation/userInfoDropdown.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="874">
-              <caret line="47" column="60" lean-forward="false" selection-start-line="47" selection-start-column="60" selection-end-line="47" selection-end-column="60" />
+            <state relative-caret-position="115">
+              <caret line="5" column="42" lean-forward="true" selection-start-line="5" selection-start-column="42" selection-end-line="5" selection-end-column="42" />
               <folding>
-                <element signature="e#577#614#0" expanded="true" />
+                <element signature="e#575#612#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="userInfoCard.vue" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/components/userHomepage/userInfoCard.vue">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="736">
-              <caret line="38" column="0" lean-forward="true" selection-start-line="38" selection-start-column="0" selection-end-line="38" selection-end-column="0" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -123,7 +107,6 @@
         <option value="$PROJECT_DIR$/src/components/UserSideBar.vue" />
         <option value="$PROJECT_DIR$/src/components/modifyUserInfo.vue" />
         <option value="$PROJECT_DIR$/src/views/Home.vue" />
-        <option value="$PROJECT_DIR$/src/views/UserSetting.vue" />
         <option value="$PROJECT_DIR$/src/components/VerifyCode.vue" />
         <option value="$PROJECT_DIR$/src/components/Footer.vue" />
         <option value="$PROJECT_DIR$/src/store.js" />
@@ -139,9 +122,14 @@
         <option value="$PROJECT_DIR$/tests/unit/example.spec.js" />
         <option value="$PROJECT_DIR$/src/views/Homepage.vue" />
         <option value="$PROJECT_DIR$/src/components/common/navigation/LoginDialog.vue" />
-        <option value="$PROJECT_DIR$/src/App.vue" />
         <option value="$PROJECT_DIR$/src/components/common/navigation/Navigation.vue" />
         <option value="$PROJECT_DIR$/src/components/common/VerifyCode.vue" />
+        <option value="$PROJECT_DIR$/src/App.vue" />
+        <option value="$PROJECT_DIR$/src/components/userHomepage/userInfoCard.vue" />
+        <option value="$PROJECT_DIR$/src/components/userSetting/modifyUserInfo.vue" />
+        <option value="$PROJECT_DIR$/src/components/common/navigation/userInfoDropdown.vue" />
+        <option value="$PROJECT_DIR$/src/components/userHomepage/UserHomepageBar.vue" />
+        <option value="$PROJECT_DIR$/src/views/UserSetting.vue" />
       </list>
     </option>
   </component>
@@ -214,11 +202,6 @@
             <path>
               <item name="ipv6_mooc_web" type="b2602c69:ProjectViewProjectNode" />
               <item name="ipv6_mooc_web" type="462c0819:PsiDirectoryNode" />
-              <item name="public" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ipv6_mooc_web" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ipv6_mooc_web" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -226,6 +209,13 @@
               <item name="ipv6_mooc_web" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="assets" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ipv6_mooc_web" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ipv6_mooc_web" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="assets" type="462c0819:PsiDirectoryNode" />
+              <item name="css" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="ipv6_mooc_web" type="b2602c69:ProjectViewProjectNode" />
@@ -247,6 +237,20 @@
               <item name="components" type="462c0819:PsiDirectoryNode" />
               <item name="common" type="462c0819:PsiDirectoryNode" />
               <item name="navigation" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ipv6_mooc_web" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ipv6_mooc_web" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
+              <item name="userHomepage" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ipv6_mooc_web" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ipv6_mooc_web" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
+              <item name="userSetting" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="ipv6_mooc_web" type="b2602c69:ProjectViewProjectNode" />
@@ -309,11 +313,11 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\program\Vue\ipv6_mooc_web\src\assets\image" />
       <recent name="E:\program\Vue\ipv6_mooc_web\src\components\common" />
       <recent name="E:\program\Vue\ipv6_mooc_web\src\components\common\navigation" />
       <recent name="E:\program\Vue\ipv6_mooc_web\src\components\userSetting" />
       <recent name="E:\program\Vue\ipv6_mooc_web\src\components\userHomepage" />
-      <recent name="E:\program\Vue\ipv6_mooc_web\src\components" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -353,12 +357,12 @@
       <workItem from="1538969850979" duration="1562000" />
       <workItem from="1539241913541" duration="20996000" />
       <workItem from="1539269293447" duration="4391000" />
-      <workItem from="1539331984212" duration="15235000" />
+      <workItem from="1539331984212" duration="18528000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="146518000" />
+    <option name="totallyTimeSpent" value="149811000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -380,7 +384,7 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23538461" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.23538461" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21601209" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3276923" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -539,19 +543,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/assets/logo.png">
+    <entry file="file://$PROJECT_DIR$/src/assets/image/logo.png">
       <provider selected="true" editor-type-id="images">
         <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/UserSideBar.vue" />
-    <entry file="file://$PROJECT_DIR$/src/components/userSetting/modifyUserInfo.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="10" lean-forward="true" selection-start-line="0" selection-start-column="10" selection-end-line="0" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/components/common/Footer.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="138">
@@ -582,14 +579,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/UserSetting.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="23">
-          <caret line="1" column="29" lean-forward="true" selection-start-line="1" selection-start-column="29" selection-end-line="1" selection-end-column="29" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="db://15436bc2-9db7-49a0-981b-b241821f044f/objects/schemas/zabbix/tables/user">
       <provider selected="true" editor-type-id="1.DATA">
         <state row-count="13" readonly="false">
@@ -610,14 +599,6 @@
           </columns>
           <sorting />
           <content-types />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/userHomepage/UserHomepageBar.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="443">
-          <caret line="29" column="24" lean-forward="false" selection-start-line="29" selection-start-column="24" selection-end-line="29" selection-end-column="24" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -717,16 +698,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/common/navigation/userInfoDropdown.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="874">
-          <caret line="47" column="60" lean-forward="false" selection-start-line="47" selection-start-column="60" selection-end-line="47" selection-end-column="60" />
-          <folding>
-            <element signature="e#577#614#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/views/Homepage.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="46">
@@ -809,23 +780,23 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/App.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="313">
-          <caret line="44" column="22" lean-forward="true" selection-start-line="44" selection-start-column="22" selection-end-line="44" selection-end-column="22" />
+        <state relative-caret-position="305">
+          <caret line="40" column="10" lean-forward="true" selection-start-line="40" selection-start-column="10" selection-end-line="40" selection-end-column="10" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/userHomepage/userInfoCard.vue">
+    <entry file="file://$PROJECT_DIR$/src/components/common/VerifyCode.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="736">
-          <caret line="38" column="0" lean-forward="true" selection-start-line="38" selection-start-column="0" selection-end-line="38" selection-end-column="0" />
+        <state relative-caret-position="305">
+          <caret line="25" column="73" lean-forward="false" selection-start-line="25" selection-start-column="73" selection-end-line="25" selection-end-column="73" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/common/navigation/LoginDialog.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2185">
+        <state relative-caret-position="-2239">
           <caret line="9" column="18" lean-forward="true" selection-start-line="9" selection-start-column="18" selection-end-line="9" selection-end-column="18" />
           <folding>
             <element signature="e#1717#1748#0" expanded="true" />
@@ -833,9 +804,35 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/userHomepage/userInfoCard.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="437">
+          <caret line="64" column="25" lean-forward="false" selection-start-line="64" selection-start-column="25" selection-end-line="64" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/common/navigation/userInfoDropdown.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="115">
+          <caret line="5" column="42" lean-forward="true" selection-start-line="5" selection-start-column="42" selection-end-line="5" selection-end-column="42" />
+          <folding>
+            <element signature="e#575#612#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/userSetting/modifyUserInfo.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="276">
+          <caret line="12" column="0" lean-forward="false" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/components/common/navigation/Navigation.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="92">
+        <state relative-caret-position="-460">
           <caret line="4" column="58" lean-forward="false" selection-start-line="4" selection-start-column="58" selection-end-line="4" selection-end-column="58" />
           <folding>
             <element signature="n#style#0;n#el-menu-item#0;n#div#0;n#el-menu#0;n#div#0;n#template#0;n#!!top" expanded="true" />
@@ -846,10 +843,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/common/VerifyCode.vue">
+    <entry file="file://$PROJECT_DIR$/src/components/userHomepage/UserHomepageBar.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="230">
-          <caret line="25" column="73" lean-forward="false" selection-start-line="25" selection-start-column="73" selection-end-line="25" selection-end-column="73" />
+        <state relative-caret-position="23">
+          <caret line="1" column="33" lean-forward="true" selection-start-line="1" selection-start-column="33" selection-end-line="1" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/UserSetting.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="69">
+          <caret line="3" column="38" lean-forward="false" selection-start-line="3" selection-start-column="38" selection-end-line="3" selection-end-column="38" />
           <folding />
         </state>
       </provider>
