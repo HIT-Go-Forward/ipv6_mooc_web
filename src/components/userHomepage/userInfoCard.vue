@@ -14,10 +14,11 @@
                     <span> | </span>
                         <span>哈尔滨工业大学</span>
                     </div>
+                    <div class="intro">
+                        <span>个人简介：计算机学院信息安全专业</span>
+                    </div>
                 </div>
-                <div class="intro">
-                    <span>个人简介：计算机学院信息安全专业</span>
-                </div>
+
             </el-col>
             <el-col :span="10">
                 <div>
@@ -47,7 +48,7 @@
         color: #fff;
     }
     .userImg {
-        width: 15%;
+        width: 80px;
         display: inline-block;
         vertical-align: top;
         margin-left: 20%;
@@ -61,11 +62,11 @@
         margin-top: 40px;
         text-align: left;
     }
-    .intro{
-        margin-left: 20%;
-    }
     .name{
         font-size: 200%;
+    }
+    .intro{
+        margin-top: 10px;
     }
     .userInfo{
         margin: 15px;

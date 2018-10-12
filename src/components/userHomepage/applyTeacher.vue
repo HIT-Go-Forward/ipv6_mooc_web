@@ -1,13 +1,10 @@
 <template>
-    <div class="modifyUserInfo">
-
-    </div>
+    
 </template>
 
 <script>
     export default {
-        name: "modify-user-info",
-
+        name: "apply-teacher"
     }
 </script>
 

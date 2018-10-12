@@ -3,7 +3,7 @@
         <span>{{this.$store.getters.getStorge.user.name}}</span>
         <el-dropdown-menu slot="dropdown">
             <el-dropdown-item command="1">个人中心</el-dropdown-item>
-            <el-dropdown-item command="2">个人设置</el-dropdown-item>
+            <el-dropdown-item command="2">修改个人信息</el-dropdown-item>
             <el-dropdown-item command="3">申请成为教师</el-dropdown-item>
             <el-dropdown-item command="4">站内信息</el-dropdown-item>
             <el-dropdown-item command="5" divided>退出登录</el-dropdown-item>
