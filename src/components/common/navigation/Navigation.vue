@@ -1,12 +1,10 @@
 <template>
     <div class="Navigation">
         <el-menu
-                :defult-active="activeIndex" mode="horizontal"
-                @select="handleSelect" class="el-menu"
-                background-color="#333" text-color="#fff"
-                active-text-color="#ffd04b">
+                :defult-active="activeIndex" mode="horizontal" class="el-menu"
+                background-color="#333" text-color="#fff" active-text-color="#ffd04b">
             <el-menu-item index="1">
-                <img alt="Vue logo" src="../assets/logo.png">
+                <img alt="Vue logo" src="../../../assets/logo.png">
             </el-menu-item>
             <el-menu-item index="2">课程</el-menu-item>
             <el-menu-item index="3">名校</el-menu-item>
@@ -36,6 +34,11 @@ x
     import { mapState } from 'vuex'
     export default {
         name: "Navigation",
+        data(){
+            return{
+                activeIndex: 1
+            }
+        },
         components: {
             loginDialog: ()=>import('./LoginDialog'),
             registerDialog: ()=>import('./RegisterDialog'),

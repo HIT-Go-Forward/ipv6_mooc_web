@@ -23,7 +23,7 @@
                 event.target.value = event.target.value.replace(/\s*/g,'');
                 this.verifyCode[event.target.id] = event.target.value;
                 this.$emit('addVerifyCode', this.verifyCode);
-                if(event.target.value.length===1){
+                if(event.target.value.length===1 && event.target.id!=='5'){
                     event.target.parentNode.nextSibling.childNodes[1].focus();
                 }
             },

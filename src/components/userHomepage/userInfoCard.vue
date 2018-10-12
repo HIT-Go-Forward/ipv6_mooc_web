@@ -1,19 +1,17 @@
 <template>
     <div class="userInfoCard">
         <el-row type="flex" justify="space-around">
-
             <el-col :span="10" class="info">
                 <div class="userImg">
-                    <img src="../assets/logo.png" alt="">
+                    <img src="../../assets/avatar.jpg" alt="">
                 </div>
-                <div class="info">
+                <div class="userInfo">
                     <div class="name">
                         <span>{{user.name}}</span>
                     </div>
                     <div class="identify">
                         <span>学生</span>
-                    </div>
-                    <div class="school">
+                    <span> | </span>
                         <span>哈尔滨工业大学</span>
                     </div>
                 </div>
@@ -42,23 +40,29 @@
 <style scoped>
     .userInfoCard {
         height: 200px;
+        background-image: url("../../assets/show3.jpg");
+        color: #fff;
     }
     .userImg {
         width: 15%;
         display: inline-block;
+        vertical-align: top;
+        margin-left: 20%;
     }
     img {
         width: 100%;
         border-radius: 100%;
     }
-    .identify {
-        display: inline-block;
-    }
-    .school{
-        display: inline-block;
-    }
     .info{
         display: inline-block;
         margin-top: 4%;
+        text-align: left;
+    }
+    .name{
+        font-size: 200%;
+    }
+    .userInfo{
+        margin: 2%;
+        display: inline-block;
     }
 </style>

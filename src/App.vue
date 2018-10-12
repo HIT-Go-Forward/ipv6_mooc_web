@@ -13,8 +13,8 @@
 export default {
     name: 'app',
     components: {
-        navigation: ()=>import('./components/Navigation'),
-        elFooter: ()=>import('./components/Footer')
+        navigation: ()=>import('./components/common/navigation/Navigation'),
+        elFooter: ()=>import('./components/common/Footer')
     }
 }
 </script>
@@ -40,5 +40,8 @@ export default {
     }
     .main{
         min-height: 600px;
+    }
+    .el-dialog__headerbtn{
+        display: none;
     }
 </style>

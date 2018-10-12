@@ -9,8 +9,8 @@
     export default {
         name: "user-homepage",
         components:{
-            userHomepageBar: ()=>import('../components/UserHomepageBar'),
-            userInfoCard: ()=>import('../components/userInfoCard')
+            userHomepageBar: ()=>import('../components/userHomepage/UserHomepageBar'),
+            userInfoCard: ()=>import('../components/userHomepage/userInfoCard')
         }
     }
 </script>

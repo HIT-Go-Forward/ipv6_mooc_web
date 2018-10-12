@@ -101,7 +101,7 @@
     export default {
         name: "register-dialog",
         components:{
-            verifyCode: ()=>import('./VerifyCode')
+            verifyCode: ()=>import('../VerifyCode')
         },
         data(){
             let verifyPassword = (rule, value, callback)=>{

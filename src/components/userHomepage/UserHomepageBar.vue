@@ -27,5 +27,6 @@
     .userHomepageBar{
         margin-left: 100px;
         margin-right: 300px;
+        margin-top: 20px;
     }
 </style>

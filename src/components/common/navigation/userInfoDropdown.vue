@@ -12,7 +12,7 @@
 </template>
 
 <script>
-    import router from "../router";
+    import router from "../../../router";
     import axios from "axios"
     export default {
         name: "user-info-dropdown",
@@ -45,7 +45,7 @@
                                 document.cookie = 'id='+this.$store.getters.getStorge.user.id+'; max-age=0';
                                 document.cookie = 'password='+this.$store.getters.getStorge.user.password+'; max-age=0';
                                 this.$store.state.IsLogin = false;
-                                router.push({name: 'home'})
+                                router.push({name: 'homepage'})
                             }
                         })
                         .catch(error => console.log(error));
