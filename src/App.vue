@@ -10,38 +10,44 @@
 
 <script>
 
-export default {
-    name: 'app',
-    components: {
-        navigation: ()=>import('./components/common/navigation/Navigation'),
-        elFooter: ()=>import('./components/common/Footer')
+    export default {
+        name: 'app',
+        components: {
+            navigation: () => import('./components/common/navigation/Navigation'),
+            elFooter: () => import('./components/common/Footer')
+        }
     }
-}
 </script>
 
 <style>
     #app {
-      font-family: 'Avenir', Helvetica, Arial, sans-serif;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      text-align: center;
-      color: #2c3e50;
+        font-family: 'Avenir', Helvetica, Arial, sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        text-align: center;
+        color: #2c3e50;
+        background-color: #eee;
     }
-    body{
+
+    body {
         margin: 0;
         /*background-color: #545c64;*/
     }
-    input::-webkit-outer-spin-button,input::-webkit-inner-spin-button {
-      -webkit-appearance: none !important;
-      margin: 0;
+
+    input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
+        -webkit-appearance: none !important;
+        margin: 0;
     }
-    input[type="number"]{
-      -moz-appearance: textfield;
+
+    input[type="number"] {
+        -moz-appearance: textfield;
     }
-    .main{
+
+    .main {
         min-height: 900px;
     }
-    .el-dialog__headerbtn{
+
+    .el-dialog__headerbtn {
         display: none;
     }
 </style>
