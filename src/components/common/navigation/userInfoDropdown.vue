@@ -36,7 +36,7 @@
                     router.push({name: 'userSetting'})
                 }
                 else if(command==='5'){
-                    axios.get('http://39.106.156.178:8080/authority/logout.action')
+                    axios.get(this.$store.state.actionIP+'/authority/logout.action')
                         .then(response=>{
                             if(response.data.status===403){
                                 this.$message.error(response.data.data)

@@ -17,7 +17,7 @@
         <div class="apply-refused" v-if="applyMsg.state===3">
             <div class="refuse-msg">
                 <p>您的申请已被管理员拒绝，拒绝原因是：</p>
-                <p>{{ applyMsg.state }}</p>
+                <p>{{ applyMsg.note }}</p>
                 <p>您可以继续申请</p>
             </div>
             <el-row :gutter="20">
