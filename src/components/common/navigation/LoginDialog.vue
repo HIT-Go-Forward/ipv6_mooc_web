@@ -81,7 +81,7 @@
                                password: md5(this.form.password, 'hit-go-forward')
                            }
                        }
-                       axios.get('http://39.106.156.178:8080/authority/login.action', {
+                       axios.get(this.$store.state.actionIP+'/authority/login.action', {
                            params: params})
                            .then(response=>{
                                if(response.data.status===403){

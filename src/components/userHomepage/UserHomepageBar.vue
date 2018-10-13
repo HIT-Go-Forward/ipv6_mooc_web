@@ -24,7 +24,8 @@
                     state: 0,
                     handlerId: '',
                     handleTime: '',
-                    handleId: ''
+                    handleId: '',
+                    note: ''
                 },
                 user: this.$store.getters.getStorge.user
             }
@@ -47,6 +48,7 @@
                         this.applyMsg.handleId = res.data.data[0].id
                         this.applyMsg.handlerId = res.data.data[0].handlerId
                         this.applyMsg.handleTime = res.data.data[0].handleTime
+                        this.applyMsg.note = res.data.data[0].note
                     } else {
                         this.$message.error("服务器出错！")
                     }

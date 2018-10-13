@@ -176,7 +176,7 @@
                 this.$refs['form'].validate((valid)=>{
                     if(valid){
                         alert('111')
-                        axios.get('http://172.17.27.5:8080/authority/register.action', {
+                        axios.get(this.$store.state.actionIP+'/authority/register.action', {
                             params: {
                                 name: this.form.name,
                                 email: this.form.email,
@@ -184,8 +184,6 @@
                                 password: md5(this.form.password, 'hit-go-forward')
                             }})
                             .then(response=>{
-                                alert('222')
-                                alert(response.data.status)
                                 if(response.data.status===403){
                                     this.$message.error(response.data.data);
                                 }
@@ -208,7 +206,7 @@
             verifyEmail(){
                 this.$refs['form'].validateField('email', (errorMessage)=>{
                     if(!errorMessage){
-                        axios.get('http://39.106.156.178:8080/authority/uniqueEmail.action', {
+                        axios.get(this.$store.state.actionIP+'/authority/uniqueEmail.action', {
                             params: {
                                 email: this.form.email,
                             }})
@@ -217,7 +215,7 @@
                                     this.$message.error(response.data.data);
                                 }
                                 else if(response.data.status===200){
-                                    axios.get('http://39.106.156.178:8080/authority/sendValidateCode.action',{
+                                    axios.get(this.$store.state.actionIP+'/authority/sendValidateCode.action',{
                                         params: {
                                             email: this.form.email
                                         }})
@@ -257,7 +255,7 @@
                 alert('111')
                 this.$refs['form'].validate((valid)=>{
                     if(valid){
-                        axios.get('http://172.17.27.5:8080/authority/modifyInfo.action', {
+                        axios.get(this.$store.state.actionIP+'/authority/modifyInfo.action', {
                             params: {
                                 birthday: this.form.birthday,
                                 sex: this.form.sex,
