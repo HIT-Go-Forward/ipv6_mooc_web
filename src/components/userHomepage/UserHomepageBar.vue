@@ -2,7 +2,7 @@
     <div class="userHomepageBar">
         <el-tabs v-model="tabName" @tab-click="handleClick">
             <el-tab-pane label="已学习" name="doneCourse">
-                <course-card v-for="course in courses" :course="course"/>
+                <course-card v-for="course in courses" :key="course.id" :course="course"/>
             </el-tab-pane>
             <el-tab-pane label="正在学习" name="learningCourse"> </el-tab-pane>
             <el-tab-pane label="浏览记录" name="visitCourse"> </el-tab-pane>
@@ -10,7 +10,9 @@
             <el-tab-pane label="申请成为教师" name="applyTeacher" v-if="user.type===4">
                 <apply-teacher :applyMsg="applyMsg"></apply-teacher>
             </el-tab-pane>
-            <el-tab-pane label="修改密码" name="modifyPassword"> </el-tab-pane>
+            <el-tab-pane label="修改密码" name="modifyPassword">
+                <modify-password></modify-password>
+            </el-tab-pane>
         </el-tabs>
     </div>
 </template>
@@ -35,7 +37,8 @@
         },
         components: {
             applyTeacher: ()=>import('./applyTeacher'),
-            courseCard: ()=>import('../common/courseCard')
+            courseCard: ()=>import('../common/courseCard'),
+            modifyPassword: ()=>import('./modifyPassword')
         },
         methods:{
             handleClick(tab) {
