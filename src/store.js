@@ -8,7 +8,9 @@ export default new Vuex.Store({
         LoginDialogVisible: false,        //登录注册框是否显示
         RegisterDialogVisible: false,
         IsLogin: false,                    //是否登录
-        user: null                        //用户信息
+        user: null,                        //用户信息
+        actionIP: 'http://39.106.156.178:8080'  //服务器
+        //actionIP: 'http://172.17.27.5'        //班耀强服务器
     },
     getters: {
         getStorge(state){
