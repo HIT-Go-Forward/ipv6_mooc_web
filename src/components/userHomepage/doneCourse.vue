@@ -6,7 +6,6 @@
 </template>
 
 <script>
-    import
     export default {
         name: "done-course",
         components:{
