@@ -13,6 +13,9 @@
             <el-tab-pane label="修改密码" name="modifyPassword">
                 <modify-password></modify-password>
             </el-tab-pane>
+            <el-tab-pane label="教师审核" name="teacherAudit"></el-tab-pane>
+            <el-tab-pane label="课程审核" name="courseAudit"></el-tab-pane>
+            <el-tab-pane label="举报审核" name="informAudit"></el-tab-pane>
         </el-tabs>
     </div>
 </template>
