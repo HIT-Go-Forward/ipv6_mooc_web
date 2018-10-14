@@ -18,7 +18,7 @@
             <div class="refuse-msg">
                 <p>您的申请已被管理员拒绝，拒绝原因是：</p>
                 <p>{{ applyMsg.note }}</p>
-                <p>您可以继续申请</p>
+                <p>但您可以继续申请：</p>
             </div>
             <el-row :gutter="20">
                 <el-col  :span="16" :offset="4">

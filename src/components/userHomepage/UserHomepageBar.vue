@@ -12,7 +12,9 @@
             <el-tab-pane label="申请成为教师" name="applyTeacher" v-if="user.type===4">
                 <apply-teacher :applyMsg="applyMsg"></apply-teacher>
             </el-tab-pane>
-            <el-tab-pane label="修改密码" name="modifyPassword"> </el-tab-pane>
+            <el-tab-pane label="修改密码" name="modifyPassword">
+                <modify-password></modify-password>
+            </el-tab-pane>
         </el-tabs>
     </div>
 </template>
@@ -37,7 +39,8 @@
         components: {
             learningCourse: ()=>import('./learningCourse'),
             doneCourse: ()=>import('./doneCourse'),
-            applyTeacher: ()=>import('./applyTeacher')
+            applyTeacher: ()=>import('./applyTeacher'),
+            modifyPassword: ()=>import('./modifyPassword')
         },
         methods:{
             handleClick(tab) {
