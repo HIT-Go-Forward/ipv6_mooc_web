@@ -5,8 +5,8 @@
 
             <div slot="title" class="dialog-title">
                 <el-steps :active="registerStatus" simple>
-                    <el-step title="用户注册" icon="el-icon-edit"> </el-step>
-                    <el-step title="完善信息" icon="el-icon-edit"> </el-step>
+                    <el-step title="用户注册" icon="el-icon-edit"></el-step>
+                    <el-step title="完善信息" icon="el-icon-edit"></el-step>
                 </el-steps>
             </div>
 
@@ -17,7 +17,7 @@
                         <el-input type="text" v-model="form.name" prefix-icon="el-icon-edit"/>
                     </el-form-item>
                     <el-form-item label="邮箱" prop="email">
-                        <el-autocomplete class="el-autoComplete" v-model="form.email"  clearable
+                        <el-autocomplete class="el-autoComplete" v-model="form.email" clearable
                                          :fetch-suggestions="querySearch" :trigger-on-focus="false">
                             <i class="el-icon-edit" slot="prefix"></i>
                         </el-autocomplete>
@@ -45,11 +45,11 @@
                             </el-form-item>
                         </el-col>
                         <el-col :span="7">
-                            <el-form-item label="学历">
+                            <el-form-item label="学历" class="education">
                                 <el-select v-model="form.education" placeholder="选择学历" value="">
-                                    <el-option label="本科" value="本科"> </el-option>
-                                    <el-option label="硕士" value="硕士"> </el-option>
-                                    <el-option label="博士" value="博士"> </el-option>
+                                    <el-option label="本科" value="3"></el-option>
+                                    <el-option label="硕士" value="4"></el-option>
+                                    <el-option label="博士" value="5"></el-option>
                                 </el-select>
                             </el-form-item>
                         </el-col>
@@ -57,26 +57,29 @@
 
                     <el-row type="flex" justify="space-between">
                         <el-col :span="12">
-                        <el-form-item label="生日">
-                            <el-date-picker class="el-date-picker" v-model="form.birthday" type="date" placeholder="选择日期"/>
-                        </el-form-item>
+                            <el-form-item label="生日">
+                                <el-date-picker class="el-date-picker" v-model="form.birthday" type="date"
+                                                placeholder="选择日期"/>
+                            </el-form-item>
                         </el-col>
                         <el-col :span="7">
-                            <el-form-item label="性别">
+                            <el-form-item label="性别" class="sex">
                                 <el-select v-model="form.sex" value="" placeholder="选择性别">
-                                    <el-option label="男" value="F"> </el-option>
-                                    <el-option label="女" value="M"> </el-option>
+                                    <el-option label="男" value="F"></el-option>
+                                    <el-option label="女" value="M"></el-option>
                                 </el-select>
                             </el-form-item>
                         </el-col>
                     </el-row>
 
                     <el-form-item label="手机">
-                        <el-input onKeypress='return (/[\d]/.test(String.fromCharCode(event.keyCode)))' type="number" v-model="form.phone"/>
+                        <el-input onKeypress='return (/[\d]/.test(String.fromCharCode(event.keyCode)))' type="number"
+                                  v-model="form.phone"/>
                     </el-form-item>
 
                     <el-form-item label="简介">
-                        <el-input type="textarea" placeholder="请输入个人简介" v-model="form.intro" :autosize="{minRows: 2, maxRows: 4}"/>
+                        <el-input type="textarea" placeholder="请输入个人简介" v-model="form.intro"
+                                  :autosize="{minRows: 2}"/>
                     </el-form-item>
                 </div>
             </el-form>
@@ -95,24 +98,25 @@
 </template>
 
 <script>
-    import { mapState } from 'vuex'
+    import {mapState} from 'vuex'
     import axios from 'axios'
     import md5 from 'blueimp-md5'
+
     export default {
         name: "register-dialog",
-        components:{
-            verifyCode: ()=>import('../VerifyCode')
+        components: {
+            verifyCode: () => import('../VerifyCode')
         },
-        data(){
-            let verifyPassword = (rule, value, callback)=>{
-                if(value !== this.form.password){
+        data() {
+            let verifyPassword = (rule, value, callback) => {
+                if (value !== this.form.password) {
                     callback(new Error('两次密码输入不一致!'));
                 }
-                else{
+                else {
                     callback();
                 }
             };
-            return{
+            return {
                 registerStatus: 1,
                 isDisabled: false,
                 verifyTime: 60,
@@ -128,7 +132,6 @@
                     birthday: '',
                     sex: '',
                     intro: '',
-                    note: '',
                     phone: ''
                 },
                 rules: {
@@ -161,74 +164,85 @@
         },
         computed: {
             ...mapState({
-                RegisterDialogVisible : state => state.RegisterDialogVisible
+                RegisterDialogVisible: state => state.RegisterDialogVisible
             })
         },
         methods: {
-            register(){
+            getFomateDay(date) {
+                let year = date.getFullYear();
+                let month = date.getMonth() + 1;
+                let day = date.getDate();
+                month = month < 10 ? '0' + month : month;
+                day = day < 10 ? '0' + day : day;
+                return year + '-' + month + '-' + day;
+            },
+            register() {
                 this.$store.commit('registerShow');
                 console.log("register");
             },
-            addVerifyCode(verifyCode){
+            addVerifyCode(verifyCode) {
                 this.form.verifyCode = verifyCode.join('');
             },
-            registerCommit(){
-                this.$refs['form'].validate((valid)=>{
-                    if(valid){
+            registerCommit() {
+                this.$refs['form'].validate((valid) => {
+                    if (valid) {
                         alert('111')
-                        axios.get(this.$store.state.actionIP+'/authority/register.action', {
+                        axios.get(this.$store.state.actionIP + '/authority/register.action', {
                             params: {
                                 name: this.form.name,
                                 email: this.form.email,
                                 code: this.form.verifyCode,
                                 password: md5(this.form.password, 'hit-go-forward')
-                            }})
-                            .then(response=>{
-                                if(response.data.status===403){
+                            }
+                        })
+                            .then(response => {
+                                if (response.data.status === 403) {
                                     this.$message.error(response.data.data);
                                 }
-                                else if(response.data.status===200){
+                                else if (response.data.status === 200) {
                                     this.$message.success('注册成功');
                                     this.registerStatus = 2;
                                 }
-                                else if(response.data.status===500){
+                                else if (response.data.status === 500) {
                                     this.$message.error('服务器出错')
                                 }
                             })
                             .catch(error => console.log(error));
                     }
-                    else{
+                    else {
                         console.log('error commit');
                         return false;
                     }
                 });
             },
-            verifyEmail(){
-                this.$refs['form'].validateField('email', (errorMessage)=>{
-                    if(!errorMessage){
-                        axios.get(this.$store.state.actionIP+'/authority/uniqueEmail.action', {
+            verifyEmail() {
+                this.$refs['form'].validateField('email', (errorMessage) => {
+                    if (!errorMessage) {
+                        axios.get(this.$store.state.actionIP + '/authority/uniqueEmail.action', {
                             params: {
                                 email: this.form.email,
-                            }})
-                            .then(response=>{
-                                if(response.data.status===403){
+                            }
+                        })
+                            .then(response => {
+                                if (response.data.status === 403) {
                                     this.$message.error(response.data.data);
                                 }
-                                else if(response.data.status===200){
-                                    axios.get(this.$store.state.actionIP+'/authority/sendValidateCode.action',{
+                                else if (response.data.status === 200) {
+                                    axios.get(this.$store.state.actionIP + '/authority/sendValidateCode.action', {
                                         params: {
                                             email: this.form.email
-                                        }})
-                                        .then(response=>{
-                                            if(response.data.status === 500){
+                                        }
+                                    })
+                                        .then(response => {
+                                            if (response.data.status === 500) {
                                                 this.$message.error(response.data.data);
                                             }
-                                            else if(response.data.status === 200){
+                                            else if (response.data.status === 200) {
                                                 this.isDisabled = true;
-                                                let interval = window.setInterval(()=>{
-                                                    this.verifyButtonName = this.verifyTime+'s后重新验证';
+                                                let interval = window.setInterval(() => {
+                                                    this.verifyButtonName = this.verifyTime + 's后重新验证';
                                                     this.verifyTime--;
-                                                    if(this.verifyTime<0){
+                                                    if (this.verifyTime < 0) {
                                                         this.verifyButtonName = '重新验证';
                                                         this.verifyTime = 60;
                                                         this.isDisabled = false;
@@ -237,41 +251,48 @@
                                                 }, 1000)
                                             }
                                         })
-                                        .catch(error=> console.log(error));
+                                        .catch(error => {
+                                            this.$message.error('未连接到服务器');
+                                            console.log(error);
+                                        });
                                 }
-                                else if(response.data.status===500){
+                                else if (response.data.status === 500) {
                                     this.$message.error('服务器出错');
                                 }
                             })
-                            .catch(error => console.log(error));
+                            .catch(error => {
+                                this.$message.error('未连接到服务器');
+                                console.log(error);
+                            });
                     }
-                    else{
+                    else {
                         console.log(errorMessage);
                         return false;
                     }
                 });
             },
-            complete(){
+            complete() {
                 alert('111')
-                this.$refs['form'].validate((valid)=>{
-                    if(valid){
-                        axios.get(this.$store.state.actionIP+'/authority/modifyInfo.action', {
+                this.$refs['form'].validate((valid) => {
+                    if (valid) {
+                        axios.get(this.$store.state.actionIP + '/authority/modifyInfo.action', {
                             params: {
-                                birthday: this.form.birthday,
+                                birthday: this.getFomateDay(this.form.birthday),
                                 sex: this.form.sex,
                                 education: this.form.education,
                                 school: this.form.school,
                                 phone: this.form.phone,
                                 intro: this.form.intro
-                            }})
-                            .then(response=>{
+                            }
+                        })
+                            .then(response => {
                                 alert('333')
                                 alert(response.data.status)
 
-                                if(response.data.status===403){
+                                if (response.data.status === 403) {
                                     this.$message.error(response.data.data);
                                 }
-                                else if(response.data.status===200){
+                                else if (response.data.status === 200) {
                                     alert('2222')
                                     alert(response.data.data)
                                     // document.cookie = 'id='+response.data.data.id+'; max-age=604800';
@@ -280,32 +301,35 @@
                                     // this.$store.commit('login');
                                     // this.registerCancel();
                                 }
-                                else if(response.data.status===500){
+                                else if (response.data.status === 500) {
                                     this.$message.error('服务器出错');
                                 }
                             })
-                            .catch(error => console.log(error));
+                            .catch(error => {
+                                this.$message.error('未连接到服务器');
+                                console.log(error);
+                            });
                     }
-                    else{
-                        console.log('error commit');
+                    else {
+                        console.log('form data is invalid!');
                         return false;
                     }
                 });
             },
-            registerCancel(){
+            registerCancel() {
                 this.$refs.verifyCode.clearCode();
                 this.$refs['form'].resetFields();
                 this.$store.commit('registerHide');
             },
-            querySearch(queryString, callback){
-                let result = this.loadAll().map((val)=>{
+            querySearch(queryString, callback) {
+                let result = this.loadAll().map((val) => {
                     val.value = queryString + val.value;
                     return val;
                 });
                 console.log(result);
                 callback(result);
             },
-            loadAll(){
+            loadAll() {
                 return [
                     {value: '@qq.com'},
                     {value: '@163.com'},
@@ -324,15 +348,25 @@
 </script>
 
 <style>
-    .el-autoComplete{
+    .el-autoComplete {
         width: 75%;
         float: left;
     }
-    .el-button-verify{
+
+    .el-button-verify {
         width: 23%;
         overflow: hidden;
     }
-    .el-date-picker{
+
+    .el-date-picker {
         float: left;
+    }
+
+    .sex {
+        float: right;
+    }
+
+    .education {
+        float: right;
     }
 </style>
