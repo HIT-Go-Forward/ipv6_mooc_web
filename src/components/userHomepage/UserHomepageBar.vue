@@ -7,7 +7,9 @@
             <el-tab-pane label="正在学习" name="learningCourse">
                 <learning-course/>
             </el-tab-pane>
-            <el-tab-pane label="浏览记录" name="visitCourse"> </el-tab-pane>
+            <el-tab-pane label="浏览记录" name="visitCourse">
+                <visit-course/>
+            </el-tab-pane>
             <el-tab-pane label="发布课程" name="releaseCourse"> </el-tab-pane>
             <el-tab-pane label="申请成为教师" name="applyTeacher" v-if="user.type===4">
                 <apply-teacher :applyMsg="applyMsg"></apply-teacher>
@@ -37,6 +39,7 @@
             }
         },
         components: {
+            visitCourse: ()=>import('./visitCourse'),
             learningCourse: ()=>import('./learningCourse'),
             doneCourse: ()=>import('./doneCourse'),
             applyTeacher: ()=>import('./applyTeacher'),

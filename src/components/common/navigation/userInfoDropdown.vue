@@ -12,28 +12,17 @@
 </template>
 
 <script>
-    import router from "../../../router";
+    import router from "../../../router"
     import axios from "axios"
     export default {
         name: "user-info-dropdown",
         methods: {
             handleCommand(command){
                 if(command==='1'){
-                    // axios.get('http://39.106.156.178:8080/authority/getUserInfo.action')
-                    //     .then(response=>{
-                    //         if(response.data.status===403){
-                    //             this.$message.error(response.data.data)
-                    //         }
-                    //         else if(response.data.status===200){
-                    //             alert('1')
-                    //
-                    //         }
-                    //     })
-                    //     .catch(error => console.log(error))
-                    router.push({name: 'userHomepage'})
+                    router.push('userHomepage')
                 }
                 else if(command==='2'){
-                    router.push({name: 'userSetting'})
+                    router.push('userSetting')
                 }
                 else if(command==='5'){
                     axios.get(this.$store.state.actionIP+'/authority/logout.action')
@@ -45,11 +34,13 @@
                                 document.cookie = 'id='+this.$store.getters.getStorge.user.id+'; max-age=0';
                                 document.cookie = 'password='+this.$store.getters.getStorge.user.password+'; max-age=0';
                                 this.$store.state.IsLogin = false;
-                                router.push({name: 'homepage'})
+                                router.push('homepage');
                             }
                         })
-                        .catch(error => console.log(error));
-
+                        .catch(error => {
+                            this.$message.error('未连接到服务器');
+                            console.log(error);
+                        });
                 }
             }
         }

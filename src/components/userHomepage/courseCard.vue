@@ -7,14 +7,14 @@
                 </el-col>
                 <el-col :span="12" class="course-info">
                     <div class="course-name">
-                        <span>数据库系统分析与设计balabalabala</span>
+                        <span>{{course.name}}</span>
                     </div>
                     <div class="course-teacher">
-                        <span><i class="el-icon-location"></i> {{course}}</span>
-                        <span><i class="el-icon-view"></i> 19453人</span>
+                        <span><i class="el-icon-location"></i> {{course.teacher}}</span>
+                        <span><i class="el-icon-view"></i> {{course.userNum}}</span>
                     </div>
                     <div class="course-intro">
-                        <span>mysql数据库是世界上最好的数据库.数据库(Database)是按照数据结构来组织、存储和管理数据的仓库</span>
+                        <span>{{course.num}}</span>
                     </div>
                 </el-col>
             </el-row>

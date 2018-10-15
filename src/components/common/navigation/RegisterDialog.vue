@@ -5,8 +5,8 @@
 
             <div slot="title" class="dialog-title">
                 <el-steps :active="registerStatus" simple>
-                    <el-step title="用户注册" icon="el-icon-edit"></el-step>
-                    <el-step title="完善信息" icon="el-icon-edit"></el-step>
+                    <el-step title="用户注册" icon="el-icon-edit"> </el-step>
+                    <el-step title="完善信息" icon="el-icon-edit"> </el-step>
                 </el-steps>
             </div>
 
@@ -40,16 +40,20 @@
                 <div v-if="registerStatus===2">
                     <el-row type="flex" justify="space-between">
                         <el-col :span="16">
-                            <el-form-item label="学校" class="">
-                                <el-input type="text" v-model="form.school"/>
+                            <el-form-item label="学校" class="school">
+                                <el-select v-model="form.school" filterable remote
+                                           placeholder="请输入学校名称" :remote-method="getSchoolList" :loading="loading" value="">
+                                    <el-option v-for="school in schoolList" :key="school.name" :value="school.id" :label="school.name">
+                                    </el-option>
+                                </el-select>
                             </el-form-item>
                         </el-col>
                         <el-col :span="7">
                             <el-form-item label="学历" class="education">
                                 <el-select v-model="form.education" placeholder="选择学历" value="">
-                                    <el-option label="本科" value="3"></el-option>
-                                    <el-option label="硕士" value="4"></el-option>
-                                    <el-option label="博士" value="5"></el-option>
+                                    <el-option label="本科" value="3"> </el-option>
+                                    <el-option label="硕士" value="4"> </el-option>
+                                    <el-option label="博士" value="5"> </el-option>
                                 </el-select>
                             </el-form-item>
                         </el-col>
@@ -65,8 +69,8 @@
                         <el-col :span="7">
                             <el-form-item label="性别" class="sex">
                                 <el-select v-model="form.sex" value="" placeholder="选择性别">
-                                    <el-option label="男" value="F"></el-option>
-                                    <el-option label="女" value="M"></el-option>
+                                    <el-option label="男" value="F"> </el-option>
+                                    <el-option label="女" value="M"> </el-option>
                                 </el-select>
                             </el-form-item>
                         </el-col>
@@ -116,7 +120,17 @@
                     callback();
                 }
             };
+            let stringTrim = (rule, value, callback) => {
+                if (value.replace(/(^\s*)|(\s*$)/g,'') === '') {
+                    callback(new Error('不能全为空格'));
+                }
+                else {
+                    callback();
+                }
+            };
             return {
+                schoolList:[],
+                loading: false,
                 registerStatus: 1,
                 isDisabled: false,
                 verifyTime: 60,
@@ -137,7 +151,8 @@
                 rules: {
                     name: [
                         {required: true, message: '请输入用户名', trigger: 'blur'},
-                        {max: 40, message: '名字不能超过40字', trigger: 'blur'}
+                        {max: 40, message: '名字不能超过40字', trigger: 'blur'},
+                        {validator: stringTrim, message: '不能全为空格', trigger: 'blur'}
                     ],
                     email: [
                         {type: 'email', message: '邮箱格式不对', trigger: 'blur'},
@@ -168,13 +183,49 @@
             })
         },
         methods: {
-            getFomateDay(date) {
-                let year = date.getFullYear();
-                let month = date.getMonth() + 1;
-                let day = date.getDate();
-                month = month < 10 ? '0' + month : month;
-                day = day < 10 ? '0' + day : day;
-                return year + '-' + month + '-' + day;
+            getSchoolList(query){
+                if(query!==''){
+                    this.loading = true;
+                    setTimeout(()=>{
+                        axios.get(this.$store.state.actionIP + '/school/querySchool.action', {
+                            params: {
+                                keyword: query
+                            }
+                        })
+                            .then(response => {
+                                if (response.data.status === 403) {
+                                    this.$message.error(response.data.data);
+                                }
+                                else if (response.data.status === 200) {
+                                    this.loading = false;
+                                    this.schoolList = response.data.data;
+                                }
+                                else if (response.data.status === 500) {
+                                    this.$message.error('服务器出错');
+                                }
+                            })
+                            .catch(error => {
+                                this.$message.error('未连接到服务器');
+                                console.log(error);
+                            });
+                    }, 200);
+                }
+                else{
+                    this.schoolList = [];
+                }
+            },
+            getFomateDay(birthday) {
+                if(birthday===null){
+                    return birthday;
+                }else{
+                    let date= new Date(Date.parse(birthday));
+                    let year = date.getFullYear();
+                    let month = date.getMonth() + 1;
+                    let day = date.getDate();
+                    month = month < 10 ? '0' + month : month;
+                    day = day < 10 ? '0' + day : day;
+                    return year + '-' + month + '-' + day;
+                }
             },
             register() {
                 this.$store.commit('registerShow');
@@ -186,10 +237,9 @@
             registerCommit() {
                 this.$refs['form'].validate((valid) => {
                     if (valid) {
-                        alert('111')
                         axios.get(this.$store.state.actionIP + '/authority/register.action', {
                             params: {
-                                name: this.form.name,
+                                name: this.form.name.replace(/(^\s*)|(\s*$)/g,''),
                                 email: this.form.email,
                                 code: this.form.verifyCode,
                                 password: md5(this.form.password, 'hit-go-forward')
@@ -201,13 +251,19 @@
                                 }
                                 else if (response.data.status === 200) {
                                     this.$message.success('注册成功');
+                                    document.cookie = 'id='+response.data.data.id+'; max-age=604800';
+                                    document.cookie = 'password='+response.data.data.password+'; max-age=604800';
+                                    this.$store.commit('$_setStorage', {user: response.data.data});
                                     this.registerStatus = 2;
                                 }
                                 else if (response.data.status === 500) {
                                     this.$message.error('服务器出错')
                                 }
                             })
-                            .catch(error => console.log(error));
+                            .catch(error => {
+                                this.$message.error('未连接到服务器');
+                                console.log(error);
+                            });
                     }
                     else {
                         console.log('error commit');
@@ -272,9 +328,9 @@
                 });
             },
             complete() {
-                alert('111')
                 this.$refs['form'].validate((valid) => {
                     if (valid) {
+                        alert('11')
                         axios.get(this.$store.state.actionIP + '/authority/modifyInfo.action', {
                             params: {
                                 birthday: this.getFomateDay(this.form.birthday),
@@ -286,20 +342,13 @@
                             }
                         })
                             .then(response => {
-                                alert('333')
-                                alert(response.data.status)
-
                                 if (response.data.status === 403) {
                                     this.$message.error(response.data.data);
                                 }
                                 else if (response.data.status === 200) {
-                                    alert('2222')
-                                    alert(response.data.data)
-                                    // document.cookie = 'id='+response.data.data.id+'; max-age=604800';
-                                    // document.cookie = 'password='+response.data.data.password+'; max-age=604800';
-                                    // this.$store.commit('$_setStorage', {user: response.data.data});
-                                    // this.$store.commit('login');
-                                    // this.registerCancel();
+                                    this.$store.commit('$_setStorage', {user: response.data.data});
+                                    this.$store.commit('login');
+                                    this.registerCancel();
                                 }
                                 else if (response.data.status === 500) {
                                     this.$message.error('服务器出错');
@@ -368,5 +417,9 @@
 
     .education {
         float: right;
+    }
+
+    .school{
+        float: left;
     }
 </style>

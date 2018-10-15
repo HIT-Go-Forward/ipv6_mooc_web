@@ -8,16 +8,20 @@
 
             <el-row type="flex" justify="space-between">
                 <el-col :span="16">
-                    <el-form-item label="学校" class="">
-                        <el-input type="text" v-model="form.school"/>
+                    <el-form-item label="学校" class="school">
+                        <el-select v-model="form.school" filterable remote
+                                   placeholder="请输入学校名称" :remote-method="getSchoolList" :loading="loading" value="">
+                            <el-option v-for="school in schoolList" :key="school.name" :value="school.id" :label="school.name">
+                            </el-option>
+                        </el-select>
                     </el-form-item>
                 </el-col>
                 <el-col :span="7">
                     <el-form-item label="学历" class="education">
                         <el-select v-model="form.education" placeholder="选择学历" value="">
-                            <el-option label="本科" value="3"></el-option>
-                            <el-option label="硕士" value="4"></el-option>
-                            <el-option label="博士" value="5"></el-option>
+                            <el-option label="本科" value="3"> </el-option>
+                            <el-option label="硕士" value="4"> </el-option>
+                            <el-option label="博士" value="5"> </el-option>
                         </el-select>
                     </el-form-item>
                 </el-col>
@@ -32,8 +36,8 @@
                 <el-col :span="7">
                     <el-form-item label="性别" class="sex">
                         <el-select v-model="form.sex" value="" placeholder="选择性别">
-                            <el-option label="男" value="F"></el-option>
-                            <el-option label="女" value="M"></el-option>
+                            <el-option label="男" value="F"> </el-option>
+                            <el-option label="女" value="M"> </el-option>
                         </el-select>
                     </el-form-item>
                 </el-col>
@@ -49,7 +53,8 @@
                           :autosize="{minRows: 2}"/>
             </el-form-item>
             <el-form-item>
-                <el-button class="modify-button" plain round @click="modifyUserInfo">修改信息</el-button>
+                <el-button class="button" plain round @click="modifyUserInfo">修改</el-button>
+                <el-button class="button" plain round @click="returnUserHomepage">返回</el-button>
             </el-form-item>
         </el-form>
     </div>
@@ -57,16 +62,35 @@
 
 <script>
     import axios from 'axios'
-
+    import router from "../../router"
     export default {
         name: "modify-user-info",
         data() {
+            let stringTrim = (rule, value, callback) => {
+                if (value.replace(/(^\s*)|(\s*$)/g,'') === '') {
+                    callback(new Error('不能全为空格'));
+                }
+                else {
+                    callback();
+                }
+            };
             return {
-                form: this.$store.getters.getStorge.user,
+                schoolList:[],
+                loading: false,
+                form: {
+                    name: '',
+                    school: '',
+                    education: '',
+                    birthday: '',
+                    sex: '',
+                    intro: '',
+                    phone: ''
+                },
                 rules: {
                     name: [
                         {required: true, message: '请输入用户名', trigger: 'blur'},
-                        {max: 40, message: '名字不能超过40字', trigger: 'blur'}
+                        {max: 40, message: '名字不能超过40字', trigger: 'blur'},
+                        {validator: stringTrim, message: '不能全为空格', trigger: 'blur'}
                     ],
                     school: [
                         {max: 40, message: '学校名字不能超过40字', trigger: 'blur'}
@@ -80,21 +104,70 @@
                 }
             }
         },
+        created(){
+            let user = this.$store.getters.getStorge.user;
+            this.form.name = user.name;
+            this.form.school = user.school;
+            this.form.intro = user.intro;
+            this.form.birthday = user.birthday;
+            this.form.education = user.education;
+            this.form.phone = user.phone;
+            this.form.sex = user.sex;
+        },
         methods: {
-            getFomateDay(date) {
-                let year = date.getFullYear();
-                let month = date.getMonth() + 1;
-                let day = date.getDate();
-                month = month < 10 ? '0' + month : month;
-                day = day < 10 ? '0' + day : day;
-                return year + '-' + month + '-' + day;
+            getSchoolList(query){
+                if(query!==''){
+                    this.loading = true;
+                    setTimeout(()=>{
+                        axios.get(this.$store.state.actionIP + '/school/querySchool.action', {
+                            params: {
+                                keyword: query
+                            }
+                        })
+                            .then(response => {
+                                if (response.data.status === 403) {
+                                    this.$message.error(response.data.data);
+                                }
+                                else if (response.data.status === 200) {
+                                    this.loading = false;
+                                    this.schoolList = response.data.data;
+                                }
+                                else if (response.data.status === 500) {
+                                    this.$message.error('服务器出错');
+                                }
+                            })
+                            .catch(error => {
+                                this.$message.error('未连接到服务器');
+                                console.log(error);
+                            });
+                    }, 200);
+                }
+                else{
+                    this.schoolList = [];
+                }
+            },
+            getFomateDay(birthday) {
+                if(birthday===null){
+                    return birthday;
+                }else{
+                    let date= new Date(Date.parse(birthday));
+                    let year = date.getFullYear();
+                    let month = date.getMonth() + 1;
+                    let day = date.getDate();
+                    month = month < 10 ? '0' + month : month;
+                    day = day < 10 ? '0' + day : day;
+                    return year + '-' + month + '-' + day;
+                }
+            },
+            returnUserHomepage(){
+                router.push('userHomepage');
             },
             modifyUserInfo() {
                 this.$refs['form'].validate((valid) => {
                     if (valid) {
                         axios.get(this.$store.state.actionIP + '/authority/modifyInfo.action', {
                             params: {
-                                name: this.form.name,
+                                name: this.form.name.replace(/(^\s*)|(\s*$)/g,''),
                                 birthday: this.getFomateDay(this.form.birthday),
                                 sex: this.form.sex,
                                 education: this.form.education,
@@ -108,9 +181,8 @@
                                     this.$message.error(response.data.data);
                                 }
                                 else if (response.data.status === 200) {
-
+                                    this.$store.commit('$_setStorage', {user: response.data.data});
                                     this.$message.success('修改成功');
-                                    this.registerStatus = 2;
                                 }
                                 else if (response.data.status === 500) {
                                     this.$message.error('服务器出错');
@@ -138,7 +210,7 @@
         margin-left: auto;
         margin-right: auto;
         background-color: #ddd;
-        padding: 50px;
+        padding: 50px 50px 10px;
     }
 
     .el-date-picker {
@@ -149,7 +221,17 @@
         float: right;
     }
 
+    .button{
+        margin-top: 20px;
+        margin-right: 50px;
+        margin-left: 50px;
+    }
+
     .education {
         float: right;
+    }
+
+    .school{
+        float: left;
     }
 </style>

@@ -1,7 +1,7 @@
 <template>
     <div class="Navigation">
         <el-menu
-                :defult-active="activeIndex" mode="horizontal" class="el-menu"
+                :defult-active="activeIndex" mode="horizontal" class="el-menu" @select="handleSelect"
                 background-color="#333" text-color="#fff" active-text-color="#ffd04b">
             <el-menu-item index="1">
                 <img alt="Vue logo" src="../../../assets/image/logo.png">
@@ -21,9 +21,9 @@
                     <userInfoDropdown/>
                 </el-menu-item>
             </div>
-            <el-menu-item index="7" style="float:right">
+            <el-menu-item index="7" style="float:right" v-show="this.$route.path==='/homepage' || this.$route.path==='/'">
                 <div>
-                    <el-input size="small" placeholder="请输入查询内容" prefix-icon="el-icon-search"/>
+                    <el-input size="small" placeholder="查询感兴趣的课程" prefix-icon="el-icon-search"/>
                 </div>
             </el-menu-item>
         </el-menu>
@@ -31,45 +31,56 @@
 </template>
 x
 <script>
-    import { mapState } from 'vuex'
+    import {mapState} from 'vuex'
+    import router from '../../../router'
+
     export default {
         name: "Navigation",
-        data(){
-            return{
+        data() {
+            return {
                 activeIndex: 1
             }
         },
         components: {
-            loginDialog: ()=>import('./LoginDialog'),
-            registerDialog: ()=>import('./RegisterDialog'),
-            userInfoDropdown: ()=>import('./userInfoDropdown')
+            loginDialog: () => import('./LoginDialog'),
+            registerDialog: () => import('./RegisterDialog'),
+            userInfoDropdown: () => import('./userInfoDropdown')
         },
         computed: {
             ...mapState({
-                IsLogin : state => state.IsLogin
+                IsLogin: state => state.IsLogin
             })
         },
-        created(){
-            if(document.cookie.indexOf("id=")!==-1){
+        created() {
+            if (document.cookie.indexOf("id=") !== -1) {
                 this.$store.state.IsLogin = true;
             }
         },
-        methods:{
+        methods: {
+            handleSelect(key) {
+                switch (key) {
+                    case '1':
+                        router.push('homepage');
+                        break;
+                }
+            }
         }
     }
 </script>
 
 <style scoped>
-    .el-menu-item{
-        font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB",
-        "Microsoft YaHei","微软雅黑",Arial,sans-serif;
+    .el-menu-item {
+        font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB",
+        "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
         font-size: 16px;
     }
-    .el-menu{
+
+    .el-menu {
         padding-left: 20px;
         padding-right: 40px;
     }
-    .el-menu .el-menu-item img{
+
+    .el-menu .el-menu-item img {
         height: 40px;
     }
 </style>
