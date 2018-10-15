@@ -1,7 +1,6 @@
 <template>
-    <div>
-        <course-card v-for="course in courses" :key="course.id" :course="course"/>
-
+    <div class="doneCourse">
+        <course-card v-for="course in courseList" :key="course.id" :course="course"/>
     </div>
 </template>
 
@@ -9,12 +8,16 @@
     export default {
         name: "done-course",
         components:{
-            courseCard: ()=>import('../common/courseCard')
+            courseCard: ()=>import('./courseCard')
         },
         data(){
             return{
-                courses: ['战德臣','张岩'],
             }
+        },
+        props:{
+            courseList: Array
+        },
+        methods:{
         }
 
     }

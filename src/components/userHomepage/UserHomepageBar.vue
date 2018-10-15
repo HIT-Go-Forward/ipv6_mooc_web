@@ -2,12 +2,14 @@
     <div class="userHomepageBar">
         <el-tabs v-model="tabName" @tab-click="handleClick">
             <el-tab-pane label="已学习" name="doneCourse">
-                <done-course/>
+                <done-course :courseList="courseList"/>
             </el-tab-pane>
             <el-tab-pane label="正在学习" name="learningCourse">
-                <learning-course/>
+                <learning-course :courseList="courseList"/>
             </el-tab-pane>
-            <el-tab-pane label="浏览记录" name="visitCourse"> </el-tab-pane>
+            <el-tab-pane label="浏览记录" name="visitCourse">
+                <visit-course :visitCourse="visitCourse"/>
+            </el-tab-pane>
             <el-tab-pane label="发布课程" name="releaseCourse"> </el-tab-pane>
             <el-tab-pane label="申请成为教师" name="applyTeacher" v-if="user.type===4">
                 <apply-teacher :applyMsg="applyMsg"></apply-teacher>
@@ -32,6 +34,8 @@
         name: "user-homepage-bar",
         data(){
             return{
+                courseList: [],
+                visitCourse: [],
                 tabName: 'doneCourse',
                 applyMsg: {
                     state: 0,
@@ -49,6 +53,7 @@
             }
         },
         components: {
+            visitCourse: ()=>import('./visitCourse'),
             learningCourse: ()=>import('./learningCourse'),
             doneCourse: ()=>import('./doneCourse'),
             applyTeacher: ()=>import('./applyTeacher'),
@@ -56,9 +61,57 @@
             teacherAudit: ()=>import('./teacherAudit'),
             courseAudit: ()=>import('./courseAudit')
         },
+        created(){
+            this.getCourse('learned');
+        },
         methods:{
+            getCourse(courseType){
+                this.courseList = [];
+                axios.get(this.$store.state.actionIP + '/course/getUserCourses.action', {
+                    params: {
+                        type: courseType
+                    }
+                })
+                    .then(response => {
+                        if (response.data.status === 403) {
+                            this.$message.error(response.data.data);
+                        }
+                        else if (response.data.status === 200) {
+                            this.courseList = response.data.data;
+                        }
+                        else if (response.data.status === 500) {
+                            this.$message.error('服务器出错')
+                        }
+                    })
+                    .catch(error => {
+                        this.$message.error('未连接到服务器');
+                        console.log(error);
+                    });
+            },
+            getVisitCourse(){
+                this.visitCourse = [];
+                axios.get(this.$store.state.actionIP + '/history/getCourseHistory.action')
+                    .then(response => {
+                        if (response.data.status === 403) {
+                            this.$message.error(response.data.data);
+                        }
+                        else if (response.data.status === 200) {
+                            this.visitCourse = response.data.data;
+                        }
+                        else if (response.data.status === 500) {
+                            this.$message.error('服务器出错')
+                        }
+                    })
+                    .catch(error => {
+                        this.$message.error('未连接到服务器');
+                        console.log(error);
+                    });
+            },
             handleClick(tab) {
                 switch (tab.name) {
+                    case 'doneCourse': this.getCourse('learned');break;
+                    case 'learningCourse': this.getCourse('learning');break;
+                    case 'visitCourse': this.getVisitCourse();break;
                     case 'applyTeacher':this.applyStateSearch();break;
                     case 'teacherAudit':this.teacherAuditAll();break;
                     case 'courseAudit': this.courseAuditAll();break;
