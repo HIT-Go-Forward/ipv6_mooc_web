@@ -116,7 +116,7 @@
             courseAuditAll(){
                 axios.get(this.$store.state.actionIP+'/course/getUserCourses.action',{
                     params: {
-                        'type':'accept'
+                        'type':'accepted'
                     }
                 }).then((res)=>{
                     console.log(res.data)
@@ -131,7 +131,7 @@
                 })
                 axios.get(this.$store.state.actionIP+'/course/getUserCourses.action',{
                     params: {
-                        'type':'reject'
+                        'type':'rejected'
                     }
                 }).then((res)=>{
                     console.log(res.data)

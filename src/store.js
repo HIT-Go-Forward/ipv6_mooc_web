@@ -7,9 +7,10 @@ export default new Vuex.Store({
     state: {
         LoginDialogVisible: false,        //登录注册框是否显示
         RegisterDialogVisible: false,
+        userInfoDialogVisible: false,
         IsLogin: false,                    //是否登录
         user: null,                        //用户信息
-        actionIP: 'http://39.106.156.178:8080'  //服务器
+        actionIP: 'http://39.106.156.178:8080'  //线上服务器
         //actionIP: 'http://172.17.27.5:8080'        //班耀强服务器
     },
     getters: {
@@ -39,7 +40,12 @@ export default new Vuex.Store({
         logout(state){
             state.IsLogin = false;
         },
-
+        userInfoShow(state){
+            state.userInfoDialogVisible = true
+        },
+        userInfoHide(state){
+            state.userInfoDialogVisible = false
+        },
         $_setStorage (state, value) {
             state.user = value;
             localStorage.setItem(key, JSON.stringify(value));

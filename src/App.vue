@@ -47,8 +47,4 @@
     .main {
         min-height: 900px;
     }
-
-    .el-dialog__headerbtn {
-        display: none;
-    }
 </style>

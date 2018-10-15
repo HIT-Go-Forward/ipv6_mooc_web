@@ -8,7 +8,7 @@
                 <img src="../../assets/image/avatar.jpg" class="image" @click="goToCourse()">
                 <div>
                     <a class="courseName" href="javascript:void (0);" @click="goToCourse()">{{index}}. {{course.name}}</a>
-                    <a class="updater" href="javascript:void (0);" @click="goToTeacher()">{{course.teacherId}}</a>
+                    <a class="updater" href="javascript:void (0);" @click="goToTeacher(course.teacher.id)">{{course.teacher.id}}</a>
                     <p class="courseIntro">{{course.state}}</p>
                 </div>
             </el-card>
@@ -22,7 +22,7 @@
                     <img src="../../assets/image/avatar.jpg" class="image">
                     <div>
                         <a class="courseName" href="javascript:void (0);" @click="goToCourse()">{{index}}. {{course.name}}</a>
-                        <a class="updater" href="javascript:void (0);" @click="goToTeacher()">{{course.teacherId}}</a>
+                        <a class="updater" href="javascript:void (0);" @click="goToTeacher(course.teacher.id)">{{course.teacher.id}}</a>
                         <p class="courseIntro">{{course.state}}</p>
                     </div>
                 </el-card>
@@ -36,29 +36,37 @@
                     <img src="../../assets/image/avatar.jpg" class="image">
                     <div>
                         <a class="courseName" href="javascript:void (0);" @click="goToCourse()">{{index}}. {{course.name}}</a>
-                        <a class="updater" href="javascript:void (0);" @click="goToTeacher()">{{course.teacherId}}</a>
+                        <a class="updater" href="javascript:void (0);" @click="goToTeacher(course.teacher.id)">{{course.teacher.id}}</a>
                         <p class="courseIntro">{{course.state}}</p>
                     </div>
                 </el-card>
             </el-col>
         </el-row>
+        <user-info-dialog :id="id"></user-info-dialog>
     </div>
 </template>
 
 <script>
     import router from '../../router'
+
     export default {
         name: "courseAudit",
         props:['rejected','accept','applying'],
+        data(){
+            return {
+                id:'',
+            }
+        },
         components:{
-
+            userInfoDialog: ()=>import('../common/userInfoDialog')
         },
         methods:{
             goToCourse(){
                 router.push('course')
             },
-            goToTeacher(){
-                router.push('teacher')
+            goToTeacher(id){
+                this.$store.commit("userInfoShow");
+                this.id=id
             }
         }
     }
