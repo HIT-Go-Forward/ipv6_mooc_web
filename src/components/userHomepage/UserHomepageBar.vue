@@ -17,6 +17,13 @@
             <el-tab-pane label="修改密码" name="modifyPassword">
                 <modify-password></modify-password>
             </el-tab-pane>
+            <el-tab-pane label="教师审核" name="teacherAudit" v-if="user.type===2">
+                <teacherAudit :handled="handledTeacherApply" :unhandled="unhandledTeacherApply"></teacherAudit>
+            </el-tab-pane>
+            <el-tab-pane label="课程审核" name="courseAudit" v-if="user.type===2">
+                <course-audit :rejected="rejectCourseApply" :accept="acceptCourseApply" :applying="applyingCourseApply"></course-audit>
+            </el-tab-pane>
+            <el-tab-pane label="举报审核" name="informAudit" v-if="user.type===2"></el-tab-pane>
         </el-tabs>
     </div>
 </template>
@@ -35,6 +42,11 @@
                     handleId: '',
                     note: ''
                 },
+                handledTeacherApply: '',
+                unhandledTeacherApply: '',
+                acceptCourseApply: '',
+                rejectCourseApply: '',
+                applyingCourseApply: '',
                 user: this.$store.getters.getStorge.user
             }
         },
@@ -43,18 +55,21 @@
             learningCourse: ()=>import('./learningCourse'),
             doneCourse: ()=>import('./doneCourse'),
             applyTeacher: ()=>import('./applyTeacher'),
-            modifyPassword: ()=>import('./modifyPassword')
+            modifyPassword: ()=>import('./modifyPassword'),
+            teacherAudit: ()=>import('./teacherAudit'),
+            courseAudit: ()=>import('./courseAudit')
         },
         methods:{
             handleClick(tab) {
                 switch (tab.name) {
                     case 'applyTeacher':this.applyStateSearch();break;
+                    case 'teacherAudit':this.teacherAuditAll();break;
+                    case 'courseAudit': this.courseAuditAll();break;
                 }
                 console.log(tab.name)
             },
             applyStateSearch(){
                 axios.get(this.$store.state.actionIP+'/apply/getManageableApplies.action').then((res)=>{
-                    console.log(res)
                     if(res.data.status === 200) {
                         this.applyMsg.state = res.data.data[0].state
                         this.applyMsg.handleId = res.data.data[0].id
@@ -68,8 +83,88 @@
                     this.$message.error("没连接到服务器！")
                     console.log(err)
                 })
+            },
+            teacherAuditAll(){
+                axios.get(this.$store.state.actionIP+'/apply/getManageableApplies.action',{
+                    params: {
+                        'type': 'handled'
+                    }
+                }).then((res)=>{
+                    if(res.data.status === 200) {
+                        this.handledTeacherApply = res.data.data
+                        console.log(this.handledTeacherApply)
+                    } else {
+                        this.$message.error("服务器出错"+res.data.data)
+                    }
+                }).catch((err)=>{
+                    this.$message.error("没连接到服务器")
+                    console.log(err)
+                })
+                axios.get(this.$store.state.actionIP+'/apply/getManageableApplies.action',{
+                    params: {
+                        'type': 'unhandled'
+                    }
+                }).then((res)=>{
+                    if(res.data.status === 200) {
+                        this.unhandledTeacherApply = res.data.data
+                        console.log(this.unhandledTeacherApply)
+                    } else {
+                        this.$message.error("服务器出错"+res.data.data)
+                    }
+                }).catch((err)=>{
+                    this.$message.error("没连接到服务器")
+                    console.log(err)
+                })
+            },
+            courseAuditAll(){
+                axios.get(this.$store.state.actionIP+'/course/getUserCourses.action',{
+                    params: {
+                        'type':'accept'
+                    }
+                }).then((res)=>{
+                    console.log(res.data)
+                    if(res.data.status === 200) {
+                        this.acceptCourseApply = res.data.data
+                    } else {
+                        this.$message.error("服务器出错"+res.data.data)
+                    }
+                }).catch((err)=>{
+                    this.$message.error("没连接到服务器")
+                    console.log(err)
+                })
+                axios.get(this.$store.state.actionIP+'/course/getUserCourses.action',{
+                    params: {
+                        'type':'reject'
+                    }
+                }).then((res)=>{
+                    console.log(res.data)
+                    if(res.data.status === 200) {
+                        this.rejectCourseApply = res.data.data
+                    } else {
+                        this.$message.error("服务器出错"+res.data.data)
+                    }
+                }).catch((err)=>{
+                    this.$message.error("没连接到服务器")
+                    console.log(err)
+                })
+                axios.get(this.$store.state.actionIP+'/course/getUserCourses.action',{
+                    params: {
+                        'type':'applying'
+                    }
+                }).then((res)=>{
+                    console.log(res.data)
+                    if(res.data.status === 200) {
+                        this.applyingCourseApply = res.data.data
+                    } else {
+                        this.$message.error("服务器出错"+res.data.data)
+                    }
+                }).catch((err)=>{
+                    this.$message.error("没连接到服务器")
+                    console.log(err)
+                })
             }
         },
+
     }
 </script>
 
