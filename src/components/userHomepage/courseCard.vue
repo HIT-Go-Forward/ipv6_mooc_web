@@ -1,20 +1,20 @@
 <template>
     <el-col :span="12">
-        <el-card class="courseCard" :body-style="{ padding: '0px'}" shadow="hover" @click.native="viewCourse">
+        <el-card class="courseCard" :body-style="{ padding: '0px'}" shadow="hover" @click.native="handleSelect">
             <el-row class="course">
                 <el-col :span="12" class="image">
                     <img src="../../assets/image/avatar.jpg" alt="">
                 </el-col>
                 <el-col :span="12" class="course-info">
                     <div class="course-name">
-                        <span>{{course.name}}</span>
+                        <span>{{course.course.name}}</span>
                     </div>
                     <div class="course-teacher">
-                        <span><i class="el-icon-location"></i> {{course.teacher}}</span>
-                        <span><i class="el-icon-view"></i> {{course.userNum}}</span>
+                        <span><i class="el-icon-location"></i> {{course.course.teacher.name}}</span>
+                        <span><i class="el-icon-view"></i> {{course.course.userNum}}</span>
                     </div>
                     <div class="course-intro">
-                        <span>{{course.num}}</span>
+                        <span>{{course.course.intro}}</span>
                     </div>
                 </el-col>
             </el-row>
@@ -23,6 +23,7 @@
 </template>
 
 <script>
+    import axios from 'axios'
     export default {
         name: "course-card",
         data(){
@@ -30,11 +31,31 @@
             }
         },
         props:{
-            course: String
+            course: Object
         },
         methods:{
-            viewCourse(){
-                alert(this.course)
+            handleSelect(){
+                axios.get(this.$store.state.actionIP + '/course/getCourseById.action', {
+                    params: {
+                        courseId: this.course.course.id
+                    }
+                })
+                    .then(response => {
+                        if (response.data.status === 403) {
+                            this.$message.error(response.data.data);
+                        }
+                        else if (response.data.status === 200) {
+                            //TODO
+                            console.log(response.data.data)
+                        }
+                        else if (response.data.status === 500) {
+                            this.$message.error('服务器出错')
+                        }
+                    })
+                    .catch(error => {
+                        this.$message.error('未连接到服务器');
+                        console.log(error);
+                    });
             }
         }
     }

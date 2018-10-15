@@ -33,7 +33,6 @@ x
 <script>
     import {mapState} from 'vuex'
     import router from '../../../router'
-
     export default {
         name: "Navigation",
         data() {
@@ -54,6 +53,9 @@ x
         created() {
             if (document.cookie.indexOf("id=") !== -1) {
                 this.$store.state.IsLogin = true;
+            }
+            else{
+                router.push('homepage');
             }
         },
         methods: {
