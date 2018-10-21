@@ -1,5 +1,9 @@
 <template>
-    
+    <div>
+        <div class="release-course-container">
+            
+        </div>
+    </div>
 </template>
 
 <script>
