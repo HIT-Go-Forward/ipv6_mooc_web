@@ -26,7 +26,7 @@
         -moz-osx-font-smoothing: grayscale;
         text-align: center;
         color: #2c3e50;
-        background-color: #eee;
+        background-color: #ddd;
         min-width: 1200px;
     }
 

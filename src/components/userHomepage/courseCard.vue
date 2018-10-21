@@ -24,6 +24,7 @@
 
 <script>
     import axios from 'axios'
+    import router from '../../router'
     export default {
         name: "course-card",
         data(){
@@ -35,27 +36,28 @@
         },
         methods:{
             handleSelect(){
-                axios.get(this.$store.state.actionIP + '/course/getCourseById.action', {
-                    params: {
-                        courseId: this.course.course.id
-                    }
-                })
-                    .then(response => {
-                        if (response.data.status === 403) {
-                            this.$message.error(response.data.data);
-                        }
-                        else if (response.data.status === 200) {
-                            //TODO
-                            console.log(response.data.data)
-                        }
-                        else if (response.data.status === 500) {
-                            this.$message.error('服务器出错')
-                        }
-                    })
-                    .catch(error => {
-                        this.$message.error('未连接到服务器');
-                        console.log(error);
-                    });
+                router.push({name: 'courseHomepage', params: {courseId:this.course.course.id}});
+                // axios.get(this.$store.state.actionIP + '/course/getCourseById.action', {
+                //     params: {
+                //         courseId: this.course.course.id
+                //     }
+                // })
+                //     .then(response => {
+                //         if (response.data.status === 403) {
+                //             this.$message.error(response.data.data);
+                //         }
+                //         else if (response.data.status === 200) {
+                //             router.push({name: 'courseHomepage', params: {courseId:this.course.course.id}});
+                //             console.log(response.data.data)
+                //         }
+                //         else if (response.data.status === 500) {
+                //             this.$message.error('服务器出错')
+                //         }
+                //     })
+                //     .catch(error => {
+                //         this.$message.error('未连接到服务器');
+                //         console.log(error);
+                //     });
             }
         }
     }
