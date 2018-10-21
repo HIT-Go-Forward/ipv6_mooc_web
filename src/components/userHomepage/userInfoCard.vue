@@ -18,11 +18,11 @@
                                 <span v-else-if="user.type===3">教师</span>
                                 <span v-else-if="user.type===2">管理员</span>
                                 <span> | </span>
-                                <span v-if="user.school!==null">{{user.school.name}}</span>
+                                <span v-if="user.school">{{user.school.name}}</span>
                                 <span v-else>学校未填写</span>
                             </div>
                             <div class="intro">
-                                <span v-if="user.intro!==null">此用户未填写个人简介</span>
+                                <span v-if="user.intro">此用户未填写个人简介</span>
                                 <span v-else>{{user.intro}}</span>
                             </div>
                         </div>
@@ -46,6 +46,10 @@
             return {
                 user: this.$store.getters.getStorge.user
             }
+        },
+        created:function(){
+            console.log(this.user)
+            console.log(this.user.name)
         }
     }
 </script>

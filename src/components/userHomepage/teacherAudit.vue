@@ -4,7 +4,11 @@
             <h1>还未处理的教师申请</h1>
             <el-table :data="unhandled" style="width: 100%;" height="250" max-height="400">
                 <el-table-column prop="id" sortable label="标号" width="100"></el-table-column>
-                <el-table-column prop="applyUser.name" sortable label="申请者" width="100"></el-table-column>
+                <el-table-column sortable label="申请者" width="100">
+                    <template slot-scope="scope">
+                        <a href="javascript:void(0);" @click="goToTeacher(scope.row.applyUser.id)">{{scope.row.applyUser.name}}</a>
+                    </template>
+                </el-table-column>
                 <el-table-column prop="note" sortable label="申请理由" width="300"></el-table-column>
                 <el-table-column prop="time" sortable label="申请时间" width="200"></el-table-column>
                 <el-table-column label="操作" width="200">
@@ -29,14 +33,27 @@
             <h1>已经处理完成的教师申请</h1>
             <el-table :data="handled" style="width: 100%" height="250" max-height="400">
                 <el-table-column prop="id" sortable label="标号" width="100"></el-table-column>
-                <el-table-column prop="applyUser.name" sortable label="申请者" width="100"></el-table-column>
+                <el-table-column sortable label="申请者" width="100">
+                    <template slot-scope="scope">
+                        <a href="javascript:void(0);" @click="goToTeacher(scope.row.applyUser.id)">{{scope.row.applyUser.name}}</a>
+                    </template>
+                </el-table-column>
                 <el-table-column prop="note" sortable label="申请理由" width="300"></el-table-column>
                 <el-table-column prop="time" sortable label="申请时间" width="200"></el-table-column>
                 <el-table-column prop="handler.name" sortable label="处理人" width="200"></el-table-column>
                 <el-table-column prop="handleTime" sortable label="处理时间" width="200"></el-table-column>
+                <el-table-column sortable label="审核结果" width="100">
+                    <template slot-scope="scope">
+                        <span v-if="scope.row.state===1">申请中</span>
+                        <span v-else-if="scope.row.state===2">已同意</span>
+                        <span v-else-if="scope.row.state===3">已拒绝</span>
+                        <span v-else>鬼知道发生了什么</span>
+                    </template>
+                </el-table-column>
                 <el-table-column prop="handleNote" sortable label="审核备注"></el-table-column>
             </el-table>
         </div>
+        <user-info-dialog :id="id"></user-info-dialog>
     </div>
 </template>
 
@@ -50,9 +67,11 @@
         },
         data(){
             return {
-                verify_note: []
+                verify_note: [],
+                id: ''
             }
         },
+
         methods:{
             access(index,applyId){
                 axios.get(this.$store.state.actionIP+'/apply/acceptTeacherApply.action',{
@@ -91,11 +110,25 @@
                     this.$message.error("未连接到互联网！")
                     console.log(err)
                 })
+            },
+            goToTeacher(id){
+                this.$store.commit("userInfoShow");
+                this.id=id
             }
         },
     }
 </script>
 
 <style scoped>
-
+    a{
+        text-decoration: none;
+        color: black;
+    }
+    a:hover{
+        font-weight: bold;
+    }
+    a:visited{
+        text-decoration: none;
+        color: #000;
+    }
 </style>

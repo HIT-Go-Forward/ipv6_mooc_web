@@ -10,7 +10,9 @@
             <el-tab-pane label="浏览记录" name="visitCourse">
                 <visit-course :visitCourse="visitCourse"/>
             </el-tab-pane>
-            <el-tab-pane label="发布课程" name="releaseCourse"> </el-tab-pane>
+            <el-tab-pane label="发布课程" name="releaseCourse" v-if="user.type<=3">
+                <release-course></release-course>
+            </el-tab-pane>
             <el-tab-pane label="申请成为教师" name="applyTeacher" v-if="user.type===4">
                 <apply-teacher :applyMsg="applyMsg"></apply-teacher>
             </el-tab-pane>
@@ -25,6 +27,7 @@
             </el-tab-pane>
             <el-tab-pane label="举报审核" name="informAudit" v-if="user.type===2"></el-tab-pane>
         </el-tabs>
+        <el-button type="primary" class="refresh" icon="el-icon-refresh" @click="refreshData"></el-button>
     </div>
 </template>
 
@@ -36,7 +39,7 @@
             return{
                 courseList: [],
                 visitCourse: [],
-                tabName: 'doneCourse',
+                tabName: 'learningCourse',
                 applyMsg: {
                     state: 0,
                     handlerId: '',
@@ -59,12 +62,60 @@
             applyTeacher: ()=>import('./applyTeacher'),
             modifyPassword: ()=>import('./modifyPassword'),
             teacherAudit: ()=>import('./teacherAudit'),
-            courseAudit: ()=>import('./courseAudit')
+            courseAudit: ()=>import('./courseAudit'),
+            releaseCourse: ()=>import('./releaseCourse')
         },
         created(){
             this.getCourse('learned');
         },
         methods:{
+            refreshData() {
+                this.$store.commit("userInfoHide");
+                switch (this.tabName) {
+                    case 'doneCourse':this.getCourse('learned');break;
+                    case 'learningCourse':this.getCourse('learning');break;
+                    case 'visitCourse':this.getVisitCourse();break;
+                    case 'applyTeacher':this.applyStateSearch();break;
+                    case 'teacherAudit':this.teacherAuditAll();break;
+                    case 'courseAudit':this.courseAuditAll();break;
+                }
+            },
+            handleClick(tab) {
+                this.$store.commit("userInfoHide");
+                switch (tab.name) {
+                    case 'doneCourse':
+                        if(!this.courseList) {
+                            this.getCourse('learned');
+                        }
+                        break;
+                    case 'learningCourse':
+                        if(!this.courseList) {
+                            this.getCourse('learning');
+                        }
+                        break;
+                    case 'visitCourse':
+                        if(!this.visitCourse) {
+                            this.getVisitCourse();
+                        }
+                        break;
+                    case 'applyTeacher':
+                        if(!this.applyMsg) {
+                            this.applyStateSearch();
+                        }
+                        break;
+                    case 'teacherAudit':
+                        if(!this.handledTeacherApply && !this.unhandledTeacherApply){
+                            this.teacherAuditAll();
+                        }
+                        break;
+                    case 'courseAudit':
+                        if(!this.rejectCourseApply && !this.applyingCourseApply && !this.acceptCourseApply) {
+                            this.courseAuditAll();
+                        }
+                        break;
+                }
+                console.log(tab.name)
+            },
             getCourse(courseType){
                 this.courseList = [];
                 axios.get(this.$store.state.actionIP + '/course/getUserCourses.action', {
@@ -106,17 +157,6 @@
                         this.$message.error('未连接到服务器');
                         console.log(error);
                     });
-            },
-            handleClick(tab) {
-                switch (tab.name) {
-                    case 'doneCourse': this.getCourse('learned');break;
-                    case 'learningCourse': this.getCourse('learning');break;
-                    case 'visitCourse': this.getVisitCourse();break;
-                    case 'applyTeacher':this.applyStateSearch();break;
-                    case 'teacherAudit':this.teacherAuditAll();break;
-                    case 'courseAudit': this.courseAuditAll();break;
-                }
-                console.log(tab.name)
             },
             applyStateSearch(){
                 axios.get(this.$store.state.actionIP+'/apply/getManageableApplies.action').then((res)=>{
@@ -223,5 +263,8 @@
         margin-left: 100px;
         margin-right: 300px;
         margin-top: 40px;
+    }
+    .refresh{
+        float: right;
     }
 </style>
