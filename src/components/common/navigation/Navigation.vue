@@ -55,14 +55,14 @@ x
                 this.$store.state.IsLogin = true;
             }
             else{
-                router.push('homepage');
+                router.push({name: 'homepage'});
             }
         },
         methods: {
             handleSelect(key) {
                 switch (key) {
                     case '1':
-                        router.push('homepage');
+                        router.push({name: 'homepage'});
                         break;
                 }
             }

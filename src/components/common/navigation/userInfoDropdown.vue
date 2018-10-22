@@ -19,10 +19,10 @@
         methods: {
             handleCommand(command){
                 if(command==='1'){
-                    router.push('userHomepage')
+                    router.push({name: 'userHomepage'})
                 }
                 else if(command==='2'){
-                    router.push('userSetting')
+                    router.push({name: 'userSetting'})
                 }
                 else if(command==='5'){
                     axios.get(this.$store.state.actionIP+'/authority/logout.action')
@@ -34,7 +34,7 @@
                                 document.cookie = 'id='+this.$store.getters.getStorge.user.id+'; max-age=0';
                                 document.cookie = 'password='+this.$store.getters.getStorge.user.password+'; max-age=0';
                                 this.$store.state.IsLogin = false;
-                                router.push('homepage');
+                                router.push({name: 'homepage'});
                             }
                         })
                         .catch(error => {

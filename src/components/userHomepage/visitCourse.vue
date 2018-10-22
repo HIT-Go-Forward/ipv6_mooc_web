@@ -3,7 +3,7 @@
         <el-table :data="visitCourse" stipe class="table" style="width: 100%;" @row-click="handleSelect">
             <el-table-column prop="date" :formatter="timeFormat" label="时间" width="300"> </el-table-column>
             <el-table-column prop="courseName" label="课程" width="400"> </el-table-column>
-            <el-table-column prop="" label="教师"> </el-table-column>
+            <el-table-column prop="teacherName" label="教师"> </el-table-column>
         </el-table>
     </div>
 </template>

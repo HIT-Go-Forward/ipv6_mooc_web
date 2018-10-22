@@ -5,7 +5,10 @@
                 <el-row>
                     <el-col :span="8">
                         <div class="userImg">
-                            <img src="../../assets/image/avatar.jpg" alt="">
+                            <img src="../../assets/image/avatar.jpg" alt="" class="avatar">
+                            <div class="avatar-gray" @click="modifyAvatar">
+                                <span class="avatar-cover">更换头像</span>
+                            </div>
                         </div>
                     </el-col>
                     <el-col :span="16">
@@ -22,8 +25,8 @@
                                 <span v-else>学校未填写</span>
                             </div>
                             <div class="intro">
-                                <span v-if="user.intro">此用户未填写个人简介</span>
-                                <span v-else>{{user.intro}}</span>
+                                <span v-if="user.intro">{{user.intro}}</span>
+                                <span v-else>此用户未填写个人简介</span>
                             </div>
                         </div>
                     </el-col>
@@ -35,6 +38,7 @@
                 </div>
             </el-col>
         </el-row>
+        <avatar-dialog ref="avatarDialog"/>
     </div>
 
 </template>
@@ -42,9 +46,17 @@
 <script>
     export default {
         name: "user-info-card",
+        components:{
+            avatarDialog: ()=>import('./avatarDialog')
+        },
         data() {
             return {
-                user: this.$store.getters.getStorge.user
+                user: this.$store.getters.getStorge.user,
+            }
+        },
+        methods:{
+            modifyAvatar(){
+                this.$refs.avatarDialog.avatarUpload();
             }
         },
         created:function(){
@@ -66,6 +78,24 @@
         vertical-align: top;
         margin-left: 20%;
         float: right;
+    }
+    .avatar-cover{
+        position: relative;
+        top: 33px;
+        left: 12px;
+        font-size: 90%;
+    }
+    .avatar-gray:hover{
+        opacity: 0.7;
+        cursor: pointer;
+    }
+    .avatar-gray{
+        background-color: black;
+        position: relative;
+        opacity: 0;
+        top: -84px;
+        height: 80px;
+        border-radius: 100%;
     }
     img {
         width: 100%;

@@ -107,7 +107,7 @@
         created(){
             let user = this.$store.getters.getStorge.user;
             this.form.name = user.name;
-            this.form.school = user.school;
+            this.form.school = user.school.name;
             this.form.intro = user.intro;
             this.form.birthday = user.birthday;
             this.form.education = user.education;
@@ -160,7 +160,7 @@
                 }
             },
             returnUserHomepage(){
-                router.push('userHomepage');
+                router.back();
             },
             modifyUserInfo() {
                 this.$refs['form'].validate((valid) => {
@@ -171,7 +171,7 @@
                                 birthday: this.getFomateDay(this.form.birthday),
                                 sex: this.form.sex,
                                 education: this.form.education,
-                                school: this.form.school,
+                                school: typeof this.form.school === 'number' ? this.form.school: this.$store.getters.getStorge.user.school.id,
                                 phone: this.form.phone,
                                 intro: this.form.intro
                             }
