@@ -27,7 +27,7 @@
             </el-tab-pane>
             <el-tab-pane label="举报审核" name="informAudit" v-if="user.type===2"></el-tab-pane>
         </el-tabs>
-        <el-button type="primary" class="refresh" icon="el-icon-refresh" @click="refreshData"></el-button>
+        <el-button v-if="tabName!=='modifyPassword' && tabName!=='releaseCourse' && tabName!=='applyTeacher'" type="primary" class="refresh" icon="el-icon-refresh" @click="refreshData"></el-button>
     </div>
 </template>
 
@@ -265,6 +265,7 @@
         margin-top: 40px;
     }
     .refresh{
-        float: right;
+        margin-top: 2em;
+        margin-bottom: 2em;
     }
 </style>
