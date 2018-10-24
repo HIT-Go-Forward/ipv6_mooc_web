@@ -2,8 +2,8 @@
     <div class="course-card">
         <el-row>
             <el-col :span="10">
-                <div class="intro-video">
-                    视频简介/图片
+                <div class="course-img">
+                    <img :src="mediaIP + course.img" alt="" class="intro-img">
                 </div>
             </el-col>
             <el-col :span="12">
@@ -17,8 +17,8 @@
                                 <span>课程简介:</span>
                             </el-col>
                             <el-col :span="21">
-                                <span v-if="course.intro">{{course.intro}}</span>
-                                <span v-else>未填写</span>
+                                <span v-if="course.brief">{{course.brief}}</span>
+                                <span v-else>未填写课程简介</span>
                             </el-col>
                         </el-row>
                     </div>
@@ -26,7 +26,8 @@
                         <span>已有{{course.userNum}}人参加该课程</span>
                     </div>
                     <div class="course-join">
-                        <el-button class="join-button" plain type="primary" @click="joinCourse">立即加入</el-button>
+                        <el-button v-if="false" class="join-button" plain type="primary" @click="joinCourse">立即加入</el-button>
+                        <el-button v-else class="join-button" plain type="primary" @click="enterCourse">进入课程</el-button>
                     </div>
                 </div>
             </el-col>
@@ -35,17 +36,26 @@
 </template>
 
 <script>
+    import router from '../../router'
     export default {
         name: "course-card",
         created(){
-            // console.log(this.$route.params.courseId);
+            //TODO 查询是否参与了该课程
+        },
+        data(){
+            return{
+                mediaIP: this.$store.state.mediaIP,
+            }
         },
         props:{
-            course: Object
+            course: {}
         },
         methods:{
             joinCourse(){
-                alert('加入')
+                //TODO 加入课程
+            },
+            enterCourse(){
+                router.push({path: `/course/${this.course.id}/learn`});
             }
         }
     }
@@ -56,9 +66,13 @@
         height: 300px;
         background-color: #eee;
     }
-    .intro-video{
+    .intro-img{
+        width: 100%;
+        height: 100%;
+    }
+    .course-img{
         background-color: #ddd;
-        min-height: 260px;
+        height: 260px;
         margin: 20px;
     }
     .course-info{

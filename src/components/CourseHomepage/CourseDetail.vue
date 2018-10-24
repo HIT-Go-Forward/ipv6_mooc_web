@@ -1,6 +1,8 @@
 <template>
     <el-tabs v-model="activeName" @tab-click="handleClick" class="course-detail">
-        <el-tab-pane label="课程详情" name="courseDetail">{{course.intro}}</el-tab-pane>
+        <el-tab-pane label="课程详情" name="courseDetail">
+            <course-info :course="course"/>
+        </el-tab-pane>
         <el-tab-pane label="课程评价" name="courseComment"> </el-tab-pane>
     </el-tabs>
 </template>
@@ -10,6 +12,9 @@
         name: "course-detail",
         props:{
             course: Object
+        },
+        components:{
+            courseInfo: ()=>import('./CourseInfo')
         },
         data(){
             return{

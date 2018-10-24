@@ -8,7 +8,7 @@
                 <el-row>
                     <el-col :span="8">
                         <div class="teacher-img">
-                            <img src="../../assets/image/avatar.jpg" alt="">
+                            <img :src="mediaIP + course.teacher.img" alt="">
                         </div>
                     </el-col>
                     <el-col :span="16">
@@ -33,6 +33,11 @@
         props:{
             course: Object
         },
+        data(){
+            return{
+                mediaIP: this.$store.state.mediaIP,
+            }
+        }
     }
 </script>
 
@@ -54,6 +59,7 @@
     img{
         width: 100%;
         border-radius: 100%;
+        height: 100%;
     }
     .teacher-info{
         margin-top: 30px;

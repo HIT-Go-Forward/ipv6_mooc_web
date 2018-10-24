@@ -14,7 +14,8 @@
                         <span><i class="el-icon-view"></i> {{course.course.userNum}}</span>
                     </div>
                     <div class="course-intro">
-                        <span>{{course.course.intro}}</span>
+                        <span v-if="course.course.brief">{{course.course.brief}}</span>
+                        <span v-else>未填写课程简介</span>
                     </div>
                 </el-col>
             </el-row>
@@ -36,7 +37,12 @@
         },
         methods:{
             handleSelect(){
-                router.push({name: 'courseHomepage', params: {courseId:this.course.course.id}});
+                if(true){
+                    router.push({path: `/course/${this.course.id}/learn`});
+                }
+                else{
+                    router.push({name: 'courseHomepage', params: {courseId:this.course.course.id}});
+                }
                 // axios.get(this.$store.state.actionIP + '/course/getCourseById.action', {
                 //     params: {
                 //         courseId: this.course.course.id

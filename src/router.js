@@ -31,6 +31,23 @@ export default new Router({
           path: '/course/:courseId/homepage',
           name: 'courseHomepage',
           component: ()=>import('./views/Course/CourseHomepage')
+      },
+      {
+          path: '/course/:courseId/learn',
+          name: 'courseEntity',
+          component: ()=>import('./views/Course/CourseEntity'),
+          children:[
+              {
+                  path: '',
+                  name: 'notice',
+                  component: ()=>import('./components/Course/CourseEntity/CourseNotice')
+              },
+              {
+                  path: 'courseware',
+                  name: 'courseware',
+                  component: ()=>import('./components/Course/CourseEntity/Courseware')
+              }
+          ]
       }
   ]
 })

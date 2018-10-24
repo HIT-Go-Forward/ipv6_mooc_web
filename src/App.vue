@@ -53,4 +53,16 @@
         width: 200px;
         margin: 0 auto;
     }
+
+    .el-collapse-item__content{
+        padding-bottom: 5px !important;
+    }
+
+    .el-carousel__item:nth-child(2n) {
+        background-color: #99a9bf;
+    }
+
+    .el-carousel__item:nth-child(2n+1) {
+        background-color: #d3dce6;
+    }
 </style>
