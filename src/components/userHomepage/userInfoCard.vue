@@ -5,7 +5,7 @@
                 <el-row>
                     <el-col :span="8">
                         <div class="userImg">
-                            <img src="../../assets/image/avatar.jpg" alt="" class="avatar">
+                            <img :src="mediaIP + user.img" alt="" class="avatar">
                             <div class="avatar-gray" @click="modifyAvatar">
                                 <span class="avatar-cover">更换头像</span>
                             </div>
@@ -52,6 +52,7 @@
         data() {
             return {
                 user: this.$store.getters.getStorge.user,
+                mediaIP: this.$store.state.mediaIP,
             }
         },
         methods:{
@@ -74,6 +75,7 @@
     }
     .userImg {
         width: 80px;
+        height: 80px;
         display: inline-block;
         vertical-align: top;
         margin-left: 20%;
@@ -100,6 +102,7 @@
     img {
         width: 100%;
         border-radius: 100%;
+        height: 100%;
     }
     .info{
         display: inline-block;

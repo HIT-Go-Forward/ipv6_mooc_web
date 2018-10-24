@@ -49,6 +49,7 @@
     }
     .teacher-img{
         width: 60px;
+        height: 60px;
     }
     img{
         width: 100%;
