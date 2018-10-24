@@ -7,7 +7,7 @@
             <el-card class="card">
                 <img src="../../assets/image/avatar.jpg" class="image" @click="goToCourse()">
                 <div>
-                    <a class="courseName" href="javascript:void (0);" @click="goToCourse()">{{index}}. {{course.name}}</a>
+                    <a class="courseName" href="javascript:void (0);" @click="goToCourse(course.id)">{{index}}. {{course.name}}</a>
                     <a class="updater" href="javascript:void (0);" @click="goToTeacher(course.teacher.id)">{{course.teacher.id}}</a>
                     <p class="courseIntro">{{course.state}}</p>
                 </div>
@@ -21,7 +21,7 @@
                 <el-card class="card">
                     <img src="../../assets/image/avatar.jpg" class="image">
                     <div>
-                        <a class="courseName" href="javascript:void (0);" @click="goToCourse()">{{index}}. {{course.name}}</a>
+                        <a class="courseName" href="javascript:void (0);" @click="goToCourse(course.id)">{{index}}. {{course.name}}</a>
                         <a class="updater" href="javascript:void (0);" @click="goToTeacher(course.teacher.id)">{{course.teacher.id}}</a>
                         <p class="courseIntro">{{course.state}}</p>
                     </div>
@@ -35,7 +35,7 @@
                 <el-card class="card">
                     <img src="../../assets/image/avatar.jpg" class="image">
                     <div>
-                        <a class="courseName" href="javascript:void (0);" @click="goToCourse()">{{index}}. {{course.name}}</a>
+                        <a class="courseName" href="javascript:void (0);" @click="goToCourse(course.id)">{{index}}. {{course.name}}</a>
                         <a class="updater" href="javascript:void (0);" @click="goToTeacher(course.teacher.id)">{{course.teacher.id}}</a>
                         <p class="courseIntro">{{course.state}}</p>
                     </div>
@@ -61,8 +61,8 @@
             userInfoDialog: ()=>import('../common/userInfoDialog')
         },
         methods:{
-            goToCourse(){
-                router.push('course')
+            goToCourse(courseId){
+                router.push('/course/'+courseId+'/homepage')
             },
             goToTeacher(id){
                 this.$store.commit("userInfoShow");
