@@ -31,9 +31,14 @@
 
 <style scoped>
     .course-detail{
-        padding: 0 50px;
+        padding: 20px;
         margin-right: 20px;
+        border-radius: 20px;
+        box-shadow: 0 0 10px #B09999;
         background-color: #eee;
-        min-height: 300px;
+        min-height: 500px;
+    }
+    .course-detail:hover{
+        box-shadow: 0 0 20px #B09999;
     }
 </style>

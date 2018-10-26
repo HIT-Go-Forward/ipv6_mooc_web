@@ -72,6 +72,8 @@
         height: 200px;
         background-image: url("../../assets/image/show3.jpg");
         color: #fff;
+        border-radius: 0 0 20px 20px;
+        box-shadow: 0 0 10px #B09999;
     }
     .userImg {
         width: 80px;

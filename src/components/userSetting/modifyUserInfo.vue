@@ -211,6 +211,8 @@
         margin-right: auto;
         background-color: #ddd;
         padding: 50px 50px 10px;
+        border-radius: 20px;
+        box-shadow: 0 0 10px #B09999;
     }
 
     .el-date-picker {

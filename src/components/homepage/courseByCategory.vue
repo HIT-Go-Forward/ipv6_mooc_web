@@ -47,7 +47,7 @@
         margin-top: 16px;
     }
     .course-by-category{
-        margin: 0 50px;
+        margin: 0;
         padding: 20px;
         border-radius: 15px;
         height: 600px;
@@ -60,6 +60,7 @@
     .category-line{
         display: block;
         height: 50px;
+        border-bottom: 1px dashed #aaa;
     }
     .visit-all{
         float: right;

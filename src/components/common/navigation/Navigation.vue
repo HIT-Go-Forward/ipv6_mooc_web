@@ -3,29 +3,31 @@
         <el-menu
                 :defult-active="activeIndex" mode="horizontal" class="el-menu" @select="handleSelect"
                 background-color="#333" text-color="#fff" active-text-color="#ffd04b">
-            <el-menu-item index="1">
-                <img alt="Vue logo" src="../../../assets/image/logo.png">
-            </el-menu-item>
-            <el-menu-item index="2">课程</el-menu-item>
-            <el-menu-item index="3">名校</el-menu-item>
-            <div v-if="!IsLogin">
-                <el-menu-item index="4" style="float:right">
-                    <register-dialog/>
+            <div class="menu-main">
+                <el-menu-item index="1" class="el-menu-item" style="float: left">
+                    <img alt="Vue logo" src="../../../assets/image/logo.png">
                 </el-menu-item>
-                <el-menu-item index="5" style="float:right">
-                    <login-dialog/>
-                </el-menu-item>
-            </div>
-            <div v-else>
-                <el-menu-item index="6" style="float: right">
-                    <userInfoDropdown/>
-                </el-menu-item>
-            </div>
-            <el-menu-item index="7" style="float:right" v-show="this.$route.path==='/homepage' || this.$route.path==='/'">
-                <div>
-                    <el-input size="small" placeholder="查询感兴趣的课程" prefix-icon="el-icon-search"/>
+                <el-menu-item index="2" class="el-menu-item" style="float: left">课程</el-menu-item>
+                <el-menu-item index="3" class="el-menu-item" style="float: left">名校</el-menu-item>
+                <div v-if="!IsLogin">
+                    <el-menu-item index="4" style="float:right"  class="el-menu-item">
+                        <register-dialog/>
+                    </el-menu-item>
+                    <el-menu-item index="5" style="float:right"  class="el-menu-item">
+                        <login-dialog/>
+                    </el-menu-item>
                 </div>
-            </el-menu-item>
+                <div v-else>
+                    <el-menu-item index="6" style="float: right"  class="el-menu-item">
+                        <userInfoDropdown/>
+                    </el-menu-item>
+                </div>
+                <el-menu-item  class="el-menu-item" index="7" style="float:right" v-show="this.$route.path==='/homepage' || this.$route.path==='/'">
+                    <div>
+                        <el-input size="small" placeholder="查询感兴趣的课程" prefix-icon="el-icon-search"/>
+                    </div>
+                </el-menu-item>
+            </div>
         </el-menu>
     </div>
 </template>
@@ -77,9 +79,14 @@ x
         font-size: 16px;
     }
 
-    .el-menu {
-        padding-left: 20px;
-        padding-right: 40px;
+    .menu-main {
+        width: 1200px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .el-menu-item{
+        display: inline;
     }
 
     .el-menu .el-menu-item img {

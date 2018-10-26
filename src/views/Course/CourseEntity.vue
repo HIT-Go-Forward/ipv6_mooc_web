@@ -1,11 +1,11 @@
 <template>
     <div class="course-entity">
         <el-row>
-            <el-col :span="4">
+            <el-col :span="7">
                 <course-side-bar :course="course"/>
             </el-col>
-            <el-col :span="20">
-                <router-view :course="course"/>
+            <el-col :span="17">
+                <courseware :course="course"/>
             </el-col>
         </el-row>
     </div>
@@ -17,6 +17,7 @@
         name: "course-entity",
         components:{
             courseSideBar: ()=>import('../../components/Course/CourseEntity/CourseSideBar'),
+            courseware: ()=>import('../../components/Course/CourseEntity/Courseware')
         },
         data(){
             return{

@@ -46,7 +46,10 @@
     }
 
     .main {
+        margin-right: auto;
+        margin-left: auto;
         min-height: 900px;
+        width: 1200px;
     }
 
     .avatar-upload .el-upload-dragger{

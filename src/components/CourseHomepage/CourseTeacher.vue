@@ -45,12 +45,17 @@
     .course-teacher{
         background-color: #eee;
         text-align: left;
-        padding: 0 20px;
-        min-height: 300px;
+        padding: 20px;
+        border-radius: 20px 0 20px 20px;
+        box-shadow: 0 0 10px #B09999;
+    }
+    .course-teacher:hover{
+        box-shadow: 0 0 20px #B09999;
     }
     .teacher-header{
-        padding: 15px 0 10px;
-        border-bottom: 1px solid;
+        padding: 0 0 10px;
+        border-bottom: 1px solid #aaa;
+        font-size: 15px;
     }
     .teacher-img{
         width: 60px;
