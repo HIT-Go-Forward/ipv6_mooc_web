@@ -16,7 +16,5 @@
 </script>
 
 <style scoped>
-    .course-by-category{
-        margin: 0 50px;
-    }
+
 </style>
