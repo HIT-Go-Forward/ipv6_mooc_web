@@ -1,11 +1,11 @@
 <template>
     <div class="course-by-category">
         <div class="category-line">
-            <div v-for="category in categoryList" class="category">
+            <div v-for="category in categoryList" :key="category" class="category">
                 <span @click="handleClick(category.id)">{{category.name}}</span>
             </div>
         </div>
-        <div v-for="courseItem in courseItemList">
+        <div v-for="courseItem in courseItemList" :key="courseItem">
             <course-item :courseItem="courseItem"/>
         </div>
     </div>

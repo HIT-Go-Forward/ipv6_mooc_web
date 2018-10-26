@@ -24,7 +24,7 @@
 </template>
 
 <script>
-    import axios from 'axios'
+    //import axios from 'axios'
     import router from '../../router'
     export default {
         name: "course-card",
@@ -37,12 +37,8 @@
         },
         methods:{
             handleSelect(){
-                if(true){
-                    router.push({path: `/course/${this.course.id}/learn`});
-                }
-                else{
-                    router.push({name: 'courseHomepage', params: {courseId:this.course.course.id}});
-                }
+                router.push({path: `/course/${this.course.id}/learn`});
+                //router.push({name: 'courseHomepage', params: {courseId:this.course.course.id}});
                 // axios.get(this.$store.state.actionIP + '/course/getCourseById.action', {
                 //     params: {
                 //         courseId: this.course.course.id

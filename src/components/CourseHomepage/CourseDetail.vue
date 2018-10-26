@@ -23,7 +23,7 @@
         },
         methods: {
             handleClick(tab){
-
+                console.log(tab)
             }
         }
     }

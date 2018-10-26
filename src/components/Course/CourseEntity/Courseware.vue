@@ -25,7 +25,7 @@
             </el-collapse-item>
             <el-collapse-item  name="video1" class="collapse-item">
                 <template slot="title">简介视频</template>
-                <div class="lesson-item" v-for="lesson in lessonList">{{lesson.title}}</div>
+                <div class="lesson-item" v-for="lesson in lessonList" :key="lesson">{{lesson.title}}</div>
             </el-collapse-item>
         </el-collapse>
     </div>

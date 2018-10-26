@@ -23,14 +23,14 @@ export default new Router({
           component: () => import('./views/UserSetting')
       },
       {
-          path: '/course/courseEdit',
-          name: 'courseEdit',
-          component: () => import('./views/Course/CourseEdit')
-      },
-      {
           path: '/course/:courseId/homepage',
           name: 'courseHomepage',
           component: ()=>import('./views/Course/CourseHomepage')
+      },
+      {
+          path: '/course/:courseId/courseEdit',
+          name: 'courseEdit',
+          component: ()=>import('./views/Course/CourseEdit')
       },
       {
           path: '/course/:courseId/learn',
