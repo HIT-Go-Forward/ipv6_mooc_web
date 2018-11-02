@@ -87,7 +87,7 @@
                     <el-input v-model="form.note" placeholder="这里可填写备注用于提交给管理员"></el-input>
                 </el-form-item>
                 <el-form-item>
-                    <el-button type="primary" @click="courseReleaseSubmit">创建课程草稿</el-button>
+                    <el-button type="primary" @click="courseReleaseSubmit">提交课程</el-button>
                 </el-form-item>
             </el-form>
         </el-col>
@@ -148,7 +148,7 @@
                     if(res.data.status===200){
                         //router.push('course/courseEdit')
                         this.courseId=res.data.data
-                        this.$message.success("课程草稿创建成功！5秒后跳转到课程详情页面")
+                        this.$message.success("课程提交审核成功！5秒后跳转到课程详情页面")
                         this.$refs.courseImgUpload.submit()
                         setTimeout(()=>{
                             router.push('/course/'+this.courseId+'/homepage')
@@ -183,11 +183,11 @@
                 const isLt2M = file.size / 1024 / 1024 < 2;
 
                 if (!isJPG) {
-                    this.$message.error('图片格式错误，上传失败，请在课程编辑页面修改！');
+                    this.$message.error('图片格式错误！可在课程编辑页面修改.');
                     return false
                 }
                 if (!isLt2M) {
-                    this.$message.error('图片过大，上传失败，请在课程编辑页面修改！');
+                    this.$message.error('图片过大!可在课程编辑页面修改.');
                     return false
                 }
                 let fd = new FormData()
@@ -196,7 +196,7 @@
                 fd.append('type','courseImg')
                 console.log(file)
                 axios({
-                    url: this.$store.state.actionIP+'/course/saveCourseDraft.action',
+                    url: this.$store.state.actionIP+'/resource/upload.action',
                     method:'post',
                     data: fd
                 }).then((res) => {

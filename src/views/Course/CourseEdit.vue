@@ -1,7 +1,17 @@
 <template>
     <el-row class="release-course-part">
-        <el-col :span="5">
-            Courses
+        <el-col :span="5" class="left-courses">
+            <div class="left-title">课列表</div>
+            <el-collapse>
+                <el-collapse-item v-for="(chapter,index) in chapters" :key="index" :title="'第'+(index+1)+'章： '+chapter.title" :name="index">
+                    <ul>
+                        <li v-for="(section,index) in chapter.sections" :key="index">
+                            <a href="javascript:void(0)" @click="gotoLesson(section.id)">第{{index+1}}节：{{section.title}}</a>
+                        </li>
+                    </ul>
+                </el-collapse-item>
+            </el-collapse>
+            <div><a href="javascript:void(0)" @click="addLesson" class="add-lesson">增加课程</a></div>
         </el-col>
         <el-col :span="16" :offset="1" class="release-course-container">
             <el-form ref="form" :model="form" label-width="6em">
@@ -9,13 +19,13 @@
                     <el-upload
                             action=""
                             ref="courseImgUpload"
-                            class="upload-demo"
+                            class="img-upload"
                             :before-upload="handlePost"
                             drag
                             :limit="1"
                             accept="image/*"
                     >
-                        <img :src="imageSrc">
+                        <img :src="imageSrc" class="img">
                         <div class="el-upload__tip" slot="tip">点击图片修改，只能上传jpg/png/gif文件，且不超过2MB</div>
                     </el-upload>
                 </el-form-item>
@@ -88,8 +98,7 @@
                     <el-input v-model="form.note" placeholder="这里可填写备注用于提交给管理员"></el-input>
                 </el-form-item>
                 <el-form-item>
-                    <el-button type="primary" @click="courseReleaseSubmit">修改草稿</el-button>
-                    <el-button type="primary" @click="courseReleaseSubmit">提交课程</el-button>
+                    <el-button type="primary" @click="courseReleaseSubmit">提交修改</el-button>
                     <el-button type="danger">删除课程</el-button>
                 </el-form-item>
             </el-form>
@@ -104,6 +113,7 @@
         name: "CourseEdit",
         data(){
             return {
+                courseId:'',
                 form:{
                     courseName:'',
                     courseIntro:'',
@@ -124,22 +134,42 @@
                 courseSonTypes: [],
                 courseParentType:'',
                 courseType: '',
-                courseSonShow: false
+                courseSonShow: false,
+                chapters: []
             }
         },
-        mounted:function(){
+        created:function(){
             this.getCourseType();
             this.getCourseDetail();
             this.getCourseLessons();
         },
         methods:{
+            gotoLesson(lessonId){
+                router.push('/course/'+lessonId+'/lesson')
+            },
+            addLesson(){
+                router.push('/course/'+this.courseId+'/addLesson')
+            },
             getCourseLessons(){
+                this.courseId = this.$route.params.courseId
                 axios.get(this.$store.state.actionIP+"/course/getCourseOutline.action",{
                     params: {
-                        courseId:this.$route.params.courseId
+                        courseId:this.courseId
                     }
                 }).then((res)=>{
                     console.log(res)
+                    for (let i = 0;i<res.data.data.length;i++){
+                        if(!this.chapters[res.data.data[i].chapterNum-1])
+                            this.chapters[res.data.data[i].chapterNum-1] = {
+                                title:res.data.data[i].chapterTitle,
+                                sections:[]
+                            }
+                        this.chapters[res.data.data[i].chapterNum-1].sections.splice(res.data.data.sectionNum-1,0,{
+                            title:res.data.data[i].sectionTitle,
+                            id:res.data.data[i].id
+                        })
+                    }
+                    console.log(this.chapters)
                 }).catch((err)=>{
                     this.$message.error("联网错误！")
                     console.log(err)
@@ -250,6 +280,7 @@
                     if(res.data.status===200){
                         setTimeout(()=>{
                             this.$message.success("图片上传成功!")
+                            this.imageSrc = this.imageSrc+'?t='+Math.random()
                         },1000)
                     } else {
                         this.$message.error("图片上传失败！")
@@ -292,6 +323,26 @@
     }
 </script>
 <style scoped>
+    .left-title{
+        text-align: center;
+        margin: 5px 0 5px 0;
+        font-size: 20px;
+    }
+    .left-courses{
+        border: 1px solid darkgray;
+        box-shadow: 2px 2px 4px lightgrey;
+        background-color: white;
+        text-align: left;
+        padding: 0 5px 10px 10px;
+    }
+    .el-upload{
+        font-size: 0;
+    }
+    .img{
+        margin: 0;
+        max-height: 100%;
+        max-width: 100%;
+    }
     .el-tag + .el-tag {
         margin-left: 10px;
     }
@@ -329,5 +380,16 @@
     }
     .el-upload__tip{
         margin-top: -1em;
+    }
+    ul{
+        list-style: none;
+    }
+    a{
+        color: blue;
+        text-decoration: none;
+    }
+    .add-lesson{
+        float: right;
+        margin-top: 10px;
     }
 </style>
