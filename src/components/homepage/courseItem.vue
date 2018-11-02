@@ -73,7 +73,7 @@
         width: 180px;
         margin: 10px 10px;
         cursor: pointer;
-        box-shadow: 0 0 2px #B09999;
+        box-shadow: 0 0 4px #B09999;
         border-radius: 10px;
     }
     .course-item:hover{

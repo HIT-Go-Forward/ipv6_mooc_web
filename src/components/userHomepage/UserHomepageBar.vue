@@ -260,9 +260,13 @@
 
 <style scoped>
     .userHomepageBar{
-        margin-left: 100px;
-        margin-right: 300px;
         margin-top: 40px;
+        padding: 20px;
+        border-radius: 20px;
+        box-shadow: 0 0 10px #B09999;
+    }
+    .userHomepageBar:hover{
+        box-shadow: 0 0 20px #B09999;
     }
     .refresh{
         margin-top: 2em;

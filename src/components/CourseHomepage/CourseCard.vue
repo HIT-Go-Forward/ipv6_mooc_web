@@ -64,6 +64,8 @@
 <style scoped>
     .course-card{
         height: 300px;
+        border-radius: 0 0 20px 20px;
+        box-shadow: 0 0 10px #B09999;
         background-color: #eee;
     }
     .intro-img{

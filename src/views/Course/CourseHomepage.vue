@@ -53,9 +53,8 @@
 
 <style scoped>
     .course-homepage{
-        margin: 20px;
     }
     .course-bar{
-        margin: 20px 60px 0;
+        margin-top: 40px;
     }
 </style>
