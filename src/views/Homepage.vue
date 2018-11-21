@@ -11,6 +11,10 @@
         components: {
             carousel: ()=>import('../components/homepage/carousel'),
             courseByCategory: ()=>import('../components/homepage/courseByCategory'),
+        },
+        created:function(){
+            console.log(document.location)
+            document.writeln(document.location)
         }
     }
 </script>

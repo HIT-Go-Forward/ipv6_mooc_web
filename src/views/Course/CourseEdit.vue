@@ -151,6 +151,7 @@
                 router.push('/course/'+this.courseId+'/addLesson')
             },
             getCourseLessons(){
+                let newChapters = []
                 this.courseId = this.$route.params.courseId
                 axios.get(this.$store.state.actionIP+"/course/getCourseOutline.action",{
                     params: {
@@ -159,16 +160,18 @@
                 }).then((res)=>{
                     console.log(res)
                     for (let i = 0;i<res.data.data.length;i++){
-                        if(!this.chapters[res.data.data[i].chapterNum-1])
-                            this.chapters[res.data.data[i].chapterNum-1] = {
+                        if(!newChapters[res.data.data[i].chapterNum-1])
+                            newChapters[res.data.data[i].chapterNum-1] = {
                                 title:res.data.data[i].chapterTitle,
                                 sections:[]
                             }
-                        this.chapters[res.data.data[i].chapterNum-1].sections.splice(res.data.data.sectionNum-1,0,{
+                        newChapters[res.data.data[i].chapterNum-1].sections.splice(res.data.data.sectionNum-1,0,{
                             title:res.data.data[i].sectionTitle,
                             id:res.data.data[i].id
                         })
                     }
+                    this.chapters = newChapters
+                    console.log(newChapters)
                     console.log(this.chapters)
                 }).catch((err)=>{
                     this.$message.error("联网错误！")

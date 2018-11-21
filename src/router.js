@@ -29,7 +29,7 @@ export default new Router({
       },
       {
           path: '/course/:courseId/addLesson',
-          name: 'courseHomepage',
+          name: 'addLesson',
           component: ()=>import('./views/Course/addLesson')
       },
       {
