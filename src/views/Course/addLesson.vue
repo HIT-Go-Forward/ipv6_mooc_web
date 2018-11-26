@@ -104,8 +104,38 @@
             </el-form>
         </div>
         <div class="lesson-msg-verify" v-if="part===2">
-
+            <div class="lesson-verify">
+                <div class="verify">
+                    <span class="verify-title">课程题目：</span>
+                    <span class="verify-content">{{lesson.title}}</span>
+                </div>
+                <div class="verify">
+                    <span class="verify-title">课程信息：</span>
+                    <span class="verify-content">{{lesson.intro}}</span>
+                </div>
+                <div class="verify">
+                    <span class="verify-title">课程状态：</span>
+                    <span class="verify-content">未审核</span>
+                </div>
+                <div class="verify">
+                    <span class="verify-title">课程创建时间：</span>
+                    <span class="verify-content">{{lesson.createDate}}</span>
+                </div>
+            <div class="video-title">
+                <div>课程视频</div>
+                <video width="80%" :src="this.$store.state.mediaIP+this.lesson.videoUrl" controls></video>
+            </div>
+            <div class="video-title">
+                <div>课程配套文件</div>
+                <a :href="this.$store.state.mediaIP+this.lesson.fileUrl">点击下载</a>
+            </div>
+            <div class="verify verify-all">
+                <el-button type="primary" class="verify-submit">确认</el-button>
+                <el-button type="primary" class="verify-submit">修改</el-button>
+            </div>
         </div>
+        </div>
+
     </div>
 </template>
 
@@ -115,7 +145,7 @@
         name: "addLesson",
         data(){
             return {
-                part: 0,
+                part: 2,
                 chapters: '',
                 addChapterFlag: 0,
                 addChapterTitle: '',
@@ -125,7 +155,8 @@
                     intro:'',
                     note:''
                 },
-                lessonId:'',
+                lessonId:13,
+                lesson:'',
 
                 fileUploadState:0,
                 videoUploadState:0,
@@ -141,8 +172,16 @@
                 }
             }
         },
+        watch:{
+            part:function(part1,part2){
+                if(part2===2){
+                    this.getLessonDetail();
+                }
+            }
+        },
         created:function() {
             this.getCourseOutline()
+            this.getLessonDetail();
         },
         methods:{
             getCourseOutline(){
@@ -170,6 +209,19 @@
                 }).catch((err)=>{
                     this.$message.error("联网错误！")
                     console.log(err)
+                })
+            },
+            getLessonDetail(){
+                axios.get(this.$store.state.actionIP+"/course/getLessonById.action",{
+                    params:{
+                        lessonId:this.lessonId
+                    }
+                }).then((res)=>{
+                    console.log(res)
+                    this.lesson = res.data.data
+                }).catch((err)=>{
+                    console.log(err)
+                    this.$message.error("联网错误！")
                 })
             },
             addChapter(){
@@ -294,5 +346,25 @@
         border: 1px lightgrey solid;
         border-radius: 5px;
         box-shadow: lightgrey 3px 3px;
+    }
+    .lesson-verify{
+        background-color: whitesmoke;
+        border: 1px lightgrey solid;
+        border-radius: 5px;
+        box-shadow: lightgrey 3px 3px;
+    }
+    .verify{
+        margin:25px 10% 25px 10%;
+        width: 80%;
+    }
+    .verify-title{
+        float: left;
+        font-weight: bold;
+    }
+    .verify-content{
+        margin-left: 50px;
+    }
+    .video-title{
+        text-align: center;
     }
 </style>

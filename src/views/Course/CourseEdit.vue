@@ -4,9 +4,11 @@
             <div class="left-title">课列表</div>
             <el-collapse>
                 <el-collapse-item v-for="(chapter,index) in chapters" :key="index" :title="'第'+(index+1)+'章： '+chapter.title" :name="index">
-                    <ul>
-                        <li v-for="(section,index) in chapter.sections" :key="index">
+                    <ul class="chapter-list">
+                        <li v-for="(section,index) in chapter.sections" :key="index" class="lesson-list">
                             <a href="javascript:void(0)" @click="gotoLesson(section.id)">第{{index+1}}节：{{section.title}}</a>
+                            <span>{{section.state}}</span>
+                            <hr/>
                         </li>
                     </ul>
                 </el-collapse-item>
@@ -165,9 +167,16 @@
                                 title:res.data.data[i].chapterTitle,
                                 sections:[]
                             }
+                        let state;
+                        switch (res.data.data[i].state) {
+                            case 1:state = "待审核";break;
+                            case 2:state =  "审核通过";break;
+                            default: state = "审核未通过";break;
+                        }
                         newChapters[res.data.data[i].chapterNum-1].sections.splice(res.data.data.sectionNum-1,0,{
                             title:res.data.data[i].sectionTitle,
-                            id:res.data.data[i].id
+                            id:res.data.data[i].id,
+                            state: state
                         })
                     }
                     this.chapters = newChapters
@@ -382,6 +391,27 @@
     }
     ul{
         list-style: none;
+    }
+    .chapter-list{
+        padding: 0 0 0 1em;
+        margin: 0;
+    }
+    .lesson-list{
+        margin: 5px 0 0 0;
+    }
+    .lesson-list hr{
+        margin: 0;
+        opacity: 0.8;
+    }
+    .el-collapse-item__header{
+        font-size: 1.5em;
+    }
+    .lesson-list a{
+        margin-bottom: -5px;
+        color: #000;
+    }
+    .lesson-list span{
+        float:right;
     }
     a{
         color: blue;
