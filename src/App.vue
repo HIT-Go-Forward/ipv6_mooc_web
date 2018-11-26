@@ -69,4 +69,12 @@
     .el-carousel__item:nth-child(2n+1) {
         background-color: #d3dce6;
     }
+
+    .course-by-category .el-tabs__item:nth-child(2){
+        font-size: 150%;
+    }
+
+    .course-by-category #tab-click-for-more{
+
+    }
 </style>

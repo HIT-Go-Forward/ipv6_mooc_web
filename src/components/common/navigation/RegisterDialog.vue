@@ -254,6 +254,7 @@
                                     document.cookie = 'id='+response.data.data.id+'; max-age=604800';
                                     document.cookie = 'password='+response.data.data.password+'; max-age=604800';
                                     this.$store.commit('$_setStorage', {user: response.data.data});
+                                    this.$refs.verifyCode.clearCode();
                                     this.registerStatus = 2;
                                 }
                                 else if (response.data.status === 500) {
@@ -330,7 +331,6 @@
             complete() {
                 this.$refs['form'].validate((valid) => {
                     if (valid) {
-                        alert('11')
                         axios.get(this.$store.state.actionIP + '/authority/modifyInfo.action', {
                             params: {
                                 birthday: this.getFomateDay(this.form.birthday),
@@ -348,7 +348,8 @@
                                 else if (response.data.status === 200) {
                                     this.$store.commit('$_setStorage', {user: response.data.data});
                                     this.$store.commit('login');
-                                    this.registerCancel();
+                                    this.$refs['form'].resetFields();
+                                    this.$store.commit('registerHide');
                                 }
                                 else if (response.data.status === 500) {
                                     this.$message.error('服务器出错');

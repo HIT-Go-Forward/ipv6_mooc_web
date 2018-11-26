@@ -32,20 +32,19 @@
 </template>
 
 <script>
+    import axios from 'axios'
     export default {
         name: "courseware",
         props:{
-            course: {},
+            course: Object,
+            lessonList: Array,
         },
-        data(){
-            return{
-                lessonList: [{title:'沟通心理学的价值'},{title:'沟通交流中常见的行为与心理'}],
-            }
+        created(){
         },
         methods:{
             handleChange(){
                 console.log();
-            }
+            },
         }
     }
 </script>
