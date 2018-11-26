@@ -1,6 +1,6 @@
 <template>
     <el-col :span="4">
-        <el-card class="course-item" :body-style="{ padding: '0px'}" shadow="hover" @click.native="handleSelect">
+        <el-card class="course-item" :body-style="{ padding: '0px'}" shadow="hover" @click.native="handleSelect(courseItem.id)">
             <div class="course-img">
                 <img v-if="courseItem.img" :src="mediaIP + courseItem.img" alt="">
                 <img v-else src="../../assets/image/courseDefault.jpg" alt="">
@@ -20,10 +20,8 @@
 </template>
 
 <script>
-    import ElCard from "element-ui/packages/card/src/main";
-
+    import router from '../../router'
     export default {
-        components: {ElCard},
         name: "course-item",
         props: {
             courseItem: {},
@@ -34,8 +32,8 @@
             }
         },
         methods:{
-            handleSelect(){
-
+            handleSelect(courseId){
+                router.push({path: `/course/${courseId}/homepage`});
             }
         }
     }
@@ -77,6 +75,7 @@
         border-radius: 10px;
     }
     .course-item:hover{
+
         box-shadow: 2px 2px 40px #B09999;
     }
     .course-num{

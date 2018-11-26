@@ -1,11 +1,11 @@
 <template>
     <el-dropdown @command="handleCommand">
-        <span>{{this.$store.getters.getStorge.user.name}}</span>
+        <span><i class="el-icon-setting"></i>{{this.$store.getters.getStorge.user.name}}</span>
         <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item command="1">个人中心</el-dropdown-item>
-            <el-dropdown-item command="2">修改个人信息</el-dropdown-item>
-            <el-dropdown-item command="3">申请成为教师</el-dropdown-item>
-            <el-dropdown-item command="4">站内信息</el-dropdown-item>
+            <el-dropdown-item command="1" class="dropdown-item">个人中心</el-dropdown-item>
+            <el-dropdown-item command="2" class="dropdown-item">修改个人信息</el-dropdown-item>
+            <el-dropdown-item command="3" class="dropdown-item">申请成为教师</el-dropdown-item>
+            <el-dropdown-item command="4" class="dropdown-item">站内信息</el-dropdown-item>
             <el-dropdown-item command="5" divided>退出登录</el-dropdown-item>
         </el-dropdown-menu>
     </el-dropdown>
@@ -48,5 +48,14 @@
 </script>
 
 <style scoped>
+    .dropdown-item{
+        width: 100px;
+        transition: padding-right, padding-left;
+        transition-duration: 500ms;
+    }
+    .dropdown-item:hover{
+        padding-left: 30px;
+        padding-right: 10px;
 
+    }
 </style>

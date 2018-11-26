@@ -66,7 +66,7 @@
             releaseCourse: ()=>import('./releaseCourse')
         },
         created(){
-            this.getCourse('learned');
+            this.getCourse('learningCourse');
         },
         methods:{
             refreshData() {
