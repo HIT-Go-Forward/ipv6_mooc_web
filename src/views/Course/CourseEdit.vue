@@ -228,10 +228,8 @@
                     if(res.data.status===200){
                         //router.push('course/courseEdit')
                         this.courseId=res.data.data
-                        this.$message.success("课程创建成功！")
-                        setTimeout(()=>{
-                            router.push('/course/'+this.courseId+'/homepage')
-                        },5000)
+                        this.$message.success("课程修改成功！")
+                        window.location.reload()
                     } else {
                         this.$message.error(res.data.data)
                     }
@@ -281,10 +279,8 @@
                 }).then((res) => {
                     console.log(res)
                     if(res.data.status===200){
-                        setTimeout(()=>{
-                            this.$message.success("图片上传成功!")
-                            this.imageSrc = this.imageSrc+'?t='+Math.random()
-                        },1000)
+                        this.$message.success("图片上传成功!")
+                        this.imageSrc = this.imageSrc+'?t='+Math.floor(Math.random()*50)
                     } else {
                         this.$message.error("图片上传失败！")
                     }

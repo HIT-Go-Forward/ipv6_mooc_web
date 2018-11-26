@@ -46,24 +46,62 @@
             </el-form>
         </div>
         <div class="vedio-upload" v-if="part===1">
-            <el-upload
-                    class="upload-demo"
-                    drag
-                    action="https://jsonplaceholder.typicode.com/posts/"
-                    multiple>
-                <i class="el-icon-upload"></i>
-                <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
-                <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div>
-            </el-upload>
-            <el-upload
-                    class="upload-demo"
-                    drag
-                    action="https://jsonplaceholder.typicode.com/posts/"
-                    multiple>
-                <i class="el-icon-upload"></i>
-                <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
-                <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div>
-            </el-upload>
+            <el-form label-width="125px" class="add-class-form">
+                <el-form-item label="课程视频：">
+                    <el-upload
+                            :action="this.$store.state.actionIP+'/resource/upload.action'"
+                            ref="lessonVideoUpload"
+                            class="file-upload"
+                            :data="{
+                                'courseId':this.courseId,
+                                'type':'lessonVideo',
+                                'lessonId':this.lessonId
+                            }"
+                            :on-success="uploadVideoResponse"
+                            :on-error="uploadVideoError"
+                            :before-upload="uploadVideo"
+                            name="file"
+                            :auto-upload="false"
+                            drag
+                            :limit="1"
+                            :with-credentials="true"
+                    >
+                        <i class="el-icon-upload"></i>
+                        <div class="el-upload__text">将课程视频拖到此处，或<em>点击添加文件</em></div>
+                    </el-upload>
+                    <el-button style="margin-left: 10px;" size="small" type="success" @click="submitVideoUpload">上传到服务器</el-button>
+                </el-form-item>
+                <el-form-item label="课程辅助文件：">
+                    <el-upload
+                            :action="this.$store.state.actionIP+'/resource/upload.action'"
+                            ref="lessonFileUpload"
+                            class="file-upload"
+                            :data="{
+                                'courseId':this.courseId,
+                                'type':'lessonFile',
+                                'lessonId':this.lessonId
+                            }"
+                            :on-success="uploadFileResponse"
+                            :on-error="uploadFileError"
+                            :before-upload="uploadFile"
+                            name="file"
+                            :auto-upload="false"
+                            drag
+                            :limit="1"
+                            :with-credentials="true"
+                    >
+                        <i class="el-icon-upload"></i>
+                        <div class="el-upload__text">将文件拖到此处，或<em>点击添加文件</em></div>
+                        <div class="el-upload__tip" slot="tip">请将所需文件打包后上传，不得超过100Mb</div>
+                    </el-upload>
+                    <el-button style="margin-left: 10px;" size="small" type="success" @click="submitFileUpload">上传到服务器</el-button>
+                </el-form-item>
+                <el-form-item>
+                    <el-button v-if="fileUploadState===2||videoUploadState===2" type="primary" @click="part=3">点击进入下一步</el-button>
+                    <el-button v-if="(fileUploadState===0||fileUploadState===3)&&videoUploadState===3" type="primary" @click="part=3">点击进入下一步</el-button>
+                    <p v-else>数据上传未完成或未上传视频文件！</p>
+                </el-form-item>
+            </el-form>
         </div>
         <div class="lesson-msg-verify" v-if="part===2">
 
@@ -88,6 +126,10 @@
                     note:''
                 },
                 lessonId:'',
+
+                fileUploadState:0,
+                videoUploadState:0,
+
                 rules:{
                     chapter:[
                         {required:true,message:"请选择章节",trigger:'blur'},
@@ -148,6 +190,52 @@
                 this.addChapterFlag = 0
                 this.addChapterTitle= ''
             },
+            uploadVideo(file){
+                this.videoUploadState = 1
+                const isLt1024M = file.size / 1024 / 1024 /1024 < 2;
+
+                if (!isLt1024M) {
+                    this.$message.error('文件过大！');
+                    return false
+                }
+            },
+            submitVideoUpload(){
+                this.videoUploadState = 2
+                this.$refs.lessonVideoUpload.submit();
+            },
+            submitFileUpload(){
+                this.fileUploadState = 2
+                this.$refs.lessonFileUpload.submit();
+            },
+            uploadFileResponse(res){
+                this.fileUploadState = 3
+                console.log(res)
+                this.$message.success(res)
+            },
+            uploadFileError(err){
+                this.fileUploadState = 0
+                console.log(err)
+                this.$message.error(err)
+            },
+            uploadVideoResponse(res){
+                this.videoUploadState = 3
+                console.log(res)
+                this.$message.success(res)
+            },
+            uploadVideoError(err){
+                this.videoUploadState = 0
+                console.log(err)
+                this.$message.error(err)
+            },
+            uploadFile(file){
+                this.fileUploadState = 1
+                const isLt2M = file.size / 1024 / 1024 /100 < 2;
+
+                if (!isLt2M) {
+                    this.$message.error('文件过大！');
+                    return false
+                }
+            },
             submitLesson(){
                 console.log(1)
                 this.$refs['form'].validate((valid)=>{
@@ -167,9 +255,10 @@
                             }
                         }).then((res)=>{
                             console.log(res)
-                            if(res.data.data.status===200){
-                                this.lessonId = res.data.lessonId
-                                this.part = 2
+                            if(res.data.status===200){
+                                this.lessonId = res.data.data
+                                this.$message.success("课创建成功！进入下一步上传视频及其他文件。")
+                                this.part = 1
                             } else {
                                 this.$message.error(res.data.data)
                             }
