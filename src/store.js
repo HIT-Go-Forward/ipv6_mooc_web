@@ -12,6 +12,7 @@ export default new Vuex.Store({
         user: null,                        //用户信息
         actionIP: 'http://39.106.156.178:8080',  //线上服务器
         //actionIP: 'http://172.17.27.5:8080',        //班耀强服务器
+        //actionIP: 'http://172.17.25.121:8000',      //李志琛服务器
         mediaIP: 'http://47.94.148.40:8080/media-server',
         // mediaIP: 'http://172.17.27.5:10080'
     },

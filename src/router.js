@@ -28,6 +28,11 @@ export default new Router({
           component: ()=>import('./views/Course/CourseHomepage')
       },
       {
+          path: '/course/:courseId/addLesson',
+          name: 'addLesson',
+          component: ()=>import('./views/Course/addLesson')
+      },
+      {
           path: '/course/:courseId/courseEdit',
           name: 'courseEdit',
           component: ()=>import('./views/Course/CourseEdit')
