@@ -12,7 +12,6 @@
                 <div class="course-num">
                     <i class="el-icon-view">{{courseItem.userNum}}</i>
                 </div>
-                <div></div>
             </div>
         </el-card>
     </el-col>
