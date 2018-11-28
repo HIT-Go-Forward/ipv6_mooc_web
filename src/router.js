@@ -46,6 +46,11 @@ export default new Router({
           path: '/course/:courseId/learn',
           name: 'courseEntity',
           component: ()=>import('./views/Course/CourseEntity'),
+      },
+      {
+          path: '/lesson/:lessonId',
+          name: 'lessonPlay',
+          component: ()=>import('./views/Course/LessonPlay'),
       }
   ]
 })
