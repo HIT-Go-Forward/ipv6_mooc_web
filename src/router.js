@@ -30,12 +30,17 @@ export default new Router({
       {
           path: '/course/:courseId/addLesson',
           name: 'addLesson',
-          component: ()=>import('./views/Course/addLesson')
+          component: ()=>import('./views/Course/Lesson/addLesson')
       },
       {
           path: '/course/:courseId/courseEdit',
           name: 'courseEdit',
           component: ()=>import('./views/Course/CourseEdit')
+      },
+      {
+          path:'/course/:lessonId/lessonEdit',
+          name: 'lessonEdit',
+          component: ()=>import('./views/Course/Lesson/lessonEdit')
       },
       {
           path: '/course/:courseId/learn',

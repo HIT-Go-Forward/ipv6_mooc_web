@@ -1,7 +1,7 @@
 <template>
     <div class="lesson-upload-card">
         <div class="header">
-            <el-steps :active="part" align-center>
+            <el-steps :active="part" align-center finish-status="success">
                 <el-step title="步骤1" description="填写并保存基本的课信息"></el-step>
                 <el-step title="步骤2" description="上传文件"></el-step>
                 <el-step title="步骤3" description="确认提交"></el-step>
@@ -97,8 +97,8 @@
                     <el-button style="margin-left: 10px;" size="small" type="success" @click="submitFileUpload">上传到服务器</el-button>
                 </el-form-item>
                 <el-form-item>
-                    <el-button v-if="fileUploadState===2||videoUploadState===2" type="primary" @click="part=3">点击进入下一步</el-button>
-                    <el-button v-if="(fileUploadState===0||fileUploadState===3)&&videoUploadState===3" type="primary" @click="part=3">点击进入下一步</el-button>
+                    <el-button v-if="fileUploadState===2||videoUploadState===2" type="primary" disabled="disabled">正在上传</el-button>
+                    <el-button v-if="(fileUploadState===0||fileUploadState===3)&&videoUploadState===3" type="primary" @click="part=2">点击进入下一步</el-button>
                     <p v-else>数据上传未完成或未上传视频文件！</p>
                 </el-form-item>
             </el-form>
@@ -127,19 +127,19 @@
             </div>
             <div class="video-title">
                 <div>课程配套文件</div>
-                <a :href="this.$store.state.mediaIP+this.lesson.fileUrl">点击下载</a>
+                <a :href="this.$store.state.mediaIP+this.lesson.fileUrl" :download="this.lesson.originalFileName">点击下载</a>
             </div>
             <div class="verify verify-all">
-                <el-button type="primary" class="verify-submit">确认</el-button>
-                <el-button type="primary" class="verify-submit">修改</el-button>
+                <el-button type="primary" class="verify-submit" @click="confirmLesson">确认</el-button>
+                <el-button type="primary" class="verify-submit" @click="reEdit">修改</el-button>
             </div>
         </div>
         </div>
-
     </div>
 </template>
 
 <script>
+    import router from '../../../router'
     import axios from 'axios'
     export default {
         name: "addLesson",
@@ -184,6 +184,16 @@
             this.getLessonDetail();
         },
         methods:{
+            confirmLesson(){
+                this.part=3
+                this.$message.success("课已确认!")
+                setTimeout(()=>{
+                    router.push("/course/"+this.courseId+"/courseEdit");
+                },2000)
+            },
+            reEdit(){
+                router.push("/course/"+this.lessonId+"/lessonEdit")
+            },
             getCourseOutline(){
                 let newChapters = []
                 this.courseId = this.$route.params.courseId

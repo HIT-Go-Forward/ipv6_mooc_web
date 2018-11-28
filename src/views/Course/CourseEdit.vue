@@ -2,7 +2,7 @@
     <el-row class="release-course-part">
         <el-col :span="5" class="left-courses">
             <div class="left-title">课列表</div>
-            <el-collapse>
+            <el-collapse v-if="this.chapters">
                 <el-collapse-item v-for="(chapter,index) in chapters" :key="index" :title="'第'+(index+1)+'章： '+chapter.title" :name="index">
                     <ul class="chapter-list">
                         <li v-for="(section,index) in chapter.sections" :key="index" class="lesson-list">
@@ -13,6 +13,7 @@
                     </ul>
                 </el-collapse-item>
             </el-collapse>
+            <p v-else>这里空空如也哦</p>
             <div><a href="javascript:void(0)" @click="addLesson" class="add-lesson">增加课程</a></div>
         </el-col>
         <el-col :span="16" :offset="1" class="release-course-container">
@@ -199,13 +200,23 @@
                     if(res.data.data.needs) this.form.courseNeeds = res.data.data.needs
                     if(res.data.data.type){
                         this.form.courseTypeId = res.data.data.type.id
-                        if(res.data.data.type.parent) {
-                            this.courseParentType = res.data.data.type.parent
-                            this.courseType = res.data.data.type.id
-                            this.courseSonShow = true
-                        } else {
-                            this.courseParentType = res.data.data.type.id
+                        let idTmp = parseInt(res.data.data.type.id)
+                        let typeTmp;
+                        for(let i in this.courseTypes){
+                            if(idTmp===this.courseTypes[i].id){
+                                typeTmp = this.courseTypes[i];
+                            }
                         }
+                        console.log(typeTmp)
+                        this.courseType = typeTmp.id
+                        if(typeTmp.level===1){
+                            this.courseParentType = typeTmp.id
+                            this.courseSonShow = false
+                        } else if(typeTmp.level===2) {
+                            this.courseParentType = typeTmp.parent
+                            this.courseSonShow = true
+                        }
+                        this.changeCourse()
                     }
                     if(res.data.data.label) this.label = res.data.data.label.split(";")
                     if(res.data.data.brief) this.form.courseBrief = res.data.data.brief
@@ -221,14 +232,15 @@
                     this.$message.error("请填写课程名称！")
                     return;
                 }
-                axios.get(this.$store.state.actionIP+"/course/addNewCourse.action",{
+                axios.get(this.$store.state.actionIP+"/course/updateCourse.action",{
                     params: {
+                        'courseId' : this.courseId,
                         'courseName': this.form.courseName,
                         'courseIntro': this.form.courseIntro,
-                        'courseBrief': this.form.courseBrief,
-                        'courseBook': this.form.courseBook,
-                        'courseNeeds': this.form.courseNeeds,
-                        'courseType': this.courseType?this.courseType:this.courseParentType,
+                        'brief': this.form.courseBrief,
+                        'books': this.form.courseBook,
+                        'needs': this.form.courseNeeds,
+                        'typeId': this.courseType?this.courseType:this.courseParentType,
                         'note': this.form.note,
                         'label': this.label.join(';')
                     }
@@ -236,9 +248,8 @@
                     console.log(res)
                     if(res.data.status===200){
                         //router.push('course/courseEdit')
-                        this.courseId=res.data.data
                         this.$message.success("课程修改成功！")
-                        window.location.reload()
+                        this.getCourseDetail()
                     } else {
                         this.$message.error(res.data.data)
                     }
@@ -319,7 +330,6 @@
             },
             changeCourse(){
                 this.courseSonTypes = []
-                this.courseType = ''
                 for(let i=0;i<this.courseTypes.length;i++){
                     if(this.courseTypes[i].parent===this.courseParentType){
                         this.courseSonTypes.push(this.courseTypes[i])

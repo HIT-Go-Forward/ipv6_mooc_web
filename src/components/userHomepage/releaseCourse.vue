@@ -136,10 +136,10 @@
                     params: {
                         'courseName': this.form.courseName,
                         'courseIntro': this.form.courseIntro,
-                        'courseBrief': this.form.courseBrief,
-                        'courseBook': this.form.courseBook,
-                        'courseNeeds': this.form.courseNeeds,
-                        'courseType': this.courseType?this.courseType:this.courseParentType,
+                        'brief': this.form.courseBrief,
+                        'books': this.form.courseBook,
+                        'needs': this.form.courseNeeds,
+                        'typeId': this.courseType?this.courseType:this.courseParentType,
                         'note': this.form.note,
                         'label': this.label.join(';')
                     }
@@ -147,7 +147,7 @@
                     console.log(res)
                     if(res.data.status===200){
                         //router.push('course/courseEdit')
-                        this.courseId=res.data.data
+                        this.courseId=res.data.data.course_id
                         this.$message.success("课程提交审核成功！5秒后跳转到课程详情页面")
                         this.$refs.courseImgUpload.submit()
                         setTimeout(()=>{

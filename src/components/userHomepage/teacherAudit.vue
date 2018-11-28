@@ -2,7 +2,7 @@
     <div>
         <div>
             <h1>还未处理的教师申请</h1>
-            <el-table :data="unhandled" style="width: 100%;" height="250" max-height="400">
+            <el-table :data="unhandled.data" style="width: 100%;" height="250" max-height="400">
                 <el-table-column prop="id" sortable label="标号" width="100"></el-table-column>
                 <el-table-column sortable label="申请者" width="100">
                     <template slot-scope="scope">
@@ -31,7 +31,7 @@
         </div>
         <div>
             <h1>已经处理完成的教师申请</h1>
-            <el-table :data="handled" style="width: 100%" height="250" max-height="400">
+            <el-table :data="handled.data" style="width: 100%" height="250" max-height="400">
                 <el-table-column prop="id" sortable label="标号" width="100"></el-table-column>
                 <el-table-column sortable label="申请者" width="100">
                     <template slot-scope="scope">

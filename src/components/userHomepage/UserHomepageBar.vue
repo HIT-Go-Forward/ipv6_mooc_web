@@ -181,7 +181,7 @@
                     }
                 }).then((res)=>{
                     if(res.data.status === 200) {
-                        this.handledTeacherApply = res.data.data
+                        this.handledTeacherApply = res.data
                         console.log(this.handledTeacherApply)
                     } else {
                         this.$message.error("服务器出错"+res.data.data)
@@ -196,7 +196,7 @@
                     }
                 }).then((res)=>{
                     if(res.data.status === 200) {
-                        this.unhandledTeacherApply = res.data.data
+                        this.unhandledTeacherApply = res.data
                         console.log(this.unhandledTeacherApply)
                     } else {
                         this.$message.error("服务器出错"+res.data.data)

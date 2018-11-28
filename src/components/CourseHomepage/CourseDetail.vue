@@ -11,7 +11,7 @@
     export default {
         name: "course-detail",
         props:{
-            course: Object
+            course: ''
         },
         components:{
             courseInfo: ()=>import('./CourseInfo')
