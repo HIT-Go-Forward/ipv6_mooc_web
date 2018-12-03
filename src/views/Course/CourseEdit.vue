@@ -1,18 +1,17 @@
 <template>
     <el-row class="release-course-part">
-        <el-col :span="5" class="left-courses">
+        <el-col :span="7" class="left-courses">
             <div class="left-title">课列表</div>
-            <el-collapse v-if="this.chapters">
-                <el-collapse-item v-for="(chapter,index) in chapters" :key="index" :title="'第'+(index+1)+'章： '+chapter.title" :name="index">
-                    <ul class="chapter-list">
-                        <li v-for="(section,index) in chapter.sections" :key="index" class="lesson-list">
-                            <a href="javascript:void(0)" @click="gotoLesson(section.id)">第{{index+1}}节：{{section.title}}</a>
-                            <span>{{section.state}}</span>
-                            <hr/>
-                        </li>
-                    </ul>
-                </el-collapse-item>
-            </el-collapse>
+            <el-tree v-if="this.chapters"
+                     :data="this.chapters"
+                >
+                <span class="custom-tree-node" slot-scope="{node,data}">
+                    <span class="lesson-title" v-if="data.state" @click="gotoLesson(data.id)">{{ "第"+data.num+"节："+data.title }}</span>
+                    <span class="lesson-state" v-if="data.state">{{ data.state }}</span>
+                    <span class="chapter-title" v-if="!data.state">{{  "第"+data.num+"章："+data.title  }}</span>
+                </span>
+
+            </el-tree>
             <p v-else>这里空空如也哦</p>
             <div><a href="javascript:void(0)" @click="addLesson" class="add-lesson">增加课程</a></div>
         </el-col>
@@ -131,7 +130,6 @@
                 inputValue: '',
 
                 imageSrc:'',
-
                 courseTypes:[],
                 courseParentTypes: [],
                 courseSonTypes: [],
@@ -143,19 +141,16 @@
         },
         created:function(){
             this.getCourseType();
-            this.getCourseDetail();
-            this.getCourseLessons();
         },
         methods:{
             gotoLesson(lessonId){
-                router.push('/course/'+lessonId+'/lesson')
+                router.push('/course/'+lessonId+'/lessonEdit')
             },
             addLesson(){
                 router.push('/course/'+this.courseId+'/addLesson')
             },
             getCourseLessons(){
                 let newChapters = []
-                this.courseId = this.$route.params.courseId
                 axios.get(this.$store.state.actionIP+"/course/getCourseOutline.action",{
                     params: {
                         courseId:this.courseId
@@ -165,8 +160,9 @@
                     for (let i = 0;i<res.data.data.length;i++){
                         if(!newChapters[res.data.data[i].chapterNum-1])
                             newChapters[res.data.data[i].chapterNum-1] = {
+                                num:res.data.data[i].chapterNum,
                                 title:res.data.data[i].chapterTitle,
-                                sections:[]
+                                children:[]
                             }
                         let state;
                         switch (res.data.data[i].state) {
@@ -174,21 +170,21 @@
                             case 2:state =  "审核通过";break;
                             default: state = "审核未通过";break;
                         }
-                        newChapters[res.data.data[i].chapterNum-1].sections.splice(res.data.data.sectionNum-1,0,{
+                        newChapters[res.data.data[i].chapterNum-1].children.splice(res.data.data.sectionNum-1,0,{
+                            num:res.data.data[i].sectionNum,
                             title:res.data.data[i].sectionTitle,
                             id:res.data.data[i].id,
                             state: state
                         })
                     }
                     this.chapters = newChapters
-                    console.log(newChapters)
-                    console.log(this.chapters)
                 }).catch((err)=>{
                     this.$message.error("联网错误！")
                     console.log(err)
                 })
             },
             getCourseDetail(){
+                this.courseId = this.$route.params.courseId
                 axios.get(this.$store.state.actionIP+"/course/getCourseById.action",{
                     params: {
                         courseId:this.$route.params.courseId
@@ -222,6 +218,7 @@
                     if(res.data.data.brief) this.form.courseBrief = res.data.data.brief
                     if(res.data.data.note) this.form.note = res.data.data.note
                     if(res.data.data.img) this.imageSrc = this.$store.state.mediaIP+res.data.data.img
+                    this.getCourseLessons();
                 }).catch((err)=>{
                     this.$message.error("联网错误！")
                     console.log(err)
@@ -320,6 +317,7 @@
                                 this.courseParentTypes.push(res.data.data[i])
                             }
                         }
+                        this.getCourseDetail()
                     } else {
                         this.$message.error(res.data.data)
                     }
@@ -341,6 +339,13 @@
     }
 </script>
 <style scoped>
+    .word-max-overflow{
+        overflow: hidden;
+        word-break: keep-all;
+        -ms-text-overflow: ellipsis;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
     .left-title{
         text-align: center;
         margin: 5px 0 5px 0;

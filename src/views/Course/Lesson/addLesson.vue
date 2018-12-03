@@ -125,7 +125,7 @@
                 <div>课程视频</div>
                 <video width="80%" :src="this.$store.state.mediaIP+this.lesson.videoUrl" controls></video>
             </div>
-            <div class="video-title">
+            <div class="video-title" v-if="this.lesson.fileUrl">
                 <div>课程配套文件</div>
                 <a :href="this.$store.state.mediaIP+this.lesson.fileUrl" :download="this.lesson.originalFileName">点击下载</a>
             </div>
@@ -145,7 +145,7 @@
         name: "addLesson",
         data(){
             return {
-                part: 2,
+                part: 0,
                 chapters: '',
                 addChapterFlag: 0,
                 addChapterTitle: '',
@@ -155,7 +155,7 @@
                     intro:'',
                     note:''
                 },
-                lessonId:13,
+                lessonId:'',
                 lesson:'',
 
                 fileUploadState:0,

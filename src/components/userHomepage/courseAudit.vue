@@ -77,6 +77,12 @@
         background-color: whitesmoke;
     }
     .courseName{
+        white-space:nowrap;
+        overflow: hidden;
+        word-break: keep-all;
+        -ms-text-overflow: ellipsis;
+        text-overflow: ellipsis;
+
         margin: 0;
         display: block;
         font-size: 1.5em;
