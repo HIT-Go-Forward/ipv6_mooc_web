@@ -49,7 +49,7 @@
             <el-form label-width="125px" class="add-class-form">
                 <el-form-item label="课程视频：">
                     <el-upload
-                            :action="'/action/resource/upload.action'"
+                            :action="'/upload/resource/uploadResource.action'"
                             ref="lessonVideoUpload"
                             class="file-upload"
                             :data="{
@@ -73,7 +73,7 @@
                 </el-form-item>
                 <el-form-item label="课程辅助文件：">
                     <el-upload
-                            :action="'/action/resource/upload.action'"
+                            :action="'/upload/resource/uploadResource.action'"
                             ref="lessonFileUpload"
                             class="file-upload"
                             :data="{

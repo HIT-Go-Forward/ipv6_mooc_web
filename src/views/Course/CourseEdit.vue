@@ -213,7 +213,7 @@
                     if(res.data.data.label) this.label = res.data.data.label.split(";")
                     if(res.data.data.brief) this.form.courseBrief = res.data.data.brief
                     if(res.data.data.note) this.form.note = res.data.data.note
-                    if(res.data.data.img) this.imageSrc = this.$store.state.mediaIP+res.data.data.img
+                    if(res.data.data.img) this.imageSrc = '/media'+res.data.data.img
                     this.getCourseLessons();
                 }).catch((err)=>{
                     this.$message.error("联网错误！")
@@ -286,14 +286,15 @@
                 fd.append('type','courseImg')
                 console.log(file)
                 axios({
-                    url: '/action/resource/upload.action',
+                    url: '/upload/resource/uploadResource.action',
                     method:'post',
                     data: fd
                 }).then((res) => {
                     console.log(res)
                     if(res.data.status===200){
                         this.$message.success("图片上传成功!")
-                        this.imageSrc = this.imageSrc+'?t='+Math.floor(Math.random()*50)
+                        this.getCourseDetail()
+                        // this.imageSrc = res.data.data+'?t='+Math.floor(Math.random()*50)
                     } else {
                         this.$message.error("图片上传失败！")
                     }
