@@ -3,7 +3,7 @@
         <el-row>
             <el-col :span="10">
                 <div class="course-img">
-                    <img :src="mediaIP + course.img" alt="" class="intro-img">
+                    <img :src="'/media' + course.img" alt="" class="intro-img">
                 </div>
             </el-col>
             <el-col :span="12">
@@ -44,7 +44,6 @@
         },
         data(){
             return{
-                mediaIP: this.$store.state.mediaIP,
             }
         },
         props:{

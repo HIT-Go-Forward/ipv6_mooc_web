@@ -2,7 +2,7 @@
     <div>
         <el-dialog title="用户信息" :visible.sync="userInfoDialogVisible" center width="30%" @open="getUserInfo" :modal="false">
             <div v-if="userInfo.img" class="img-block" align="center">
-                <img :src="this.$store.state.mediaIP+userInfo.img" class="userImg" alt="照片找不到了哦" width="66%">
+                <img :src="'/media'+userInfo.img" class="userImg" alt="照片找不到了哦" width="66%">
             </div>
             <ul class="info-list">
                 <li>
@@ -74,7 +74,7 @@
         },
         methods:{
             getUserInfo(){
-                axios.get(this.$store.state.actionIP+'/authority/getUserInfo.action',{
+                axios.get('/action/authority/getUserInfo.action',{
                     params:{
                         'userId':this.id,
                     }

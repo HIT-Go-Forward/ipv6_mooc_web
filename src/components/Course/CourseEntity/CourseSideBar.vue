@@ -3,7 +3,7 @@
         <div class="sidebar">
             <!--TODO 课程图片-->
             <div  class="course-img">
-                <img :src="mediaIP + course.img" alt="">
+                <img :src="'/media' + course.img" alt="">
             </div>
         </div>
         <div class="course-info">
@@ -23,7 +23,7 @@
             <el-row class="teacher-main">
                 <el-col :span="6">
                     <div class="teacher-img">
-                        <img :src="mediaIP + course.teacher.img" alt="">
+                        <img :src="'/media' + course.teacher.img" alt="">
                     </div>
                 </el-col>
                 <el-col :span="18">
@@ -47,7 +47,6 @@
         name: "course-side-bar",
         data() {
             return {
-                mediaIP: this.$store.state.mediaIP,
             }
         },
         props: {

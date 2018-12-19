@@ -39,7 +39,7 @@
                 }
             },
             handleSelect(row){
-                axios.get(this.$store.state.actionIP + '/course/getCourseById.action', {
+                axios.get('/action/course/getCourseById.action', {
                     params: {
                         courseId: row.courseId
                     }

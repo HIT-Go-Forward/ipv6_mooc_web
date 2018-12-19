@@ -119,7 +119,7 @@
                 if(query!==''){
                     this.loading = true;
                     setTimeout(()=>{
-                        axios.get(this.$store.state.actionIP + '/school/querySchool.action', {
+                        axios.get('/action/school/querySchool.action', {
                             params: {
                                 keyword: query
                             }
@@ -165,7 +165,7 @@
             modifyUserInfo() {
                 this.$refs['form'].validate((valid) => {
                     if (valid) {
-                        axios.get(this.$store.state.actionIP + '/authority/modifyInfo.action', {
+                        axios.get('/action/authority/modifyInfo.action', {
                             params: {
                                 name: this.form.name.replace(/(^\s*)|(\s*$)/g,''),
                                 birthday: this.getFomateDay(this.form.birthday),

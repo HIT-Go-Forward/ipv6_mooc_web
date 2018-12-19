@@ -35,7 +35,7 @@
         methods:{
 
             getLesson(){
-                axios.get(this.$store.state.actionIP+'/course/getLessonById.action', {
+                axios.get('/action/course/getLessonById.action', {
                         params:{
                             lessonId: this.$route.params.lessonId,
                         }})

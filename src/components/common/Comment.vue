@@ -45,7 +45,7 @@
 
             },
             getComment(){
-                axios.get(this.$store.state.actionIP+'/CommentAndBarrage/getComment.action', {
+                axios.get('/action/CommentAndBarrage/getComment.action', {
                     params:{
                         type: this.commentType,
                         lessonId: this.$route.params.lessonId,

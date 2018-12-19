@@ -118,7 +118,7 @@
             },
             getCourse(courseType){
                 this.courseList = [];
-                axios.get(this.$store.state.actionIP + '/course/getUserCourses.action', {
+                axios.get('/action/course/getUserCourses.action', {
                     params: {
                         type: courseType
                     }
@@ -141,7 +141,7 @@
             },
             getVisitCourse(){
                 this.visitCourse = [];
-                axios.get(this.$store.state.actionIP + '/history/getCourseHistory.action')
+                axios.get('/action/history/getCourseHistory.action')
                     .then(response => {
                         if (response.data.status === 403) {
                             this.$message.error(response.data.data);
@@ -159,7 +159,7 @@
                     });
             },
             applyStateSearch(){
-                axios.get(this.$store.state.actionIP+'/apply/getManageableApplies.action').then((res)=>{
+                axios.get('/action/apply/getManageableApplies.action').then((res)=>{
                     if(res.data.status === 200) {
                         this.applyMsg.state = res.data.data[0].state
                         this.applyMsg.handleId = res.data.data[0].id
@@ -175,7 +175,7 @@
                 })
             },
             teacherAuditAll(){
-                axios.get(this.$store.state.actionIP+'/apply/getManageableApplies.action',{
+                axios.get('/action/apply/getManageableApplies.action',{
                     params: {
                         'type': 'handled'
                     }
@@ -190,7 +190,7 @@
                     this.$message.error("没连接到服务器")
                     console.log(err)
                 })
-                axios.get(this.$store.state.actionIP+'/apply/getManageableApplies.action',{
+                axios.get('/action/apply/getManageableApplies.action',{
                     params: {
                         'type': 'unhandled'
                     }
@@ -207,7 +207,7 @@
                 })
             },
             courseAuditAll(){
-                axios.get(this.$store.state.actionIP+'/course/getUserCourses.action',{
+                axios.get('/action/course/getUserCourses.action',{
                     params: {
                         'type':'accepted'
                     }
@@ -222,7 +222,7 @@
                     this.$message.error("没连接到服务器")
                     console.log(err)
                 })
-                axios.get(this.$store.state.actionIP+'/course/getUserCourses.action',{
+                axios.get('/action/course/getUserCourses.action',{
                     params: {
                         'type':'rejected'
                     }
@@ -237,7 +237,7 @@
                     this.$message.error("没连接到服务器")
                     console.log(err)
                 })
-                axios.get(this.$store.state.actionIP+'/course/getUserCourses.action',{
+                axios.get('/action/course/getUserCourses.action',{
                     params: {
                         'type':'applying'
                     }

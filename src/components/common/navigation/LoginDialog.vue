@@ -81,15 +81,17 @@
                                password: md5(this.form.password, 'hit-go-forward')
                            }
                        }
-                       axios.get(this.$store.state.actionIP+'/authority/login.action', {
+                       axios.get('/action/authority/login.action', {
                            params: params})
                            .then(response=>{
                                if(response.data.status===403){
                                    this.$message.error(response.data.data)
                                }
                                else if(response.data.status===200){
-                                   document.cookie = 'id='+response.data.data.id+'; max-age=604800';
-                                   document.cookie = 'password='+response.data.data.password+'; max-age=604800';
+                                   console.log(response)
+                                   // document.cookie = 'id='+response.data.data.id+'; max-age=604800';
+                                   // document.cookie = 'password='+response.data.data.password+'; max-age=604800';
+                                   document.cookie = 'token='+response.data.data.token
                                    this.$store.commit('$_setStorage', {user: response.data.data});
                                    this.$store.commit('login');
                                    this.loginCancel();

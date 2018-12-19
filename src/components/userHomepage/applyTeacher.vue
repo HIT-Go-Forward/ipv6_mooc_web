@@ -46,7 +46,7 @@
         },
         methods:{
             submitTeacherApply(){
-                axios.get(this.$store.state.actionIP+'/apply/applyTeacher.action',{
+                axios.get('/action/apply/applyTeacher.action',{
                     params: {
                         note: this.form.applyReason
                     }

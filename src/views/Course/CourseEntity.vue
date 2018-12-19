@@ -31,7 +31,7 @@
         },
         methods: {
             getCourseInfo(){
-                axios.get(this.$store.state.actionIP + '/course/getCourseById.action', {
+                axios.get('/action/course/getCourseById.action', {
                     params: {
                         courseId: this.$route.params.courseId
                     }
@@ -42,7 +42,7 @@
                         }
                         else if (response.data.status === 200) {
                             this.course = response.data.data;
-                            axios.get(this.$store.state.actionIP + '/course/getCourseOutline.action', {
+                            axios.get('/action/course/getCourseOutline.action', {
                                 params: {
                                     courseId: this.course.id
                                 }

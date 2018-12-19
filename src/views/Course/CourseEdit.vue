@@ -5,11 +5,13 @@
             <el-tree v-if="this.chapters"
                      :data="this.chapters"
                 >
-                <span class="custom-tree-node" slot-scope="{node,data}">
+                <div class="custom-tree-node" slot-scope="{node,data}">
                     <span class="lesson-title" v-if="data.state" @click="gotoLesson(data.id)">{{ "第"+data.num+"节："+data.title }}</span>
-                    <span class="lesson-state" v-if="data.state">{{ data.state }}</span>
+                    <span class="lesson-state waiting" v-if="data.state===1"> 未审核 </span>
+                    <span class="lesson-state pass" v-else-if="data.state===2"> 审核通过 </span>
+                    <span class="lesson-state rejected" v-else-if="data.state===3"> 审核不通过 </span>
                     <span class="chapter-title" v-if="!data.state">{{  "第"+data.num+"章："+data.title  }}</span>
-                </span>
+                </div>
 
             </el-tree>
             <p v-else>这里空空如也哦</p>
@@ -151,7 +153,7 @@
             },
             getCourseLessons(){
                 let newChapters = []
-                axios.get(this.$store.state.actionIP+"/course/getCourseOutline.action",{
+                axios.get('/action/course/getCourseOutline.action',{
                     params: {
                         courseId:this.courseId
                     }
@@ -164,17 +166,11 @@
                                 title:res.data.data[i].chapterTitle,
                                 children:[]
                             }
-                        let state;
-                        switch (res.data.data[i].state) {
-                            case 1:state = "待审核";break;
-                            case 2:state =  "审核通过";break;
-                            default: state = "审核未通过";break;
-                        }
                         newChapters[res.data.data[i].chapterNum-1].children.splice(res.data.data.sectionNum-1,0,{
                             num:res.data.data[i].sectionNum,
                             title:res.data.data[i].sectionTitle,
                             id:res.data.data[i].id,
-                            state: state
+                            state: res.data.data[i].state
                         })
                     }
                     this.chapters = newChapters
@@ -185,7 +181,7 @@
             },
             getCourseDetail(){
                 this.courseId = this.$route.params.courseId
-                axios.get(this.$store.state.actionIP+"/course/getCourseById.action",{
+                axios.get('/action/course/getCourseById.action',{
                     params: {
                         courseId:this.$route.params.courseId
                     }
@@ -229,7 +225,7 @@
                     this.$message.error("请填写课程名称！")
                     return;
                 }
-                axios.get(this.$store.state.actionIP+"/course/updateCourse.action",{
+                axios.get('/action/course/updateCourse.action',{
                     params: {
                         'courseId' : this.courseId,
                         'courseName': this.form.courseName,
@@ -290,7 +286,7 @@
                 fd.append('type','courseImg')
                 console.log(file)
                 axios({
-                    url: this.$store.state.actionIP+'/resource/upload.action',
+                    url: '/action/resource/upload.action',
                     method:'post',
                     data: fd
                 }).then((res) => {
@@ -308,7 +304,7 @@
                 return false;
             },
             getCourseType(){
-                axios.get(this.$store.state.actionIP+'/course/getAllCourseType.action').then((res)=>{
+                axios.get('/action/course/getAllCourseType.action').then((res)=>{
                     console.log(res)
                     if(res.data.status===200){
                         this.courseTypes=res.data.data
@@ -339,6 +335,22 @@
     }
 </script>
 <style scoped>
+    .custom-tree-node{
+        width: 100%;
+    }
+    .pass{
+        color: green;
+    }
+    .rejected{
+        color: red;
+    }
+    .waiting{
+        color: gray;
+    }
+    .lesson-state{
+        font-weight: bold;
+        float: right;
+    }
     .word-max-overflow{
         overflow: hidden;
         word-break: keep-all;

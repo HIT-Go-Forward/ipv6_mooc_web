@@ -49,7 +49,7 @@
             <el-form label-width="125px" class="add-class-form">
                 <el-form-item label="课程视频：">
                     <el-upload
-                            :action="this.$store.state.actionIP+'/resource/upload.action'"
+                            :action="'/action/resource/upload.action'"
                             ref="lessonVideoUpload"
                             class="file-upload"
                             :data="{
@@ -73,7 +73,7 @@
                 </el-form-item>
                 <el-form-item label="课程辅助文件：">
                     <el-upload
-                            :action="this.$store.state.actionIP+'/resource/upload.action'"
+                            :action="'/action/resource/upload.action'"
                             ref="lessonFileUpload"
                             class="file-upload"
                             :data="{
@@ -123,11 +123,11 @@
                 </div>
             <div class="video-title">
                 <div>课程视频</div>
-                <video width="80%" :src="this.$store.state.mediaIP+this.lesson.videoUrl" controls></video>
+                <video width="80%" :src="'/media'+this.lesson.videoUrl" controls></video>
             </div>
             <div class="video-title" v-if="this.lesson.fileUrl">
                 <div>课程配套文件</div>
-                <a :href="this.$store.state.mediaIP+this.lesson.fileUrl" :download="this.lesson.originalFileName">点击下载</a>
+                <a :href="'/media'+this.lesson.fileUrl" :download="this.lesson.originalFileName">点击下载</a>
             </div>
             <div class="verify verify-all">
                 <el-button type="primary" class="verify-submit" @click="confirmLesson">确认</el-button>
@@ -197,7 +197,7 @@
             getCourseOutline(){
                 let newChapters = []
                 this.courseId = this.$route.params.courseId
-                axios.get(this.$store.state.actionIP+"/course/getCourseOutline.action",{
+                axios.get('/action/course/getCourseOutline.action',{
                     params: {
                         courseId:this.courseId
                     }
@@ -222,7 +222,7 @@
                 })
             },
             getLessonDetail(){
-                axios.get(this.$store.state.actionIP+"/course/getLessonById.action",{
+                axios.get('/action/course/getLessonById.action',{
                     params:{
                         lessonId:this.lessonId
                     }
@@ -305,7 +305,7 @@
                         let chapterNum = this.form.chapter+1
                         let chapterTitle = this.chapters[this.form.chapter].title
                         let num = this.chapters[this.form.chapter].sections.length+1
-                        axios.get(this.$store.state.actionIP+"/course/addNewLesson.action",{
+                        axios.get('/action/course/addNewLesson.action',{
                             params:{
                                 num:num,
                                 title:this.form.title,

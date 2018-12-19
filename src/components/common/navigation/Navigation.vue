@@ -53,7 +53,7 @@ x
             })
         },
         created() {
-            if (document.cookie.indexOf("id=") !== -1) {
+            if (document.cookie.indexOf("token=") !== -1) {
                 this.$store.state.IsLogin = true;
             }
             else{

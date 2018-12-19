@@ -74,7 +74,7 @@
 
         methods:{
             access(index,applyId){
-                axios.get(this.$store.state.actionIP+'/apply/acceptTeacherApply.action',{
+                axios.get('/action/apply/acceptTeacherApply.action',{
                     params:{
                         applyId:applyId,
                         note:this.verify_note[index]
@@ -93,7 +93,7 @@
                 })
             },
             refuse(index,applyId){
-                axios.get(this.$store.state.actionIP+'/apply/rejectTeacherApply.action',{
+                axios.get('/action/apply/rejectTeacherApply.action',{
                     params:{
                         applyId:applyId,
                         note:this.verify_note[index]

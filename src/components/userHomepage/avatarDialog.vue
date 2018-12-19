@@ -2,7 +2,7 @@
     <div>
         <el-dialog class="avatar-dialog" :visible="modifyAvatarVisible" title="上传头像" center>
             <el-upload class="avatar-upload" drag
-                       :action="this.$store.state.actionIP + '/resource/upload.action'"
+                       :action="'/action/resource/upload.action'"
                        :show-file-list="false"
                        :on-success="handleAvatarSuccess"
                        :with-credentials="true"

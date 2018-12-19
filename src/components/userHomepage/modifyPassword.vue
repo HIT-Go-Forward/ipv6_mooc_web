@@ -56,7 +56,7 @@
             },
             verifyEmail(){
                 if(this.form.email===this.$store.getters.getStorge.user.email){
-                    axios.get(this.$store.state.actionIP+'/authority/sendValidateCodeToCurrentUser.action').then((res)=>{
+                    axios.get('/action/authority/sendValidateCodeToCurrentUser.action').then((res)=>{
                         console.log(res.data)
                         if(res.data.status===200){
                             this.$message.success("验证邮件已发送到您绑定的邮箱，请查收！")
@@ -77,7 +77,7 @@
                     this.form.new_password1=''
                     this.form.new_password2=''
                 } else {
-                    axios.get(this.$store.state.actionIP+'/authority/changePassword.action',{
+                    axios.get('/action/authority/changePassword.action',{
                         params:{
                             code: this.form.verifyCode,
                             oldPassword: md5(this.form.old_password, 'hit-go-forward'),

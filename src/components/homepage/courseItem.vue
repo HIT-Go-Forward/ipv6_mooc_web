@@ -2,7 +2,7 @@
     <el-col :span="4">
         <el-card class="course-item" :body-style="{ padding: '0px'}" shadow="hover" @click.native="handleSelect(courseItem.id)">
             <div class="course-img">
-                <img v-if="courseItem.img" :src="mediaIP + courseItem.img" alt="">
+                <img v-if="courseItem.img" :src="'/media' + courseItem.img" alt="">
                 <img v-else src="../../assets/image/courseDefault.jpg" alt="">
             </div>
             <div class="course-info">
@@ -27,7 +27,6 @@
         },
         data() {
             return {
-                mediaIP: this.$store.state.mediaIP,
             }
         },
         methods:{

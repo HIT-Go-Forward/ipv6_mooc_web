@@ -187,7 +187,7 @@
                 if(query!==''){
                     this.loading = true;
                     setTimeout(()=>{
-                        axios.get(this.$store.state.actionIP + '/school/querySchool.action', {
+                        axios.get('/action/school/querySchool.action', {
                             params: {
                                 keyword: query
                             }
@@ -237,7 +237,7 @@
             registerCommit() {
                 this.$refs['form'].validate((valid) => {
                     if (valid) {
-                        axios.get(this.$store.state.actionIP + '/authority/register.action', {
+                        axios.get('/action/authority/register.action', {
                             params: {
                                 name: this.form.name.replace(/(^\s*)|(\s*$)/g,''),
                                 email: this.form.email,
@@ -275,7 +275,7 @@
             verifyEmail() {
                 this.$refs['form'].validateField('email', (errorMessage) => {
                     if (!errorMessage) {
-                        axios.get(this.$store.state.actionIP + '/authority/uniqueEmail.action', {
+                        axios.get('/action/authority/uniqueEmail.action', {
                             params: {
                                 email: this.form.email,
                             }
@@ -331,7 +331,7 @@
             complete() {
                 this.$refs['form'].validate((valid) => {
                     if (valid) {
-                        axios.get(this.$store.state.actionIP + '/authority/modifyInfo.action', {
+                        axios.get('/action/authority/modifyInfo.action', {
                             params: {
                                 birthday: this.getFomateDay(this.form.birthday),
                                 sex: this.form.sex,

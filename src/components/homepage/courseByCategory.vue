@@ -34,7 +34,7 @@
         },
         methods:{
             getCourseList(type){
-                axios.get(this.$store.state.actionIP+'/course/getCourseByType.action', {
+                axios.get('/action/course/getCourseByType.action', {
                     params:{
                         typeId: type,
                         start: 0,

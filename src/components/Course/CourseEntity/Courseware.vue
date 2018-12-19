@@ -63,7 +63,7 @@
                 router.push({path: `/lesson/${lessonId}`});
             },
             auditing(operation){
-                axios.get(this.$store.state.actionIP+'/course/handleCourseApply.action', {
+                axios.get('/action/course/handleCourseApply.action', {
                     params:{
                         courseId: this.course.id,
                         operation: operation,

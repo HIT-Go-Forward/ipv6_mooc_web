@@ -8,7 +8,7 @@
                 <el-row>
                     <el-col :span="8">
                         <div class="teacher-img">
-                            <img :src="mediaIP + course.teacher.img" alt="">
+                            <img :src="'/media' + course.teacher.img" alt="">
                         </div>
                     </el-col>
                     <el-col :span="16">
@@ -35,7 +35,6 @@
         },
         data(){
             return{
-                mediaIP: this.$store.state.mediaIP,
             }
         }
     }

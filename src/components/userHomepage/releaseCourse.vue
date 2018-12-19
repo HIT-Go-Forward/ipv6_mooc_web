@@ -132,7 +132,7 @@
                     this.$message.error("请填写课程名称！")
                     return;
                 }
-                axios.get(this.$store.state.actionIP+"/course/addNewCourse.action",{
+                axios.get("/action/course/addNewCourse.action",{
                     params: {
                         'courseName': this.form.courseName,
                         'courseIntro': this.form.courseIntro,
@@ -196,7 +196,7 @@
                 fd.append('type','courseImg')
                 console.log(file)
                 axios({
-                    url: this.$store.state.actionIP+'/resource/upload.action',
+                    url: '/action/resource/upload.action',
                     method:'post',
                     data: fd
                 }).then((res) => {
@@ -215,7 +215,7 @@
                 return false;
             },
             getCourseType(){
-                axios.get(this.$store.state.actionIP+'/course/getAllCourseType.action').then((res)=>{
+                axios.get('/action/course/getAllCourseType.action').then((res)=>{
                     console.log(res)
                     if(res.data.status===200){
                         this.courseTypes=res.data.data
