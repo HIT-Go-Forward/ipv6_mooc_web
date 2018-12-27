@@ -10,7 +10,7 @@
             </div>
         </el-row>
         <div class="video">
-            <d-player/>
+            <d-player :url="lesson.videoUrl"/>
         </div>
         <lesson-comment :id="lesson.id" commentType="lesson"/>
     </div>

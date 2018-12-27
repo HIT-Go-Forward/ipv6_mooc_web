@@ -2,7 +2,7 @@
     <div>
         <el-dialog class="avatar-dialog" :visible="modifyAvatarVisible" title="上传头像" center>
             <el-upload class="avatar-upload" drag
-                       :action="'/action/resource/upload.action'"
+                       :action="'/upload/resource/uploadResource.action'"
                        :show-file-list="false"
                        :on-success="handleAvatarSuccess"
                        :with-credentials="true"
@@ -29,6 +29,7 @@
             return{
                 modifyAvatarVisible: false,
                 imageUrl: '',
+                newImageUrl: '',
             }
         },
         methods:{
@@ -36,6 +37,7 @@
                 this.imageUrl = URL.createObjectURL(file.raw);
                 if(res.status===200){
                     this.$message.success('上传成功');
+                    this.newImageUrl = res.data;
                 }
             },
             beforeAvatarUpload(file) {
@@ -56,6 +58,9 @@
             uploadDone(){
                 this.modifyAvatarVisible = false;
                 this.imageUrl = '';
+                let user = this.$store.getters.getStorge.user;
+                user.img = this.newImageUrl;
+                this.$store.commit('$_setStorage', {user: user});
             },
         }
     }
