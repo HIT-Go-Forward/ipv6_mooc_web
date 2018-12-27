@@ -98,7 +98,7 @@
                 </el-form-item>
                 <el-form-item>
                     <el-button v-if="fileUploadState===2||videoUploadState===2" type="primary" disabled="disabled">正在上传</el-button>
-                    <el-button v-if="(fileUploadState===0||fileUploadState===3)&&videoUploadState===3" type="primary" @click="part=2">点击进入下一步</el-button>
+                    <el-button v-if="(fileUploadState===0||fileUploadState===3)&&videoUploadState===3" type="primary" @click="toPart2()">点击进入下一步</el-button>
                     <p v-else>数据上传未完成或未上传视频文件！</p>
                 </el-form-item>
             </el-form>
@@ -172,18 +172,15 @@
                 }
             }
         },
-        watch:{
-            part:function(part1,part2){
-                if(part2===2){
-                    this.getLessonDetail();
-                }
-            }
-        },
         created:function() {
             this.getCourseOutline()
             this.getLessonDetail();
         },
         methods:{
+            toPart2(){
+                this.part=2
+                this.getLessonDetail()
+            },
             confirmLesson(){
                 this.part=3
                 this.$message.success("课已确认!")

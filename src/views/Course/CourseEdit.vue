@@ -166,7 +166,9 @@
                                 title:res.data.data[i].chapterTitle,
                                 children:[]
                             }
-                        newChapters[res.data.data[i].chapterNum-1].children.splice(res.data.data.sectionNum-1,0,{
+                        let point;
+                        while(point<newChapters[res.data.data[i].chapterNum-1].children.sectionNum) point++;
+                        newChapters[res.data.data[i].chapterNum-1].children.splice(point-1,0,{
                             num:res.data.data[i].sectionNum,
                             title:res.data.data[i].sectionTitle,
                             id:res.data.data[i].id,
