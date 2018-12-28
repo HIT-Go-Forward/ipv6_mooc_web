@@ -5,7 +5,7 @@
                 <course-side-bar :course="course"/>
             </el-col>
             <el-col :span="17">
-                <courseware :course="course" :lessonList="lessonList" :chapterList="chapterList"/>
+                <courseware @getCourseInfo="getCourseInfo" :course="course" :lessonList="lessonList" :chapterList="chapterList"/>
             </el-col>
         </el-row>
     </div>

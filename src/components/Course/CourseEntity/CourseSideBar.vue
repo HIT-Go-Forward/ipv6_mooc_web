@@ -20,10 +20,13 @@
             <div class="teacher-title">
                 <span>教师</span>
             </div>
-            <el-row class="teacher-main">
+            <el-row class="teacher-main"  v-if="course.teacher!==undefined">
                 <el-col :span="6">
-                    <div class="teacher-img">
+                    <div v-if="course.teacher.img!==undefined" class="teacher-img">
                         <img :src="'/media' + course.teacher.img" alt="">
+                    </div>
+                    <div v-else class="teacher-img">
+                        <img src="../../../assets/image/avatar.jpg" alt="">
                     </div>
                 </el-col>
                 <el-col :span="18">
@@ -50,7 +53,7 @@
             }
         },
         props: {
-            course: {},
+            course: null,
         },
         created() {
         },

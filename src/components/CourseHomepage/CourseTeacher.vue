@@ -4,11 +4,14 @@
             <span>授课教师</span>
         </div>
         <div class="teacher-list">
-            <div class="teacher-info">
+            <div class="teacher-info"  v-if="course.teacher!==undefined">
                 <el-row>
                     <el-col :span="8">
-                        <div class="teacher-img">
+                        <div v-if="course.teacher.img!==undefined" class="teacher-img">
                             <img :src="'/media' + course.teacher.img" alt="">
+                        </div>
+                        <div v-else  class="teacher-img">
+                            <img src="../../assets/image/avatar.jpg" alt="">
                         </div>
                     </el-col>
                     <el-col :span="16">
@@ -31,7 +34,7 @@
     export default {
         name: "course-teacher",
         props:{
-            course: Object
+            course: null
         },
         data(){
             return{
