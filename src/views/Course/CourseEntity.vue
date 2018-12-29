@@ -42,6 +42,8 @@
                         }
                         else if (response.data.status === 200) {
                             this.course = response.data.data;
+                            this.lessonList = [];
+                            this.chapterList = [];
                             axios.get('/action/course/getCourseOutline.action', {
                                 params: {
                                     courseId: this.course.id
