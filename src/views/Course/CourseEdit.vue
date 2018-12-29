@@ -104,7 +104,6 @@
                 </el-form-item>
                 <el-form-item>
                     <el-button type="primary" @click="courseReleaseSubmit">提交修改</el-button>
-                    <el-button type="danger">删除课程</el-button>
                     <el-button type="success" @click="goToCourse">查看课程</el-button>
                 </el-form-item>
             </el-form>

@@ -235,7 +235,7 @@
             submitLesson(){
                 let chapterNum = this.chapterNum+1
                 let chapterTitle = this.chapters[chapterNum].title
-                let num = this.chapters[chapterNum].sections.length+1
+                let num = this.lesson.num
                 axios.get('/action/course/updateLesson.action',{
                     params:{
                         lessonId:this.lessonId,
@@ -259,7 +259,6 @@
                 }).catch((err)=>{
                     console.log(err)
                     this.$message.error("网络错误")
-
                 })
             }
         }
