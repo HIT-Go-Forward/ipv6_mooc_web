@@ -1,7 +1,7 @@
 <template>
     <div id="app">
         <navigation/>
-        <div class="main">
+        <div class="main" :style="width">
             <router-view/>
         </div>
         <el-footer/>
@@ -15,6 +15,18 @@
         components: {
             navigation: () => import('./components/common/navigation/Navigation'),
             elFooter: () => import('./components/common/Footer')
+        },
+        data(){
+            return{
+                width: {
+                    width: window.innerWidth - 100 + 'px'
+                }
+            }
+        },
+        created(){
+            window.addEventListener('resize', ()=>{
+                this.width.width = window.innerWidth - 100 + 'px'
+            })
         }
     }
 </script>
@@ -49,7 +61,7 @@
         margin-right: auto;
         margin-left: auto;
         min-height: 900px;
-        width: 80%;
+        min-width: 1200px;
     }
 
     .avatar-upload .el-upload-dragger{
