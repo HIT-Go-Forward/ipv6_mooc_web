@@ -7,6 +7,7 @@
                 >
                 <div class="custom-tree-node" slot-scope="{node,data}">
                     <span class="lesson-title" v-if="data.state" @click="gotoLesson(data.id)">{{ "第"+data.num+"节："+data.title }}</span>
+                    <span class="lesson-edit" v-if="data.state===3||data.state===2" @click="editLesson(data.id)">&nbsp;编辑</span>
                     <span class="lesson-state waiting" v-if="data.state===1"> 未审核 </span>
                     <span class="lesson-state pass" v-else-if="data.state===2"> 审核通过 </span>
                     <span class="lesson-state rejected" v-else-if="data.state===3"> 审核不通过 </span>
@@ -104,6 +105,7 @@
                 <el-form-item>
                     <el-button type="primary" @click="courseReleaseSubmit">提交修改</el-button>
                     <el-button type="danger">删除课程</el-button>
+                    <el-button type="success" @click="goToCourse">查看课程</el-button>
                 </el-form-item>
             </el-form>
         </el-col>
@@ -146,7 +148,10 @@
         },
         methods:{
             gotoLesson(lessonId){
-                router.push('/course/'+lessonId+'/lessonEdit')
+                router.push('/lesson/'+lessonId)
+            },
+            editLesson(lessonId){
+                router.push('/course/'+this.courseId+'/'+lessonId+'/lessonEdit')
             },
             addLesson(){
                 router.push('/course/'+this.courseId+'/addLesson')
@@ -166,13 +171,18 @@
                                 title:res.data.data[i].chapterTitle,
                                 children:[]
                             }
-                        let point;
-                        while(point<newChapters[res.data.data[i].chapterNum-1].children.sectionNum) point++;
-                        newChapters[res.data.data[i].chapterNum-1].children.splice(point-1,0,{
+                        newChapters[res.data.data[i].chapterNum-1].children.push({
                             num:res.data.data[i].sectionNum,
                             title:res.data.data[i].sectionTitle,
                             id:res.data.data[i].id,
                             state: res.data.data[i].state
+                        })
+                    }
+                    for(let i=0;i< newChapters.length;i++){
+                        newChapters[i].children.sort(function(){
+                            return function(obj1,obj2){
+                                return obj1['num']-obj2['num'];
+                            }
                         })
                     }
                     this.chapters = newChapters
@@ -333,6 +343,9 @@
                     }
                 }
                 this.courseSonShow = this.courseSonTypes.length > 0;
+            },
+            goToCourse(){
+                router.push('/course/'+this.courseId+'/homepage')
             }
         }
     }
@@ -354,6 +367,12 @@
         font-weight: bold;
         float: right;
     }
+    .lesson-edit{
+        float: right;
+        text-decoration: none;
+        font-weight: bold;
+        color: deepskyblue;
+    }
     .word-max-overflow{
         overflow: hidden;
         word-break: keep-all;
@@ -372,6 +391,7 @@
         background-color: white;
         text-align: left;
         padding: 0 5px 10px 10px;
+        overflow: hidden;
     }
     .el-upload{
         font-size: 0;

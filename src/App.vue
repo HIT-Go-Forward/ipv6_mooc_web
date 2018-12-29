@@ -28,7 +28,7 @@
         text-align: center;
         color: #2c3e50;
         background-color: #ddd;
-        min-width: 1200px;
+        min-width: 80%;
     }
 
     body {
@@ -49,7 +49,7 @@
         margin-right: auto;
         margin-left: auto;
         min-height: 900px;
-        width: 1200px;
+        width: 80%;
     }
 
     .avatar-upload .el-upload-dragger{

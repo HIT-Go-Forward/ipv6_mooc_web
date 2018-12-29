@@ -91,7 +91,7 @@
                                    console.log(response)
                                    // document.cookie = 'id='+response.data.data.id+'; max-age=604800';
                                    // document.cookie = 'password='+response.data.data.password+'; max-age=604800';
-                                   document.cookie = 'token='+response.data.data.token
+                                   document.cookie = 'token='+response.data.data.token+'; max-age=604800';
                                    this.$store.commit('$_setStorage', {user: response.data.data});
                                    this.$store.commit('login');
                                    this.loginCancel();

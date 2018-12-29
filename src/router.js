@@ -38,7 +38,7 @@ export default new Router({
           component: ()=>import('./views/Course/CourseEdit')
       },
       {
-          path:'/course/:lessonId/lessonEdit',
+          path:'/course/:courseId/:lessonId/lessonEdit',
           name: 'lessonEdit',
           component: ()=>import('./views/Course/Lesson/lessonEdit')
       },
