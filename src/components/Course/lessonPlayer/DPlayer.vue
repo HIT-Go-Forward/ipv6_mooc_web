@@ -32,7 +32,7 @@
                     autoplay: false,
                     danmaku: {
                         id: this.$route.params.lessonId,
-                        api: 'http://127.0.0.1/barrage/',
+                        api: '/barrage/',
                         maximum: 1000,
                         user: this.$store.getters.getStorge.user.id,
                         bottom: '15%',

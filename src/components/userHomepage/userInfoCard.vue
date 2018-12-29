@@ -5,7 +5,12 @@
                 <el-row>
                     <el-col :span="8">
                         <div class="userImg">
-                            <img :src="'/media' + user.img" alt="" class="avatar">
+                            <div v-if="user.img===undefined">
+                                <img src="../../assets/image/avatar.jpg" alt="" class="avatar">
+                            </div>
+                            <div v-else>
+                                <img :src="'/media' + user.img" alt="" class="avatar">
+                            </div>
                             <div class="avatar-gray" @click="modifyAvatar">
                                 <span class="avatar-cover">更换头像</span>
                             </div>

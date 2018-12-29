@@ -19,7 +19,7 @@
     export default {
         name: "course-info",
         props:{
-            course: Object,
+            course: null,
         }
     }
 </script>
