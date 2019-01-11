@@ -57,7 +57,7 @@
 
 <script>
     import { mapState } from 'vuex'
-    import axios from 'axios'
+    import axios from '../../axiosIntercepter'
     export default {
         name: "userInfoDialog",
         props:['id'],

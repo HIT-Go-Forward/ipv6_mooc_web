@@ -21,7 +21,7 @@
 </template>
 
 <script>
-    import axios from 'axios'
+    import axios from '../../axiosIntercepter'
     export default {
         name: "comment",
         data(){

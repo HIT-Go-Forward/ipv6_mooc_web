@@ -101,7 +101,7 @@
 
 <script>
     import router from '../../../router'
-    import axios from 'axios'
+    import axios from '../../../axiosIntercepter'
     export default {
         name: "addLesson",
         data(){

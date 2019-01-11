@@ -26,8 +26,8 @@
                         <span>已有{{course.userNum}}人参加该课程</span>
                     </div>
                     <div class="course-join">
-                        <el-button v-if="false" class="join-button" plain type="primary" @click="joinCourse">立即加入</el-button>
-                        <el-button v-else class="join-button" plain type="primary" @click="enterCourse">进入课程</el-button>
+                        <el-button v-if="hasJoinedCourse" class="join-button" plain type="primary" @click="joinCourse">立即加入</el-button>
+                        <el-button v-if="user.type===2||user.id===course.teacher.id" class="join-button" plain type="primary" @click="enterCourse">进入课程</el-button>
                     </div>
                 </div>
             </el-col>
@@ -36,25 +36,55 @@
 </template>
 
 <script>
+    import axios from '../../axiosIntercepter'
     import router from '../../router'
     export default {
         name: "course-card",
-        created(){
-            //TODO 查询是否参与了该课程
-        },
-        data(){
-            return{
-            }
-        },
         props:{
             course: {}
         },
+        data(){
+            return{
+                user:"",
+                hasJoinedCourse:false
+            }
+        },
+        created(){
+            this.user = this.$store.getters.getStorge.user
+            this.hasJoin();
+        },
         methods:{
             joinCourse(){
-                //TODO 加入课程
+                axios.get("/action/course/joinCourse.action",{
+                    params:{
+                        courseId:this.course.id
+                    }
+                }).then((res)=>{
+                    if(res.data==='success')
+                        this.$message.success("你已经开始学习课程，请不要放弃哦")
+                    else{
+                        this.$message.error("学习失败？？？")
+                    }
+                }).catch((err)=>{
+                    console.log(err)
+                    this.$message.error("应用出错或网络错误！")
+                })
             },
             enterCourse(){
                 router.push({path: `/course/${this.course.id}/learn`});
+            },
+            hasJoin(){
+                axios.get('/action/course/hasJoined.action', {
+                    params: {
+                        courseId:this.course.id
+                    }
+                }).then((res)=>{
+                    console.log(res)
+                    this.hasJoinedCourse = !(res.data === "success");
+                }).catch((err)=>{
+                    this.$message.error("项目出错或网络未连接")
+                    console.log(err)
+                })
             }
         }
     }

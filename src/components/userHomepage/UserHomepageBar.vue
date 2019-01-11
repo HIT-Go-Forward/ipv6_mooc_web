@@ -7,6 +7,9 @@
             <el-tab-pane label="正在学习" name="learningCourse">
                 <learning-course :courseList="courseList"/>
             </el-tab-pane>
+            <el-tab-pane label="发布记录" name="releaseRecord">
+                <release-record :applying='releaseCourseRecordApplying' :released="releaseCourseRecordreleased" :rejected="releaseCourseRecordrejected"/>
+            </el-tab-pane>
             <el-tab-pane label="浏览记录" name="visitCourse">
                 <visit-course :visitCourse="visitCourse"/>
             </el-tab-pane>
@@ -32,7 +35,7 @@
 </template>
 
 <script>
-    import axios from 'axios'
+    import axios from '../../axiosIntercepter'
     export default {
         name: "user-homepage-bar",
         data(){
@@ -52,6 +55,10 @@
                 acceptCourseApply: '',
                 rejectCourseApply: '',
                 applyingCourseApply: '',
+                releasedCourse:'',
+                releaseCourseRecordApplying:[],
+                releaseCourseRecordreleased:[],
+                releaseCourseRecordrejected:[],
                 user: this.$store.getters.getStorge.user
             }
         },
@@ -63,10 +70,11 @@
             modifyPassword: ()=>import('./modifyPassword'),
             teacherAudit: ()=>import('./teacherAudit'),
             courseAudit: ()=>import('./courseAudit'),
-            releaseCourse: ()=>import('./releaseCourse')
+            releaseCourse: ()=>import('./releaseCourse'),
+            releaseRecord: ()=>import('./courseRecord')
         },
         created(){
-            this.getCourse('learningCourse');
+            this.getCourse('learning');
         },
         methods:{
             refreshData() {
@@ -78,6 +86,7 @@
                     case 'applyTeacher':this.applyStateSearch();break;
                     case 'teacherAudit':this.teacherAuditAll();break;
                     case 'courseAudit':this.courseAuditAll();break;
+                    case 'releaseRecord':this.getCourseRecord();break;
                 }
             },
             handleClick(tab) {
@@ -93,8 +102,13 @@
                             this.getCourse('learning');
                         }
                         break;
+                    case 'releaseRecord':
+                        if(!this.releaseCourseRecordrejected&&!this.releaseCourseRecordApplying&&!this.releaseCourseRecordreleased){
+                            this.getCourseRecord();
+                        }
+                        break;
                     case 'visitCourse':
-                        if(!this.visitCourse) {
+                        if(this.visitCourse.length===0) {
                             this.getVisitCourse();
                         }
                         break;
@@ -206,6 +220,56 @@
                     console.log(err)
                 })
             },
+            getCourseRecord(){
+                this.releaseCourseRecordrejected = []
+                this.releaseCourseRecordApplying = []
+                this.releaseCourseRecordreleased = []
+                axios.get('/action/course/getUserCourses.action',{
+                    params:{
+                        'type':'applying'
+                    }
+                }).then((res)=>{
+                    console.log(res)
+                    if(res.data.status===200){
+                        this.releaseCourseRecordApplying=res.data.data
+                    } else {
+                        this.$message.error(res.data.data)
+                    }
+                }).catch((err)=>{
+                    console.log(err)
+                    this.$message.error("服务器错误或代码出现bug")
+                })
+                axios.get('/action/course/getUserCourses.action',{
+                    params:{
+                        'type':'rejected'
+                    }
+                }).then((res)=>{
+                    console.log(res)
+                    if(res.data.status===200){
+                        this.releaseCourseRecordrejected=res.data.data
+                    } else {
+                        this.$message.error(res.data.data)
+                    }
+                }).catch((err)=>{
+                    console.log(err)
+                    this.$message.error("服务器错误或代码出现bug")
+                })
+                axios.get('/action/course/getUserCourses.action',{
+                    params:{
+                        'type':'released'
+                    }
+                }).then((res)=>{
+                    console.log(res)
+                    if(res.data.status===200){
+                        this.releaseCourseRecordreleased=res.data.data
+                    } else {
+                        this.$message.error(res.data.data)
+                    }
+                }).catch((err)=>{
+                    console.log(err)
+                    this.$message.error("服务器错误或代码出现bug")
+                })
+            },
             courseAuditAll(){
                 axios.get('/action/course/getUserCourses.action',{
                     params: {
@@ -224,7 +288,7 @@
                 })
                 axios.get('/action/course/getUserCourses.action',{
                     params: {
-                        'type':'rejected'
+                        'type':'rebutted'
                     }
                 }).then((res)=>{
                     console.log(res.data)
@@ -239,7 +303,7 @@
                 })
                 axios.get('/action/course/getUserCourses.action',{
                     params: {
-                        'type':'applying'
+                        'type':'pending'
                     }
                 }).then((res)=>{
                     console.log(res.data)
