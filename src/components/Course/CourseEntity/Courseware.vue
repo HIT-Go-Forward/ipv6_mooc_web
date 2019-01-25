@@ -2,7 +2,7 @@
     <div class="courseware">
         <div class="menu-title">
             <div v-if="user.type===2 || user.type===1" class="course-auditing">
-                <span><i class="el-icon-edit-outline"></i> 课程审核: </span>
+                <span><i class="el-icon-edit-outline"></i> 一键审核: </span>
                 <el-button-group>
                     <el-button size="small" type="success" plain @click="auditingPass">通过</el-button>
                     <el-button size="small" type="danger" plain @click="auditingFail">回绝</el-button>
@@ -57,6 +57,10 @@
                                         <div v-else-if="lesson.state === 2">
                                             第{{lesson.sectionNum}}节 {{lesson.sectionTitle}}
                                         </div>
+                                        <el-button-group class="course-auditing" v-if="(user.type===2 || user.type===1) && lesson.state === 1">
+                                            <el-button size="mini" type="success" plain @click="singleAuditingPass(lesson.id)">通过</el-button>
+                                            <el-button size="mini" type="danger" plain @click="singleAuditingFail(lesson.id)">回绝</el-button>
+                                        </el-button-group>
                                     </el-col>
                                     <el-col :span="3">
                                         <i class="el-icon-tickets lesson-icon"></i>
@@ -93,13 +97,7 @@
             enterLesson(lessonId){
                 router.push({path: `/lesson/${lessonId}`});
             },
-            auditing(operation){
-                let todoList = [];
-                for (let index in this.lessonList) {
-                    if(this.lessonList[index].state === 1){
-                        todoList.push(this.lessonList[index].id);
-                    }
-                }
+            auditing(operation, todoList){
                 if(todoList.length===0){
                     this.$message.info("没有需要审核的课程");
                 }else{
@@ -122,10 +120,30 @@
                 }
             },
             auditingPass(){
-                this.auditing("accept");
+                let todoList = [];
+                for (let index in this.lessonList) {
+                    if(this.lessonList[index].state === 1){
+                        todoList.push(this.lessonList[index].id);
+                    }
+                }
+                this.auditing("accept", todoList);
             },
             auditingFail(){
-                this.auditing("reject");
+                let todoList = [];
+                for (let index in this.lessonList) {
+                    if(this.lessonList[index].state === 1){
+                        todoList.push(this.lessonList[index].id);
+                    }
+                }
+                this.auditing("reject", todoList);
+            },
+            singleAuditingPass(id){
+                this.auditing('accept', [id]);
+                event.stopPropagation();
+            },
+            singleAuditingFail(id){
+                this.auditing('reject', [id]);
+                event.stopPropagation();
             },
             handleChange(){
                 console.log();
@@ -159,6 +177,7 @@
     .collapse-items{
         margin-top: 10px;
     }
+
     .menu-title{
         text-align: left;
     }

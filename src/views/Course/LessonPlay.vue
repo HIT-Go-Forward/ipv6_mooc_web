@@ -10,9 +10,9 @@
             </div>
         </el-row>
         <div class="video">
-            <d-player :url="lesson.videoUrl"/>
+            <d-player class="d-player" :url="lesson.videoUrl"/>
         </div>
-        <lesson-comment :id="lesson.id" commentType="lesson"/>
+        <lesson-comment :courseId="lesson.courseId" commentType="lesson"/>
     </div>
 </template>
 
@@ -33,7 +33,6 @@
             this.getLesson();
         },
         methods:{
-
             getLesson(){
                 axios.get('/action/course/getLessonById.action', {
                         params:{
@@ -76,10 +75,14 @@
         font-size: 13px;
     }
 
+    .d-player{
+        width: 100%;
+    }
+
     .video{
         background-color: #eee;
         text-align: left;
-        height: 500px;
+        height: auto;
         padding: 10px;
         margin-bottom: 10px;
         border-radius: 10px 10px 10px 10px;
@@ -94,6 +97,6 @@
         box-shadow: 0 0 5px #B09999;
     }
     .lesson-play{
-        margin: 20px 150px;
+        margin: 20px 100px;
     }
 </style>

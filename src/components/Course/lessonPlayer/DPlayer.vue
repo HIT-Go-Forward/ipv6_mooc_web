@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div id="dplayer"></div>
+        <div class="d-player" id="dplayer"></div>
     </div>
 </template>
 

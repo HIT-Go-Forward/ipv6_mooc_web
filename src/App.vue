@@ -89,4 +89,8 @@
     .course-by-category #tab-click-for-more{
 
     }
+
+    .v-note-wrapper{
+        min-height: 200px!important;
+    }
 </style>
