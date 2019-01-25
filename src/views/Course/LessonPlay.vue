@@ -17,7 +17,7 @@
 </template>
 
 <script>
-    import axios from 'axios'
+    import axios from '../../axiosIntercepter'
     export default {
         components:{
             DPlayer: ()=>import('../../components/Course/lessonPlayer/DPlayer'),

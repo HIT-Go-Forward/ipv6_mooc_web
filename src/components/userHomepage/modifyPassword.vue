@@ -31,7 +31,7 @@
 </template>
 
 <script>
-    import axios from 'axios'
+    import axios from '../../axiosIntercepter'
     import md5 from 'blueimp-md5'
     import router from "../../router";
     export default {

@@ -61,7 +61,7 @@
 </template>
 
 <script>
-    import axios from 'axios'
+    import axios from '../../axiosIntercepter'
     import router from "../../router"
     export default {
         name: "modify-user-info",

@@ -103,7 +103,7 @@
 
 <script>
     import {mapState} from 'vuex'
-    import axios from 'axios'
+    import axios from '../../../axiosIntercepter'
     import md5 from 'blueimp-md5'
 
     export default {

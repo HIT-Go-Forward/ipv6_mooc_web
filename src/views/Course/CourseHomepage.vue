@@ -13,7 +13,7 @@
 </template>
 
 <script>
-    import axios from 'axios'
+    import axios from '../../axiosIntercepter'
     export default {
         name: "course-homepage",
         components:{
@@ -27,26 +27,40 @@
             }
         },
         created(){
-            axios.get('/action/course/getCourseById.action', {
-                params: {
-                    courseId: this.$route.params.courseId
-                }
-            })
-                .then(response => {
-                    if (response.data.status === 403) {
-                        this.$message.error(response.data.data);
+            this.getCourse()
+        },
+        methods:{
+            getCourse(){
+                axios.get('/action/course/getCourseById.action', {
+                    params: {
+                        courseId: this.$route.params.courseId
                     }
-                    else if (response.data.status === 200) {
-                        this.course = response.data.data
+                }).then(response => {
+                        if (response.data.status === 403) {
+                            this.$message.error(response.data.data);
+                        }
+                        else if (response.data.status === 200) {
+                            this.course = response.data.data
+                            this.createHistory()
+                        }
+                        else if (response.data.status === 500) {
+                            this.$message.error('服务器出错')
+                        }
+                    })
+                    .catch(error => {
+                        this.$message.error('未连接到服务器');
+                        console.log(error);
+                    });
+            },
+            createHistory(){
+                axios.get('/action/history/addNewHistory.action',{
+                    params:{
+                        courseId:this.$route.params.courseId
                     }
-                    else if (response.data.status === 500) {
-                        this.$message.error('服务器出错')
-                    }
+                }).then((res)=>{
+                    console.log(res)
                 })
-                .catch(error => {
-                    this.$message.error('未连接到服务器');
-                    console.log(error);
-                });
+            }
         }
     }
 </script>
