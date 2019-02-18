@@ -12,7 +12,7 @@
     export default {
         name: 'home',
         data(){
-            return{
+            return {
                 categoryList: [],
                 tagList: [],
             }

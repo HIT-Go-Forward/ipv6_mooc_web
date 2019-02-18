@@ -1,6 +1,8 @@
 //axios 拦截器
 import axios from 'axios'
 import {Loading,Message} from 'element-ui'
+import handleData from './utils'
+
 
 axios.defaults.withCredentials=true;
 axios.defaults.timeout=5000
@@ -17,9 +19,11 @@ axios.interceptors.request.use((config)=>{
     return Promise.reject(error)
 })
 
-axios.interceptors.response.use(data=>{
+axios.interceptors.response.use((response) => {
     loadingInstance.close()
-    return data
+    console.log(response)
+    console.log(handleData(response))
+    return handleData(response);
 },error=>{
     loadingInstance.close()
     Message.error({
@@ -27,5 +31,6 @@ axios.interceptors.response.use(data=>{
     })
     return Promise.reject(error)
 })
+
 
 export default axios
