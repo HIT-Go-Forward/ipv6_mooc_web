@@ -151,7 +151,7 @@
                         this.$message.success("课程提交审核成功！5秒后跳转到课程详情页面")
                         this.$refs.courseImgUpload.submit()
                         setTimeout(()=>{
-                            router.push('/course/'+this.courseId+'/homepage')
+                            router.push('/course/'+this.courseId+'/Homepage')
                         },5000)
                     } else {
                         this.$message.error(res.data.data)

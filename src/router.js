@@ -9,11 +9,11 @@ export default new Router({
   routes: [
       {
           path: '/',
-          name: 'homepage',
-          component: () => import('./views/Homepage')
+          name: 'Homepage',
+          component: () => import('./views/Homepage/Homepage')
       },
       {
-          path: '/user/homepage',
+          path: '/user/Homepage',
           name: 'userHomepage',
           component: () => import('./views/UserHomepage')
       },
@@ -23,7 +23,7 @@ export default new Router({
           component: () => import('./views/UserSetting')
       },
       {
-          path: '/course/:courseId/homepage',
+          path: '/course/:courseId/Homepage',
           name: 'courseHomepage',
           component: ()=>import('./views/Course/CourseHomepage')
       },

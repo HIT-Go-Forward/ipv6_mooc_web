@@ -14,7 +14,7 @@
         name: 'app',
         components: {
             navigation: () => import('./components/common/navigation/Navigation'),
-            elFooter: () => import('./components/common/Footer')
+            elFooter: () => import('./views/Homepage/Footer')
         },
         data(){
             return{

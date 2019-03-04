@@ -8,7 +8,7 @@
 </template>
 
 <script>
-    import axios from '../axiosIntercepter'
+    import axios from '../../axiosIntercepter'
     export default {
         name: 'home',
         data(){
@@ -18,8 +18,8 @@
             }
         },
         components: {
-            carousel: ()=>import('../components/homepage/carousel'),
-            courseByCategory: ()=>import('../components/homepage/courseByCategory'),
+            courseByCategory: ()=>import('./homepage/courseByCategory'),
+            carousel: ()=>import('./homepage/carousel'),
         },
         created(){
             axios.get('/action/course/getAllCourseType.action').then((res)=>{
@@ -47,5 +47,7 @@
 </script>
 
 <style scoped>
-
+.home{
+    padding-top: 5rem;
+}
 </style>

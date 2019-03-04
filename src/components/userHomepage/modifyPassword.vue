@@ -91,7 +91,7 @@
                                 document.cookie = 'id='+this.$store.getters.getStorge.user.id+'; max-age=0';
                                 document.cookie = 'password='+this.$store.getters.getStorge.user.password+'; max-age=0';
                                 this.$store.state.IsLogin = false;
-                                router.push({name: 'homepage'})
+                                router.push({name: 'Homepage'})
                             }, 3000);
                         } else {
                             this.$message.warning("密码修改失败!"+res.data.data)

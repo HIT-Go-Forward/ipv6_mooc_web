@@ -3,7 +3,7 @@
         <el-card class="course-item" :body-style="{ padding: '0px'}" shadow="hover" @click.native="handleSelect(courseItem.id)">
             <div class="course-img">
                 <img v-if="courseItem.img" :src="'/media' + courseItem.img" alt="">
-                <img v-else src="../../assets/image/courseDefault.jpg" alt="">
+                <img v-else src="../../../assets/image/courseDefault.jpg" alt="">
             </div>
             <div class="course-info">
                 <div class="course-name">
@@ -19,7 +19,7 @@
 </template>
 
 <script>
-    import router from '../../router'
+    import router from '../../../router'
     export default {
         name: "course-item",
         props: {
@@ -44,8 +44,7 @@
     }
 
     .course-img {
-        height: 120px;
-        width: 180px;
+        width: 100%;
     }
 
     .course-info{
@@ -65,8 +64,8 @@
     }
     .course-item {
         background-color: #fff;
-        height: 170px;
-        width: 180px;
+        height: 80%;
+        width: 80%;
         margin: 10px 10px;
         cursor: pointer;
         box-shadow: 0 0 4px #B09999;

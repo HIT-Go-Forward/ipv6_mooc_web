@@ -1,6 +1,6 @@
 <template>
     <div class="loginDialog">
-        <div @click="login">登录</div>
+        <div @click="login"><a href="javascript:" class="login-text">登录</a></div>
         <el-dialog :visible.sync="LoginDialogVisible">
             <div slot="title" class="dialog-title">
                 <el-tabs v-model="loginType">
@@ -143,5 +143,10 @@
 <style scoped>
     .el-autoComplete{
         width: 100%;
+    }
+    .login-text{
+        text-decoration: none;
+        color: #fff;
+        font-size:1.5rem;
     }
 </style>

@@ -1,6 +1,6 @@
 <template>
     <div class="registerDialog">
-        <div @click="register">注册</div>
+        <div @click="register"><a href="javascript:" class="register-text">注册</a></div>
         <el-dialog :visible.sync="RegisterDialogVisible">
 
             <div slot="title" class="dialog-title">
@@ -422,5 +422,10 @@
 
     .school{
         float: left;
+    }
+    .register-text{
+        text-decoration: none;
+        color: #fff;
+        font-size: 1.5rem;
     }
 </style>

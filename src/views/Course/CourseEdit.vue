@@ -344,7 +344,7 @@
                 this.courseSonShow = this.courseSonTypes.length > 0;
             },
             goToCourse(){
-                router.push('/course/'+this.courseId+'/homepage')
+                router.push('/course/'+this.courseId+'/Homepage')
             }
         }
     }

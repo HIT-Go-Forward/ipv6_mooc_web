@@ -1,15 +1,15 @@
 <template>
-    <div class="course-by-category">
-            <el-tabs v-model="activeName" @tab-click="handleClick">
-                <el-tab-pane :label="type.name" :name="type.name" :key="type.id">
-                    <course-item  v-for="courseItem in courseItemList" :key="courseItem.id" :courseItem="courseItem"/>
-                </el-tab-pane>
-                <el-tab-pane v-for="category in categoryList" :key="category.id" :label="category.name" :name="category.name">
-                    <course-item  v-for="courseItem in courseItemList" :key="courseItem.id" :courseItem="courseItem"/>
-                </el-tab-pane>
-                <el-tab-pane label="查看全部 >>" :key="-1" name="click-for-more"> </el-tab-pane>
-            </el-tabs>
-    </div>
+        <el-col class="course-by-category">
+                <el-tabs v-model="activeName" @tab-click="handleClick">
+                    <el-tab-pane :label="type.name" :name="type.name" :key="type.id">
+                        <course-item  v-for="courseItem in courseItemList" :key="courseItem.id" :courseItem="courseItem"/>
+                    </el-tab-pane>
+                    <el-tab-pane v-for="category in categoryList" :key="category.id" :label="category.name" :name="category.name">
+                        <course-item  v-for="courseItem in courseItemList" :key="courseItem.id" :courseItem="courseItem"/>
+                    </el-tab-pane>
+                    <el-tab-pane label="查看全部 >>" :key="-1" name="click-for-more"> </el-tab-pane>
+                </el-tabs>
+        </el-col>
 </template>
 
 <script>
@@ -38,7 +38,7 @@
                     params:{
                         typeId: type,
                         start: 0,
-                        length: 12,
+                        length: 5,
                     }
                 }).then((res)=>{
                     if(res.data.status===200){

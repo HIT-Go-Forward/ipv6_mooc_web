@@ -1,6 +1,6 @@
 <template>
     <el-dropdown @command="handleCommand">
-        <span><i class="el-icon-setting"></i>{{this.$store.getters.getStorge.user.name}}</span>
+        <a class="user-text" href="javascript:"><img :src="this.$store.getters.getStorge.user.img">{{this.$store.getters.getStorge.user.name}}<i class="el-icon-caret-bottom"></i></a>
         <el-dropdown-menu slot="dropdown">
             <el-dropdown-item command="1" class="dropdown-item">个人中心</el-dropdown-item>
             <el-dropdown-item command="2" class="dropdown-item">修改个人信息</el-dropdown-item>
@@ -34,7 +34,7 @@
                                 document.cookie = 'id='+this.$store.getters.getStorge.user.id+'; max-age=0';
                                 document.cookie = 'password='+this.$store.getters.getStorge.user.password+'; max-age=0';
                                 this.$store.state.IsLogin = false;
-                                router.push({name: 'homepage'});
+                                router.push({name: 'Homepage'});
                             }
                         })
                         .catch(error => {
@@ -56,6 +56,10 @@
     .dropdown-item:hover{
         padding-left: 30px;
         padding-right: 10px;
-
+    }
+    .user-text{
+        font-size: 1.5rem;
+        color: #fff;
+        text-decoration: none;
     }
 </style>

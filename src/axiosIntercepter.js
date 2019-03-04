@@ -1,6 +1,7 @@
 //axios 拦截器
 import axios from 'axios'
-import {Loading,Message} from 'element-ui'
+import {Message} from 'element-ui'
+// import {Loading,Message} from 'element-ui'
 import handleData from './utils'
 
 
@@ -9,7 +10,6 @@ axios.defaults.timeout=5000
 
 var loadingInstance
 axios.interceptors.request.use((config)=>{
-    loadingInstance = Loading.service({fullscreen:true})
     return config
 },error=>{
     loadingInstance.close()
@@ -20,7 +20,6 @@ axios.interceptors.request.use((config)=>{
 })
 
 axios.interceptors.response.use((response) => {
-    loadingInstance.close()
     console.log(response)
     console.log(handleData(response))
     return handleData(response);

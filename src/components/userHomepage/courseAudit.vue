@@ -62,7 +62,7 @@
         },
         methods:{
             goToCourse(courseId){
-                router.push('/course/'+courseId+'/homepage')
+                router.push('/course/'+courseId+'/Homepage')
             },
             goToTeacher(id){
                 this.$store.commit("userInfoShow");
