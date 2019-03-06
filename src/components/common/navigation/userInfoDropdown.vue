@@ -1,6 +1,16 @@
 <template>
     <el-dropdown @command="handleCommand">
-        <a class="user-text" href="javascript:"><img :src="this.$store.getters.getStorge.user.img">{{this.$store.getters.getStorge.user.name}}<i class="el-icon-caret-bottom"></i></a>
+        <a class="user-text" href="javascript:">
+            <div>
+                <img :src="'/media'+this.$store.getters.getStorge.user.img" class="user-icon">
+            </div>
+            <div>
+            <span>{{this.$store.getters.getStorge.user.name}}</span>
+            </div>
+            <div>
+            <i class="el-icon-caret-bottom"></i>
+            </div>
+        </a>
         <el-dropdown-menu slot="dropdown">
             <el-dropdown-item command="1" class="dropdown-item">个人中心</el-dropdown-item>
             <el-dropdown-item command="2" class="dropdown-item">修改个人信息</el-dropdown-item>
@@ -16,6 +26,7 @@
     import axios from "../../../axiosIntercepter"
     export default {
         name: "user-info-dropdown",
+        inject:['reload'],
         methods: {
             handleCommand(command){
                 if(command==='1'){
@@ -33,8 +44,9 @@
                             else if(response.data.status===200){
                                 document.cookie = 'id='+this.$store.getters.getStorge.user.id+'; max-age=0';
                                 document.cookie = 'password='+this.$store.getters.getStorge.user.password+'; max-age=0';
-                                this.$store.state.IsLogin = false;
-                                router.push({name: 'Homepage'});
+                                this.$store.commit('logout')
+                                this.$store.commit('$_removeStorage');
+                                this.reload();
                             }
                         })
                         .catch(error => {
@@ -61,5 +73,12 @@
         font-size: 1.5rem;
         color: #fff;
         text-decoration: none;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+    }
+    .user-icon{
+        width: 3rem;
+        display: inline-block;
     }
 </style>

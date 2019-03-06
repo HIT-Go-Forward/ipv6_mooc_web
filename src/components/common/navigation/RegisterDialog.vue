@@ -1,7 +1,7 @@
 <template>
     <div class="registerDialog">
         <div @click="register"><a href="javascript:" class="register-text">注册</a></div>
-        <el-dialog :visible.sync="RegisterDialogVisible">
+        <el-dialog :visible.sync="RegisterDialogVisible" :modal="false">
 
             <div slot="title" class="dialog-title">
                 <el-steps :active="registerStatus" simple>
@@ -111,6 +111,7 @@
         components: {
             verifyCode: () => import('../VerifyCode')
         },
+        inject:["reload"],
         data() {
             let verifyPassword = (rule, value, callback) => {
                 if (value !== this.form.password) {
@@ -256,6 +257,7 @@
                                     this.$store.commit('$_setStorage', {user: response.data.data});
                                     this.$refs.verifyCode.clearCode();
                                     this.registerStatus = 2;
+                                    this.reload();
                                 }
                                 else if (response.data.status === 500) {
                                     this.$message.error('服务器出错')

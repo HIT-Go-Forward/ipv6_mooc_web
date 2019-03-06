@@ -6,7 +6,7 @@ import handleData from './utils'
 
 
 axios.defaults.withCredentials=true;
-axios.defaults.timeout=5000
+axios.defaults.timeout=10000
 
 var loadingInstance
 axios.interceptors.request.use((config)=>{
@@ -24,11 +24,12 @@ axios.interceptors.response.use((response) => {
     console.log(handleData(response))
     return handleData(response);
 },error=>{
-    loadingInstance.close()
+    // loadingInstance.close()
     Message.error({
         message:"加载失败"
     })
-    return Promise.reject(error)
+    console.log(error)
+    return {data:{data:"网络错误",status:404}}
 })
 
 

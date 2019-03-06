@@ -3,7 +3,7 @@
         <el-col class="menu-item-logo" :span="2" :offset="3">
             <img alt="Vue logo" class="logo" src="../../../assets/image/logo.png">
         </el-col>
-        <el-col class="menu-item-text" :span="6"><a href="javascript:">课程</a></el-col>
+        <el-col class="menu-item-text" :span="6"><a href="javascript:" @click="handleSelect(1)">课程</a></el-col>
         <el-col class="menu-item-text" :span="6"><a href="javascript:">博客</a></el-col>
         <el-col class="menu-item-text" :span="6"><a href="javascript:">直播</a></el-col>
         <el-col></el-col>
@@ -20,7 +20,6 @@
     </el-col>
 </template>
 <script>
-    import {mapState} from 'vuex'
     import router from '../../../router'
     export default {
         name: "Navigation",
@@ -34,26 +33,35 @@
             registerDialog: () => import('./RegisterDialog'),
             userInfoDropdown: () => import('./userInfoDropdown')
         },
-        computed: {
-            ...mapState({
-                IsLogin: state => state.IsLogin
-            })
-        },
-        created() {
-            if (document.cookie.indexOf("token=") !== -1) {
-                this.$store.state.IsLogin = true;
+        mounted() {
+            this.IsLogin = localStorage.getItem('Flag')==='islogin';
+            if(this.$route.path==='/'){
+                document.querySelector(".Navigation").style.position = "fixed"
             }
-            else{
-                router.push({name: 'Homepage'});
+        },
+        watch:{
+            $route(to,from){
+                console.log("from:"+from.path+";"+"to:"+to.path)
+                if(from.path==='/'){
+                    window.removeEventListener("scroll",this.handleScroll,true)
+                    document.querySelector(".Navigation").style.position = "relative"
+                }
+                if(to.path==='/'){
+                    document.querySelector(".Navigation").style.position = "fixed"
+                    window.addEventListener("scroll",this.handleScroll,true)
+                }
             }
         },
         methods: {
             handleSelect(key) {
                 switch (key) {
-                    case '1':
+                    case 1:
                         router.push({name: 'Homepage'});
                         break;
                 }
+            },
+            handleScroll(){
+            //    wait for adding
             }
         }
     }
@@ -61,8 +69,8 @@
 
 <style scoped>
     .Navigation{
+        position: relative;
         background-color: black;
-        position:fixed;
         height: 4rem;
         color: #fff;
         font-size: 2rem;
@@ -70,11 +78,11 @@
         top:0;
         left: 0;
         padding-right: 10rem;
-        z-index: 1000;
+        z-index:1000;
         display: flex;
         align-items: center;
 
-        opacity: 0.7;
+        /*opacity: 0.7;*/
     }
     .menu-item-text :hover{
         color: darkgrey;

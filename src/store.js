@@ -18,7 +18,8 @@ export default new Vuex.Store({
                 state.user = JSON.parse(localStorage.getItem(key));
             }
             return state.user;
-        }
+        },
+        IsLogin: state=>state.IsLogin
     },
     mutations: {
         loginShow(state){

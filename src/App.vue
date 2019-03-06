@@ -2,7 +2,7 @@
     <div id="app">
         <navigation/>
         <div class="main" :style="width">
-            <router-view/>
+            <router-view v-if="isRouterAlive"/>
         </div>
         <el-footer/>
     </div>
@@ -20,13 +20,27 @@
             return{
                 width: {
                     width: window.innerWidth - 100 + 'px'
-                }
+                },
+                isRouterAlive:true,
+            }
+        },
+        provide(){
+            return {
+                reload: this.reload
             }
         },
         created(){
             window.addEventListener('resize', ()=>{
                 this.width.width = window.innerWidth - 100 + 'px'
             })
+        },
+        methods:{
+            reload(){
+                this.isRouterAlive = false;
+                this.$nextTick(function(){
+                    this.isRouterAlive = true;
+                })
+            }
         }
     }
 </script>

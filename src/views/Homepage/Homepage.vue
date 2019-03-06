@@ -1,6 +1,6 @@
 <template>
     <div class="home">
-        <carousel/>
+        <carousel :courses="importantCourses"/>
         <div v-for="category in categoryList" :key="category.id">
             <course-by-category :type="category" :categoryList="tagList[category.id-1]" class="course-by-category"/>
         </div>
@@ -15,6 +15,8 @@
             return {
                 categoryList: [],
                 tagList: [],
+                importantCourses:[],
+                user:'',
             }
         },
         components: {
@@ -22,6 +24,34 @@
             carousel: ()=>import('./homepage/carousel'),
         },
         created(){
+            this.user = this.$store.getters.getStorge?this.$store.getters.getStorge.user:null
+            console.log(this.user)
+            if(this.user && this.user.type===4){
+                axios.get('/action/course/getUserCourses.action',{
+                    params:{
+                        type:"learning",
+                        start:0,
+                        length:3
+                    }
+                }).then((res)=>{
+                    this.importantCourses = res.data.data
+                }).catch((err)=>{
+                    console.log(err)
+                })
+            } else if(this.user && (this.user.type===3||this.user.type===2)){
+                axios.get('/action/course/getUserCourses.action',{
+                    params:{
+                        type:"released",
+                        start:0,
+                        length:3
+                    }
+                }).then((res)=>{
+                    this.importantCourses = res.data.data
+                }).catch((err)=>{
+                    console.log(err)
+                })
+            }
+
             axios.get('/action/course/getAllCourseType.action').then((res)=>{
                 if(res.data.status===200){
                     for(let i=0;i<res.data.data.length;i++){

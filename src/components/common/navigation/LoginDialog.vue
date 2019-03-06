@@ -1,7 +1,7 @@
 <template>
     <div class="loginDialog">
         <div @click="login"><a href="javascript:" class="login-text">登录</a></div>
-        <el-dialog :visible.sync="LoginDialogVisible">
+        <el-dialog :visible.sync="LoginDialogVisible" :modal="false">
             <div slot="title" class="dialog-title">
                 <el-tabs v-model="loginType">
                     <el-tab-pane label="邮箱登录" name="email"> </el-tab-pane>
@@ -37,6 +37,7 @@
     import md5 from 'blueimp-md5'
     export default {
         name: "LoginDialog",
+        inject:['reload'],
         data(){
             return{
                 loginType: 'email',
@@ -93,8 +94,9 @@
                                    // document.cookie = 'password='+response.data.data.password+'; max-age=604800';
                                    document.cookie = 'token='+response.data.data.token+'; max-age=604800';
                                    this.$store.commit('$_setStorage', {user: response.data.data});
-                                   this.$store.commit('login');
-                                   this.loginCancel();
+                                   this.$store.dispatch("IsLogin",true);
+                                   localStorage.setItem("Flag", "isLogin");
+                                   this.reload();
                                }
                            })
                            .catch(error => console.log(error));

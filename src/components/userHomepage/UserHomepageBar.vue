@@ -42,7 +42,7 @@
             return{
                 courseList: [],
                 visitCourse: [],
-                tabName: 'learningCourse',
+                tabName: '',
                 applyMsg: {
                     state: 0,
                     handlerId: '',
@@ -74,7 +74,8 @@
             releaseRecord: ()=>import('./courseRecord')
         },
         created(){
-            this.getCourse('learning');
+            this.tabName = this.$route.query.tabName?this.$route.query.tabName:'learningCourse';
+            this.refreshData()
         },
         methods:{
             refreshData() {
