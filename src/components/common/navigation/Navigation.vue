@@ -34,10 +34,11 @@
             registerDialog: () => import('./RegisterDialog'),
             userInfoDropdown: () => import('./userInfoDropdown')
         },
-        computed:{
+        computed: {
             ...mapState({
-                IsLogin : state => state.IsLogin
+                IsLogin: state => state.IsLogin
             })
+        },
         created() {
             if (document.cookie.indexOf("token=") !== -1) {
                 this.$store.state.IsLogin = true;
