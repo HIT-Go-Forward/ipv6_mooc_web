@@ -33,6 +33,14 @@
             registerDialog: () => import('./RegisterDialog'),
             userInfoDropdown: () => import('./userInfoDropdown')
         },
+        created() {
+            if (document.cookie.indexOf("token=") !== -1) {
+                this.$store.state.IsLogin = true;
+            }
+            else{
+                router.push({name: 'homepage'});
+            }
+        },
         mounted() {
             this.IsLogin = localStorage.getItem('Flag')==='islogin';
             if(this.$route.path==='/'){
