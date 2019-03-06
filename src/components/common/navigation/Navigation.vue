@@ -20,12 +20,13 @@
     </el-col>
 </template>
 <script>
+    import { mapState } from 'vuex'
     import router from '../../../router'
     export default {
         name: "Navigation",
         data() {
             return {
-                activeIndex: 1
+                activeIndex: 1,
             }
         },
         components: {
@@ -33,8 +34,15 @@
             registerDialog: () => import('./RegisterDialog'),
             userInfoDropdown: () => import('./userInfoDropdown')
         },
+        computed:{
+            ...mapState({
+                IsLogin : state => state.IsLogin
+            })
+        },
         mounted() {
-            this.IsLogin = localStorage.getItem('Flag')==='islogin';
+            if(document.cookie && document.cookie.startsWith("token=")){
+                this.$store.commit("login");
+            }
             if(this.$route.path==='/'){
                 document.querySelector(".Navigation").style.position = "fixed"
             }

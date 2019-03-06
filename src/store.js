@@ -19,7 +19,9 @@ export default new Vuex.Store({
             }
             return state.user;
         },
-        IsLogin: state=>state.IsLogin
+        getLogin(state){
+            return state.IsLogin
+        }
     },
     mutations: {
         loginShow(state){

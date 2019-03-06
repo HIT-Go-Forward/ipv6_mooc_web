@@ -28,7 +28,7 @@
             </el-carousel>
         </el-col>
         <el-col :span="5" class="carousel-right">
-            <el-col :span="18" class="user-courses" v-if="!this.$store.getters.getStorge.IsLogin">
+            <el-col :span="18" class="user-courses" v-if="!this.IsLogin">
                 <div class="user-courses-img-div">
                     <img src="./../../../assets/image/avatar.png" class="user-courses-img">
                 </div>
@@ -58,6 +58,7 @@
 </template>
 
 <script>
+    import {mapState} from 'vuex'
     import analyze from './../../../plugins/rgbaster'
     export default {
         name: "carousel",
@@ -66,6 +67,11 @@
                 ImgMaincolors:[],
                 user:'',
             }
+        },
+        computed:{
+            ...mapState({
+                IsLogin: state => state.IsLogin
+            })
         },
         props:['courses'],
         created(){

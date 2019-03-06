@@ -94,8 +94,9 @@
                                    // document.cookie = 'password='+response.data.data.password+'; max-age=604800';
                                    document.cookie = 'token='+response.data.data.token+'; max-age=604800';
                                    this.$store.commit('$_setStorage', {user: response.data.data});
-                                   this.$store.dispatch("IsLogin",true);
-                                   localStorage.setItem("Flag", "isLogin");
+                                   this.$store.commit('login');
+                                   console.log(this.$store.getters.getLogin);
+                                   // this.loginCancel()
                                    this.reload();
                                }
                            })

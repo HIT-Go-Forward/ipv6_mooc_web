@@ -16,26 +16,26 @@ new Vue({
     store,
     render: h => h(App)
 }).$mount('#app')
-
-router.beforeEach((to, from, next) => {
-
-    let getFlag = localStorage.getItem("Flag");
-
-    if(getFlag === "isLogin"){
-
-        store.state.IsLogin = true
-        next()
-    }else{
-        if(to.meta.IsLogin){
-            next({
-                path: '/',
-            })
-        }else{
-            next()
-        }
-
-    }
-});
-router.afterEach(() => {
-    window.scroll(0, 0);
-});
+//
+// router.beforeEach((to, from, next) => {
+//
+//     let getFlag = localStorage.getItem("Flag");
+//
+//     if(getFlag === "isLogin"){
+//
+//         store.state.IsLogin = true
+//         next()
+//     }else{
+//         if(to.meta.IsLogin){
+//             next({
+//                 path: '/',
+//             })
+//         }else{
+//             next()
+//         }
+//
+//     }
+// });
+// router.afterEach(() => {
+//     window.scroll(0, 0);
+// });
