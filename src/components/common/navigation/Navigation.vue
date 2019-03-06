@@ -38,10 +38,12 @@
             ...mapState({
                 IsLogin : state => state.IsLogin
             })
-        },
-        mounted() {
-            if(document.cookie && document.cookie.startsWith("token=")){
-                this.$store.commit("login");
+        created() {
+            if (document.cookie.indexOf("token=") !== -1) {
+                this.$store.state.IsLogin = true;
+            }
+            else{
+                router.push({name: 'homepage'});
             }
             if(this.$route.path==='/'){
                 document.querySelector(".Navigation").style.position = "fixed"
