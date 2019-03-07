@@ -1,7 +1,17 @@
 <template>
     <div class="modifyUserInfo">
-        <el-form :model="form" label-width="10rem" :rules="rules" ref="form" class="modify-userinfo-container">
+        <el-form :model="form" label-width="10rem" :rules="rules" ref="form" class="modify-userinfo-container" size="medium">
 
+            <el-form-item label="头像：">
+                <div class="userImg" @click="modifyAvatar">
+                    <div v-if="!user.img" class="avatar-div">
+                        <img src="../../assets/image/avatar.jpg" alt="" class="avatar">
+                    </div>
+                    <div v-else class="avatar-div">
+                        <img :src="'/media' + user.img" alt="" class="avatar">
+                    </div>
+                </div>
+            </el-form-item>
             <el-form-item label="用户名">
                 <el-input type="text" v-model="form.name" prefix-icon="el-icon-edit"/>
             </el-form-item>
@@ -50,13 +60,14 @@
 
             <el-form-item label="简介">
                 <el-input type="textarea" placeholder="请输入个人简介" v-model="form.intro"
-                          :autosize="{minRows: 2}"/>
+                          :autosize="{minRows: 5}"/>
             </el-form-item>
             <el-form-item>
-                <el-button class="button" plain round @click="modifyUserInfo">修改</el-button>
-                <el-button class="button" plain round @click="returnUserHomepage">返回</el-button>
+                <el-button class="button button-submit" plain round @click="modifyUserInfo">修改并保存</el-button>
+                <el-button class="button button-back" plain round @click="returnUserHomepage">放弃并返回</el-button>
             </el-form-item>
         </el-form>
+        <avatar-dialog ref="avatarDialog"/>
     </div>
 </template>
 
@@ -66,6 +77,9 @@
     export default {
         name: "modify-user-info",
         inject:["reload"],
+        components:{
+            avatarDialog: () => import('./../userHomepage/avatarDialog')
+        },
         data() {
             let stringTrim = (rule, value, callback) => {
                 if (value.replace(/(^\s*)|(\s*$)/g,'') === '') {
@@ -87,6 +101,8 @@
                     intro: '',
                     phone: ''
                 },
+                urser:'',
+                img: '',
                 rules: {
                     name: [
                         {required: true, message: '请输入用户名', trigger: 'blur'},
@@ -106,17 +122,19 @@
             }
         },
         created(){
-            let user = this.$store.getters.getStorge.user;
-            console.log(user)
-            this.form.name = user.name;
-            this.form.school = user.school?user.school.name:'';
-            this.form.intro = user.intro;
-            this.form.birthday = user.birthday;
-            this.form.education = user.education;
-            this.form.phone = user.phone;
-            this.form.sex = user.sex;
+            this.user = this.$store.getters.getStorge.user;
+            this.form.name = this.user.name;
+            this.form.school = this.user.school?this.user.school.name:'';
+            this.form.intro = this.user.intro;
+            this.form.birthday = this.user.birthday;
+            this.form.education = this.user.education;
+            this.form.phone = this.user.phone;
+            this.form.sex = this.user.sex;
         },
         methods: {
+            modifyAvatar(){
+                this.$refs.avatarDialog.avatarUpload();
+            },
             getSchoolList(query){
                 if(query!==''){
                     this.loading = true;
@@ -207,6 +225,21 @@
 </script>
 
 <style scoped>
+    .userImg{
+        width: 10rem;
+    }
+    .avatar{
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        border: 1px #ddd solid;
+        box-shadow: whitesmoke 0 0 3px;
+        transition: box-shadow 0.3s;
+    }
+    .avatar:hover{
+        border: 1px lightblue solid;
+        box-shadow: deepskyblue 0 0 3px;
+    }
     .modifyUserInfo {
         width: 60%;
         /*margin-top: 50px;*/
@@ -217,8 +250,17 @@
         border-radius: 20px;
         box-shadow: 0 0 10px #B09999;
     }
+    .button-submit{
+        background-color: lawngreen;
+        color: white;
+    }
+    .button-back{
+        background-color: red;
+        color: white;
+    }
     .modify-userinfo-container{
-        margin-top: 10rem;
+        margin-top: 7rem;
+        padding-right: 8rem;
     }
     .el-date-picker {
         float: left;

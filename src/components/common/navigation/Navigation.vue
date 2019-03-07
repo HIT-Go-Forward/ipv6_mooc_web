@@ -39,7 +39,7 @@
                 IsLogin: state => state.IsLogin
             })
         },
-        created() {
+        mounted() {
             if (document.cookie.indexOf("token=") !== -1) {
                 this.$store.state.IsLogin = true;
             }
@@ -80,7 +80,7 @@
 
 <style scoped>
     .Navigation{
-        position: static;
+        position: relative;
         background-color: black;
         height: 4rem;
         color: #fff;

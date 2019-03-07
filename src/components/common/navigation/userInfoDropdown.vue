@@ -5,7 +5,7 @@
                 <img :src="'/media'+this.$store.getters.getStorge.user.img" class="user-icon">
             </div>
             <div>
-            <span>{{this.$store.getters.getStorge.user.name}}</span>
+            <span>&nbsp;{{this.$store.getters.getStorge.user.name}}</span>
             </div>
             <div>
             <i class="el-icon-caret-bottom"></i>
@@ -80,5 +80,6 @@
     .user-icon{
         width: 3rem;
         display: inline-block;
+        border-radius: 50%;
     }
 </style>

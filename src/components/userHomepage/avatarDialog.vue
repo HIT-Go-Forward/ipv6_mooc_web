@@ -16,6 +16,7 @@
             </el-upload>
             <div slot="footer" class="dialog-footer">
                 <el-button type="primary" @click="uploadDone">确 定</el-button>
+                <el-button type="primary" @click="uploadBack">取 消</el-button>
             </div>
         </el-dialog>
     </div>
@@ -62,6 +63,9 @@
                 user.img = this.newImageUrl;
                 this.$store.commit('$_setStorage', {user: user});
             },
+            uploadBack(){
+                this.modifyAvatarVisible = false;
+            }
         }
     }
 </script>
