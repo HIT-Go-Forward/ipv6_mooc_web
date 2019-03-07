@@ -1,8 +1,8 @@
 <template>
     <div class="modifyUserInfo">
-        <el-form :model="form" label-width="80px" :rules="rules" ref="form">
+        <el-form :model="form" label-width="10rem" :rules="rules" ref="form" class="modify-userinfo-container">
 
-            <el-form-item label="用户名" prop="name">
+            <el-form-item label="用户名">
                 <el-input type="text" v-model="form.name" prefix-icon="el-icon-edit"/>
             </el-form-item>
 
@@ -65,6 +65,7 @@
     import router from "../../router"
     export default {
         name: "modify-user-info",
+        inject:["reload"],
         data() {
             let stringTrim = (rule, value, callback) => {
                 if (value.replace(/(^\s*)|(\s*$)/g,'') === '') {
@@ -106,8 +107,9 @@
         },
         created(){
             let user = this.$store.getters.getStorge.user;
+            console.log(user)
             this.form.name = user.name;
-            this.form.school = user.school.name;
+            this.form.school = user.school?user.school.name:'';
             this.form.intro = user.intro;
             this.form.birthday = user.birthday;
             this.form.education = user.education;
@@ -183,6 +185,7 @@
                                 else if (response.data.status === 200) {
                                     this.$store.commit('$_setStorage', {user: response.data.data});
                                     this.$message.success('修改成功');
+                                    this.reload();
                                 }
                                 else if (response.data.status === 500) {
                                     this.$message.error('服务器出错');
@@ -206,15 +209,17 @@
 <style scoped>
     .modifyUserInfo {
         width: 60%;
-        margin-top: 30px;
+        /*margin-top: 50px;*/
         margin-left: auto;
         margin-right: auto;
-        background-color: #ddd;
+        background-color: #fff;
         padding: 50px 50px 10px;
         border-radius: 20px;
         box-shadow: 0 0 10px #B09999;
     }
-
+    .modify-userinfo-container{
+        margin-top: 10rem;
+    }
     .el-date-picker {
         float: left;
     }

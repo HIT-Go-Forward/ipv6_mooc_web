@@ -1,6 +1,6 @@
 <template>
     <el-col class="Navigation">
-        <el-col class="menu-item-logo" :span="2" :offset="3">
+        <el-col class="menu-item-logo" :span="8" :offset="2">
             <img alt="Vue logo" class="logo" src="../../../assets/image/logo.png">
         </el-col>
         <el-col class="menu-item-text" :span="6"><a href="javascript:" @click="handleSelect(1)">课程</a></el-col>
@@ -55,7 +55,7 @@
                 console.log("from:"+from.path+";"+"to:"+to.path)
                 if(from.path==='/'){
                     window.removeEventListener("scroll",this.handleScroll,true)
-                    document.querySelector(".Navigation").style.position = "relative"
+                    document.querySelector(".Navigation").style.position = "static"
                 }
                 if(to.path==='/'){
                     document.querySelector(".Navigation").style.position = "fixed"
@@ -80,7 +80,7 @@
 
 <style scoped>
     .Navigation{
-        position: relative;
+        position: static;
         background-color: black;
         height: 4rem;
         color: #fff;
