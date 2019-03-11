@@ -53,7 +53,7 @@
         -moz-osx-font-smoothing: grayscale;
         text-align: center;
         color: #2c3e50;
-        background-color: #ddd;
+        background-color: #eee;
         min-width: 80%;
     }
 

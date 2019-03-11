@@ -1,5 +1,8 @@
 <template>
     <div class="userHomepageBar">
+        <div class="refresh-div">
+            <el-button v-if="tabName!=='modifyPassword' && tabName!=='releaseCourse' && tabName!=='applyTeacher'" type="primary" class="refresh" icon="el-icon-refresh" @click="refreshData">刷新数据</el-button>
+        </div>
         <el-tabs v-model="tabName" @tab-click="handleClick">
             <el-tab-pane label="已学习" name="doneCourse">
                 <done-course :courseList="courseList"/>
@@ -30,7 +33,6 @@
             </el-tab-pane>
             <el-tab-pane label="举报审核" name="informAudit" v-if="user.type===2"></el-tab-pane>
         </el-tabs>
-        <el-button v-if="tabName!=='modifyPassword' && tabName!=='releaseCourse' && tabName!=='applyTeacher'" type="primary" class="refresh" icon="el-icon-refresh" @click="refreshData"></el-button>
     </div>
 </template>
 
@@ -327,14 +329,17 @@
     .userHomepageBar{
         margin-top: 40px;
         padding: 20px;
-        border-radius: 20px;
-        box-shadow: 0 0 10px #B09999;
+        /*border-radius: 20px;*/
+        /*box-shadow: 0 0 10px #B09999;*/
     }
-    .userHomepageBar:hover{
-        box-shadow: 0 0 20px #B09999;
+    /*.userHomepageBar:hover{*/
+        /*box-shadow: 0 0 20px #B09999;*/
+    /*}*/
+    .refresh-div{
+        text-align: left;
     }
     .refresh{
-        margin-top: 2em;
-        margin-bottom: 2em;
+        background-color: lightgreen;
+        border-color: lightgreen;
     }
 </style>

@@ -14,7 +14,7 @@
                     <div class="course-intro">
                         <el-row>
                             <el-col :span="3">
-                                <span>课程简介:</span>
+                                <span><strong>课程简介:</strong></span>
                             </el-col>
                             <el-col :span="21">
                                 <span v-if="course.brief">{{course.brief}}</span>
@@ -36,6 +36,7 @@
 </template>
 
 <script>
+    import analyze from './../../plugins/rgbaster'
     import axios from '../../axiosIntercepter'
     import router from '../../router'
     export default {
@@ -52,6 +53,14 @@
         created(){
             this.user = this.$store.getters.getStorge.user
             this.hasJoin();
+        },
+        watch:{
+            course:function(val){
+                console.log(val.img)
+                if(val.img){
+                    this.getImgCol(val.img);
+                }
+            }
         },
         methods:{
             joinCourse(){
@@ -79,12 +88,28 @@
                         courseId:this.course.id
                     }
                 }).then((res)=>{
-                    console.log(res)
                     this.hasJoinedCourse = !(res.data === "success");
                 }).catch((err)=>{
                     this.$message.error("项目出错或网络未连接")
                     console.log(err)
                 })
+            },
+            async getImgCol(src){
+                try {
+                    let imgSrc ='/media' + src
+                    console.log(imgSrc)
+                    let imgCol = await analyze(imgSrc, {ignore: ['rgb(255,255,255)', 'rgb(0,0,0)']})
+                    let arrColor = imgCol[0].color.slice(4, -1).split(',')
+                    arrColor.forEach((item,index)=>{arrColor[index] = parseInt(item)})
+                    while(arrColor[0]<200||arrColor[1]<200||arrColor[2]<200){
+                        arrColor[0]+=15;arrColor[1]+=15;arrColor[2]+=15;
+                    }
+                    console.log(arrColor);
+                    document.querySelector('.course-card').style.backgroundColor = "rgb("+arrColor[0]+","+arrColor[1]+","+arrColor[2]+")"
+                }catch (e) {
+                    console.log(e)
+                    document.querySelector('.course-card').style.backgroundColor = "#fff"
+                }
             }
         }
     }
@@ -92,10 +117,10 @@
 
 <style scoped>
     .course-card{
-        height: 300px;
+        height: 20rem;
+        padding-top: 5rem;
         border-radius: 0 0 20px 20px;
         box-shadow: 0 0 10px #B09999;
-        background-color: #eee;
     }
     .intro-img{
         width: 100%;
@@ -118,13 +143,9 @@
     .course-intro{
         padding: 8px;
         margin-top: 20px;
-        min-height: 60px;
-        font-size: 90%;
-        display: -webkit-box;
-        -webkit-box-orient: vertical;
-        -webkit-line-clamp: 3;
+        min-height: 5rem;
         overflow: hidden;
-        background-color: #ddd;
+        background-color: #fff;
     }
     .course-user-number{
         font-size: 90%;

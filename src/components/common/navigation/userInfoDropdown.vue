@@ -47,6 +47,7 @@
                                 this.$store.commit('logout')
                                 this.$store.commit('$_removeStorage');
                                 this.reload();
+                                router.push("/")
                             }
                         })
                         .catch(error => {

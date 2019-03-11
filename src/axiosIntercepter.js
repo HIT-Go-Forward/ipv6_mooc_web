@@ -6,7 +6,7 @@ import handleData from './utils'
 
 
 axios.defaults.withCredentials=true;
-axios.defaults.timeout=10000
+// axios.defaults.timeout=10000
 
 var loadingInstance
 axios.interceptors.request.use((config)=>{

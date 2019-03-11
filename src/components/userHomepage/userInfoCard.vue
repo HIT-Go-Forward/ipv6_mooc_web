@@ -1,6 +1,6 @@
 <template>
     <div class="userInfoCard">
-        <el-row type="flex" justify="space-around">
+        <el-row justify="space-around" class="userinfo-row">
             <el-col :span="10" class="info">
                 <el-row>
                     <el-col :span="8">
@@ -11,9 +11,9 @@
                             <div v-else>
                                 <img :src="'/media' + user.img" alt="" class="avatar">
                             </div>
-                            <div class="avatar-gray" @click="modifyAvatar">
+                            <!-- <div class="avatar-gray" @click="modifyAvatar">
                                 <span class="avatar-cover">更换头像</span>
-                            </div>
+                            </div> -->
                         </div>
                     </el-col>
                     <el-col :span="16">
@@ -73,11 +73,14 @@
 
 <style scoped>
     .userInfoCard {
-        height: 200px;
+        height: 12rem;
         background-image: url("../../assets/image/show3.jpg");
         color: #fff;
         border-radius: 0 0 20px 20px;
         box-shadow: 0 0 10px #B09999;
+    }
+    .userinfo-row{
+
     }
     .userImg {
         width: 80px;
@@ -87,7 +90,7 @@
         margin-left: 20%;
         float: right;
     }
-    .avatar-cover{
+    /* .avatar-cover{
         position: relative;
         top: 33px;
         left: 12px;
@@ -104,7 +107,7 @@
         top: -84px;
         height: 80px;
         border-radius: 100%;
-    }
+    } */
     img {
         width: 100%;
         border-radius: 100%;
@@ -123,7 +126,7 @@
         font-size: 80%;
         display: -webkit-box;
         -webkit-box-orient: vertical;
-        -webkit-line-clamp: 2;
+        /*-webkit-line-clamp: 2;*/
         overflow: hidden;
     }
     .userInfo{
