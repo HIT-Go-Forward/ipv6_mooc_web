@@ -1,6 +1,6 @@
 <template>
     <div class="registerDialog">
-        <div @click="register"><a href="javascript:" class="register-text">注册</a></div>
+        <div @click="register"><a href="javascript:" class="register-text">注册/</a></div>
         <el-dialog :visible.sync="RegisterDialogVisible" :modal="false">
 
             <div slot="title" class="dialog-title">

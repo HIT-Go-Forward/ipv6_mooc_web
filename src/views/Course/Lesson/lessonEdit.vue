@@ -35,64 +35,92 @@
                         <el-input v-model="lesson.intro" type="textarea" placeholder="这里填写课程信息，将显示给学生"></el-input>
                     </el-col>
                 </el-form-item>
-                <el-form-item label="课信息：">
+                <el-form-item label="课提交信息：">
                     <el-col :span="18">
                         <el-input v-model="lesson.note" type="textarea" placeholder="这里填写向管理员提交的信息，不会显示给学生"></el-input>
                     </el-col>
                 </el-form-item>
                 <el-form-item label="课程视频：">
-                    <el-upload
-                            :action="'/upload/resource/uploadResource.action'"
-                            ref="lessonVideoUpload"
-                            class="file-upload"
-                            :data="{
-                                'courseId':this.courseId,
-                                'type':'lessonVideo',
-                                'lessonId':this.lessonId
-                            }"
-                            :on-success="uploadVideoResponse"
-                            :on-error="uploadVideoError"
-                            :before-upload="uploadVideo"
-                            name="file"
-                            :auto-upload="false"
-                            drag
-                            :limit="1"
-                            :with-credentials="true"
-                    >
-                        <i class="el-icon-upload"></i>
-                        <div class="el-upload__text">将课程视频拖到此处，或<em>点击添加文件</em></div>
-                    </el-upload>
-                    <el-button style="margin-left: 10px;" size="small" type="success" @click="submitVideoUpload">上传到服务器</el-button>
+                    <div class="d-player" id="dplayer"></div>
+                    <div class="video-detail">
+                        <h3>已上传视频文件信息</h3>
+                        <strong>视频文件名：</strong><span>{{ videoName }}</span><br/>
+                        <strong>视频大小：</strong><span>{{ videoSize }}</span><br/>
+                        <strong>视频时长：</strong><span>{{ videoLength }}</span>
+                    </div>
+                    <div class="upload-box">
+                        <div class="file-box">
+                            <input type="file" id="video" name="video" class="file-input" accept="video/mp4" @change="videoUpload($event)"/>
+                            <label for="video" class="file-input-label">
+                                <i class="el-icon-upload"></i>点击上传视频文件<br/>
+                            </label>
+                            <label for="video" class="file-input-label-tip">
+                                *仅限mp4文件，文件大小不超过1024M，上传将覆盖之前的文件
+                            </label>
+                        </div>
+                        <div class="file-info">
+                            <div class="file-name">
+                                {{ video.name }}
+                            </div>
+                            <div class="file-size">
+                                {{ video.size }}
+                            </div>
+                            <div class="progress-div" v-if="video.uploadStatus===1||video.uploadStatus===2">
+                                <el-progress :percentage="video.progress"></el-progress>
+                                <span v-if="video.progress>=100">正在向服务器提交，请稍候...</span>
+                            </div>
+                            <div class="status">
+                                <span class="wait" v-if="video.uploadStatus===0">等待上传</span>
+                                <span class="uploading" v-if="video.uploadStatus===1">上传中</span>
+                                <span class="success" v-if="video.uploadStatus===2">上传完成</span>
+                                <span class="error" v-if="video.uploadStatus===-1">服务求错误</span>
+                                <span class="error" v-if="video.uploadStatus===-2">上传类型不符合要求</span>
+                                <span class="error" v-if="video.uploadStatus===-3">文件超出限制</span>
+                            </div>
+                        </div>
+                    </div>
                 </el-form-item>
                 <el-form-item label="课程辅助文件：">
-                    <el-upload
-                            :action="'/upload/resource/uploadResource.action'"
-                            ref="lessonFileUpload"
-                            class="file-upload"
-                            :data="{
-                                'courseId':this.courseId,
-                                'type':'lessonFile',
-                                'lessonId':this.lessonId
-                            }"
-                            :on-success="uploadFileResponse"
-                            :on-error="uploadFileError"
-                            :before-upload="uploadFile"
-                            name="file"
-                            :auto-upload="false"
-                            drag
-                            :limit="1"
-                            :with-credentials="true"
-                    >
-                        <i class="el-icon-upload"></i>
-                        <div class="el-upload__text">将文件拖到此处，或<em>点击添加文件</em></div>
-                        <div class="el-upload__tip" slot="tip">请将所需文件打包后上传，不得超过100Mb</div>
-                    </el-upload>
-                    <div><span class="el-tag--danger">*这里上传将覆盖之前上传的文件，若没有问题不需要上传</span></div>
-                    <el-button style="margin-left: 10px;" size="small" type="success" @click="submitFileUpload">上传到服务器</el-button>
+                    <div class="video-detail">
+                        <h3>已上传辅助文件信息</h3>
+                        <strong>文件名：</strong><span>{{ fileName }}</span><br/>
+                        <strong>文件大小：</strong><span>{{ fileSize }}</span><br/>
+                    </div>
+                    <div class="upload-box">
+                        <div class="file-box">
+                            <input type="file" id="pack" name="pack" class="file-input" @change="packUpload($event)"/>
+                            <label for="pack" class="file-input-label">
+                                <i class="el-icon-upload"></i>点击上传课程辅助文件<br/>
+                            </label>
+                            <label for="pack" class="file-input-label-tip">
+                                *文件类型不限，如有多个文件请打包，文件大小不超过100M，上传将覆盖之前的文件
+                            </label>
+                        </div>
+                        <div class="file-info">
+                            <div class="file-name">
+                                {{ assistFile.name }}
+                            </div>
+                            <div class="file-size">
+                                {{ assistFile.size }}
+                            </div>
+                            <div class="progress-div" v-if="assistFile.uploadStatus===1||assistFile.uploadStatus===2">
+                                <el-progress :percentage="assistFile.progress"></el-progress>
+                                <span v-if="assistFile.progress>=100">正在向服务器提交，请稍候...</span>
+                            </div>
+                            <div class="status">
+                                <span class="wait" v-if="assistFile.uploadStatus===0">等待上传</span>
+                                <span class="uploading" v-if="assistFile.uploadStatus===1">上传中</span>
+                                <span class="success" v-if="assistFile.uploadStatus===2">上传完成</span>
+                                <span class="error" v-if="assistFile.uploadStatus===-1">服务求错误</span>
+                                <span class="error" v-if="assistFile.uploadStatus===-2">上传类型不符合要求</span>
+                                <span class="error" v-if="assistFile.uploadStatus===-3">文件超出限制</span>
+                            </div>
+                        </div>
+                    </div>
                 </el-form-item>
                 <el-form-item>
-                    <el-button v-if="fileUploadState===2||videoUploadState===2" type="primary" disabled="disabled">正在上传</el-button>
-                    <el-button v-if="fileUploadState===0||fileUploadState===3||videoUploadState===3||videoUploadState===0" type="primary" @click="submitLesson">提交课程信息</el-button>
+                    <el-button v-if="video.uploadStatus===1||assistFile.uploadStatus===1" type="primary" disabled="disabled">正在上传</el-button>
+                    <el-button v-if="video.uploadStatus!==1&&assistFile.uploadStatus!==1" type="primary" @click="submitLesson">提交课程信息</el-button>
                 </el-form-item>
             </el-form>
         </div>
@@ -102,6 +130,8 @@
 <script>
     import router from '../../../router'
     import axios from '../../../axiosIntercepter'
+    import 'dplayer/dist/DPlayer.min.css';
+    import DPlayer from 'dplayer';
     export default {
         name: "addLesson",
         data(){
@@ -112,9 +142,18 @@
                 chapterNum:0,
                 lessonId:'',
                 lesson:{},
+                videoName:'',
+                videoSize:'',
+                videoLength:'',
+                fileName:'',
+                fileSize:'',
+                videoUrl:'',
 
-                fileUploadState:0,
-                videoUploadState:0,
+                video:'',
+                assistFile:'',
+                uploadSuccess:'',
+
+                options: {},
             }
         },
         created:function() {
@@ -122,7 +161,26 @@
             this.getCourseOutline()
             this.getLessonDetail();
         },
+        watch:{
+            videoUrl: function(to,from){
+                if(to){
+                    this.initPlayer();
+                }
+                console.log(to,from)
+            }
+        },
         methods:{
+            initPlayer(){
+                console.log(this.videoUrl)
+                this.options = new DPlayer({
+                    container: document.getElementById('dplayer'),
+                    video:{
+                        url: "/media" + this.videoUrl,
+                    },
+                    screenshot: false,
+                    autoplay: false,
+                });
+            },
             getCourseOutline(){
                 let newChapters = []
                 this.courseId = this.$route.params.courseId
@@ -159,7 +217,13 @@
                     console.log(res)
                     if(res.data.status===200){
                         this.lesson = res.data.data;
-                        this.chapterNum = this.lesson.chapterNum-1
+                        this.chapterNum = this.lesson.chapterNum-1;
+                        this.videoName = this.lesson.video.url.split('/').pop();
+                        this.videoUrl = this.lesson.video.url;
+                        this.videoSize = this.lesson.video.size===0?"未知":this.leson.video.size;
+                        this.videoLength = this.lesson.video.length?this.lesson.video.length:"未知";
+                        this.fileName = this.lesson.file.url.split('/').pop()
+                        this.fileSize = this.lesson.file.size===0?"未知":this.leson.file.size;
                     } else {
                         this.lesson = {};
                     }
@@ -186,51 +250,115 @@
                 this.addChapterFlag = 0
                 this.addChapterTitle= ''
             },
-            uploadVideo(file){
-                this.videoUploadState = 1
-                const isLt1024M = file.size / 1024 / 1024 /1024 < 2;
+            checkFileSize(fileSize,name){
+                let size = name==="video"?1024:100
+                let isFileSize = fileSize / 1024 / 1024 /size < 2;
 
-                if (!isLt1024M) {
+                if (!isFileSize) {
                     this.$message.error('文件过大！');
                     return false
                 }
+                return true;
             },
-            submitVideoUpload(){
-                this.videoUploadState = 2
-                this.$refs.lessonVideoUpload.submit();
-            },
-            submitFileUpload(){
-                this.fileUploadState = 2
-                this.$refs.lessonFileUpload.submit();
-            },
-            uploadFileResponse(res){
-                this.fileUploadState = 3
-                console.log(res)
-                this.$message.success(res)
-            },
-            uploadFileError(err){
-                this.fileUploadState = 0
-                console.log(err)
-                this.$message.error(err)
-            },
-            uploadVideoResponse(res){
-                this.videoUploadState = 3
-                console.log(res)
-                this.$message.success(res)
-            },
-            uploadVideoError(err){
-                this.videoUploadState = 0
-                console.log(err)
-                this.$message.error(err)
-            },
-            uploadFile(file){
-                this.fileUploadState = 1
-                const isLt2M = file.size / 1024 / 1024 /100 < 2;
-
-                if (!isLt2M) {
-                    this.$message.error('文件过大！');
-                    return false
+            formatFileSize(fileSize,idx){
+                var unit = ['B','KB','MB',"GB"];
+                idx = idx||0;
+                if(fileSize<1024||idx===unit.length-1){
+                    return fileSize.toFixed(1)+unit[idx]
                 }
+                return this.formatFileSize(fileSize/1024,++idx)
+            },
+            checkFileType(fileType,name){
+                let accetpType = 'mp4'
+                return (name==='video'&&fileType===accetpType)||name==='assistFile'
+            },
+            videoUpload(e){
+                let file = e.target.files[0]
+                this.video = {
+                    name:file.name,
+                    progress:1,
+                    size: this.formatFileSize(file.size, 0),
+                    uploadStatus:0,
+                }
+                let params = new FormData();
+                params.append("courseId",this.courseId)
+                params.append("type","lessonVideo")
+                params.append("lessonId",this.lessonId)
+                params.append("file",file)
+                console.log(file)
+                if(!this.checkFileSize(file.size,'video')){
+                    this.video.uploadStatus = -3
+                    return false;
+                }
+                if(!this.checkFileType(file.name.split('.')[-1],'video')){
+                    this.video.uploadStatus = -2;
+                    return false;
+                }
+                let config = {
+                    headers:{
+                        'Content-Type':'multipart/form-data'
+                    },
+                    onUploadProgress:e=>{
+                        var completeProgress = ((e.loaded/e.total*100)|0);
+                        this.video.progress = completeProgress;
+                    }
+                }
+                this.video.uploadStatus = 1;
+                axios.post('/upload/resource/uploadResource.action',params,config).then((res)=>{
+                    console.log(res);
+                    if(res.data.status===200){
+                        this.video.uploadStatus = 2;  
+                    } else {
+                        this.video.uploadStatus = -1;
+                    }
+                }).catch((err)=>{
+                    this.video.uploadStatus = -1;
+                    console.log(err)
+                })
+            },
+            packUpload(e){
+                let file = e.target.files[0]
+                this.assistFile = {
+                    name:file.name,
+                    progress:1,
+                    size: this.formatFileSize(file.size, 0),
+                    uploadStatus:0,
+                }
+                let params = new FormData();
+                params.append("courseId",this.courseId)
+                params.append("type","lessonFile")
+                params.append("lessonId",this.lessonId)
+                params.append("file",file)
+                console.log(file)
+                if(!this.checkFileSize(file.size,'assistFile')){
+                    this.assistFile.uploadStatus = -3
+                    return false;
+                }
+                if(!this.checkFileType(file.name.split('.')[-1],'assistFile')){
+                    this.assistFile.uploadStatus = -2;
+                    return false;
+                }
+                let config = {
+                    headers:{
+                        'Content-Type':'multipart/form-data'
+                    },
+                    onUploadProgress:e=>{
+                        var completeProgress = ((e.loaded/e.total*100)|0);
+                        this.assistFile.progress = completeProgress;
+                    }
+                }
+                this.assistFile.uploadStatus = 1;
+                axios.post('/upload/resource/uploadResource.action',params,config).then((res)=>{
+                    console.log(res);
+                    if(res.data.status===200){
+                        this.assistFile.uploadStatus = 2;  
+                    } else {
+                        this.assistFile.uploadStatus = -1;
+                    }
+                }).catch((err)=>{
+                    this.assistFile.uploadStatus = -1;
+                    console.log(err)
+                })
             },
             submitLesson(){
                 let chapterNum = this.chapterNum+1
@@ -266,6 +394,28 @@
 </script>
 
 <style scoped>
+    .video-detail>h3{
+        margin:0;
+    }
+    .file-input{
+        width: 0.1px;
+        height: 0.1px;
+        opacity: 0;
+        overflow: hidden;
+        position: absolute;
+        z-index: -1;
+    }
+    .file-input-label{
+        font-size: 1.5rem;
+        cursor: pointer;
+    }
+    .file-input-label-tip{
+        font-size:0.5rem;
+        color: orange;
+    }
+    .file-box{
+        padding: 2rem;
+    }
     a{
         text-decoration: none;
         color: #000;
@@ -313,5 +463,20 @@
     }
     .video-title{
         text-align: center;
+    }
+    .status{
+        font-size: 1rem;
+    }
+    .wait{
+        color: gray;
+    }
+    .uploading{
+        color: blue;
+    }
+    .success{
+        color: green;
+    }
+    .error{
+        color: red;
     }
 </style>

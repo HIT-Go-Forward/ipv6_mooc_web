@@ -1,6 +1,6 @@
 <template>
     <div class="course-homepage">
-        <course-card :course="course"/>
+        <course-card :course="course" :changeBackgroundColor="changeBgColor"/>
         <el-row class="course-bar">
             <el-col :span="18">
                 <course-detail :course="course"/>
@@ -60,6 +60,9 @@
                 }).then((res)=>{
                     console.log(res)
                 })
+            },
+            changeBgColor(data){
+                document.querySelector('.course-homepage').backgroundColor = data;
             }
         }
     }

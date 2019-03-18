@@ -9,7 +9,6 @@
 </template>
 
 <script>
-
     export default {
         name: 'app',
         components: {
@@ -46,6 +45,7 @@
 </script>
 
 <style>
+    @import "less/index.less";
     #app {
         font-family: "Helvetica Neue", Helvetica, Arial, "Microsoft Yahei",
                      "Hiragino Sans GB", "Heiti SC", "WenQuanYi Micro Hei", sans-serif;
@@ -55,6 +55,7 @@
         color: #2c3e50;
         background-color: #eee;
         min-width: 80%;
+        font-size: 100%;
     }
 
     body {

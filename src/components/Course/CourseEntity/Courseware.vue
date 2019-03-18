@@ -23,8 +23,8 @@
                 <template slot="title">第{{chapter.chapterNum}}章 {{chapter.chapterTitle}}</template>
                 <div v-if="course.teacher!==undefined">
                     <div v-if="user.type===4">
-                        <div v-for="lesson in lessonList" :key="lesson.id" v-if="lesson.chapterNum === chapter.chapterNum && lesson.state === 2">
-                            <div class="lesson-item">
+                        <div v-for="lesson in lessonList" :key="lesson.id" >
+                            <div class="lesson-item" v-if="lesson.chapterNum === chapter.chapterNum && lesson.state === 2">
                                 <el-row>
                                     <el-col :span="1">
                                         <i class="el-icon-success"></i>
@@ -41,8 +41,8 @@
                         </div>
                     </div>
                     <div v-else-if="user.type===2 || (user.type===3 && course.teacher.id === user.id) || user.type===1">
-                        <div v-for="lesson in lessonList" :key="lesson.id" v-if="lesson.chapterNum === chapter.chapterNum">
-                            <div class="lesson-item">
+                        <div v-for="lesson in lessonList" :key="lesson.id">
+                            <div class="lesson-item" v-if="lesson.chapterNum === chapter.chapterNum">
                                 <el-row>
                                     <el-col :span="1">
                                         <i class="el-icon-success"></i>

@@ -123,11 +123,11 @@
                 </div>
             <div class="video-title">
                 <div>课程视频</div>
-                <video width="80%" :src="'/media'+this.lesson.videoUrl" controls></video>
+                <video width="80%" :src="'/media'+this.lesson.video.url" controls></video>
             </div>
-            <div class="video-title" v-if="this.lesson.fileUrl">
+            <div class="video-title" v-if="this.lesson.file.url">
                 <div>课程配套文件</div>
-                <a :href="'/media'+this.lesson.fileUrl" :download="this.lesson.originalFileName">点击下载</a>
+                <a :href="'/media'+this.lesson.file.url" :download="this.lesson.file.url">点击下载</a>
             </div>
             <div class="verify verify-all">
                 <el-button type="primary" class="verify-submit" @click="confirmLesson">确认</el-button>
@@ -145,7 +145,7 @@
         name: "addLesson",
         data(){
             return {
-                part: 0,
+                part: 1,
                 chapters: '',
                 addChapterFlag: 0,
                 addChapterTitle: '',
@@ -252,7 +252,7 @@
             uploadVideo(file){
                 this.videoUploadState = 1
                 const isLt1024M = file.size / 1024 / 1024 /1024 < 2;
-
+                console.log("look here")
                 if (!isLt1024M) {
                     this.$message.error('文件过大！');
                     return false

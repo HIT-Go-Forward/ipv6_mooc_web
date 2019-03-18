@@ -1,15 +1,15 @@
 <template>
-        <el-col class="course-by-category">
-                <el-tabs v-model="activeName" @tab-click="handleClick">
-                    <el-tab-pane :label="type.name" :name="type.name" :key="type.id">
-                        <course-item  v-for="courseItem in courseItemList" :key="courseItem.id" :courseItem="courseItem"/>
-                    </el-tab-pane>
-                    <el-tab-pane v-for="category in categoryList" :key="category.id" :label="category.name" :name="category.name">
-                        <course-item  v-for="courseItem in courseItemList" :key="courseItem.id" :courseItem="courseItem"/>
-                    </el-tab-pane>
-                    <el-tab-pane label="查看全部 >>" :key="-1" name="click-for-more"> </el-tab-pane>
-                </el-tabs>
-        </el-col>
+    <el-col class="course-by-category">
+        <el-tabs v-model="activeName" @tab-click="handleClick">
+            <el-tab-pane :label="type.name" :name="type.name" :key="type.id">
+                <course-item  v-for="courseItem in courseItemList" :key="courseItem.id" :courseItem="courseItem"/>
+            </el-tab-pane>
+            <el-tab-pane v-for="category in categoryList" :key="category.id" :label="category.name" :name="category.name">
+                <course-item  v-for="courseItem in courseItemList" :key="courseItem.id" :courseItem="courseItem"/>
+            </el-tab-pane>
+            <el-tab-pane label="查看全部 >>" :key="-1" name="click-for-more"> </el-tab-pane>
+        </el-tabs>
+    </el-col>
 </template>
 
 <script>
@@ -67,11 +67,8 @@
         margin-bottom: 40px;
         padding: 20px;
         border-radius: 15px;
-        height: 450px;
+        height: 33rem;
         background-color: #ccc;
         box-shadow: 0 0 10px #B09999;
-    }
-    .course-by-category:hover{
-        box-shadow: 0 0 20px #B09999;
     }
 </style>

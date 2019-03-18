@@ -24,9 +24,15 @@
         name: "course-item",
         props: {
             courseItem: {},
+            index:'',
         },
         data() {
             return {
+            }
+        },
+        mounted(){
+            if(this.index===0){
+                document.querySelector('.course-item').style.height = "24rem"
             }
         },
         methods:{
@@ -37,10 +43,10 @@
     }
 </script>
 
-<style scoped>
+<style scoped lang="less">
     img {
-        height: 100%;
-        width: 100%;
+        height: 9rem;
+        width: 15rem;
     }
 
     .course-img {
@@ -64,12 +70,11 @@
     }
     .course-item {
         background-color: #fff;
-        height: 80%;
-        width: 80%;
-        margin: 10px 10px;
+        height: 12rem;
+        width: 15rem;
+        margin: 1rem;
         cursor: pointer;
         box-shadow: 0 0 4px #B09999;
-        border-radius: 10px;
     }
     .course-item:hover{
 

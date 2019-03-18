@@ -186,10 +186,7 @@
     }
     .carousel-container{
         margin-bottom: 3rem;
-        margin-top: 2rem;
         padding-left: 2rem;
-        border: 1px #ddd solid;
-        border-radius: 1rem;
     }
     .carousel-collect{
         margin-left: -1rem;

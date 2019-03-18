@@ -1,18 +1,18 @@
 <template>
     <div class="nav-div">
     <el-col class="Navigation">
-        <el-col class="menu-item-logo" :span="2" :offset="2">
+        <el-col class="menu-item-logo" :span="2" :offset="3">
             <img alt="Vue logo" class="logo" src="../../../assets/image/logo.png">
         </el-col>
-        <el-col class="menu-item-text" :span="2"><a href="javascript:" @click="handleSelect(1)">课程</a></el-col>
-        <el-col class="menu-item-text" :span="2"><a href="javascript:">博客</a></el-col>
-        <el-col class="menu-item-text" :span="2"><a href="javascript:">直播</a></el-col>
-        <el-col :span="5"></el-col>
+        <el-col class="menu-item-text" :span="1"><a href="javascript:" @click="handleSelect(1)">课程</a></el-col>
+        <el-col class="menu-item-text" :span="1"><a href="javascript:">博客</a></el-col>
+        <el-col class="menu-item-text" :span="1"><a href="javascript:">直播</a></el-col>
+        <el-col :span="8"></el-col>
         <el-col class="menu-item-search" :span="4">
             <el-input size="big" placeholder="查询感兴趣的课程" prefix-icon="el-icon-search" class="search-input"/>
         </el-col>
         <el-col v-if="!IsLogin" class="menu-item-sign" :span="4">
-            <register-dialog/>/
+            <register-dialog/>
             <login-dialog/>
         </el-col>
         <el-col v-else class="menu-item" :span="4">
@@ -87,12 +87,14 @@
         /*width:100%;*/
         height: 4rem;
         color: #fff;
-        font-size: 2rem;
+        font-size: 1.5rem;
 
         top:0;
         left: 0;
         padding-right: 10rem;
+        padding-top: 0.5rem;
         z-index:1000;
+        margin-bottom: 2rem;
     }
     .Navigation{
         display: flex;
