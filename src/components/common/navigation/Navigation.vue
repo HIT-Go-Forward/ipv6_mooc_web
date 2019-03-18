@@ -5,7 +5,7 @@
             <img alt="Vue logo" class="logo" src="../../../assets/image/logo.png">
         </el-col>
         <el-col class="menu-item-text" :span="1"><a href="javascript:" @click="handleSelect(1)">课程</a></el-col>
-        <el-col class="menu-item-text" :span="1"><a href="javascript:">博客</a></el-col>
+        <el-col class="menu-item-text" :span="1"><a href="javascript:" @click="handleSelect(2)">博客</a></el-col>
         <el-col class="menu-item-text" :span="1"><a href="javascript:">直播</a></el-col>
         <el-col :span="8"></el-col>
         <el-col class="menu-item-search" :span="4">
@@ -70,6 +70,9 @@
                 switch (key) {
                     case 1:
                         router.push({name: 'Homepage'});
+                        break;
+                    case 2:
+                        router.push({name: 'blogHomepage'});
                         break;
                 }
             },

@@ -51,6 +51,11 @@ export default new Router({
           path: '/lesson/:lessonId',
           name: 'lessonPlay',
           component: ()=>import('./views/Course/LessonPlay'),
+      },
+      {
+          path: '/blog/homepage',
+          name: 'blogHomepage',
+          component:()=>import('./views/Blog/BlogHomepage'),
       }
   ]
 })
