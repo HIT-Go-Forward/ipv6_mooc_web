@@ -2,8 +2,8 @@
     <div class="course-card">
         <el-row>
             <el-col :span="10">
-                <div class="course-img">
-                    <img :src="'/media' + course.img" alt="" class="intro-img">
+                <div class="course-img-div">
+                    <img :src="'/media' + course.img" alt="" class="course-img">
                 </div>
             </el-col>
             <el-col :span="12">
@@ -42,7 +42,7 @@
     export default {
         name: "course-card",
         props:{
-            course: {}
+            course: '',
         },
         data(){
             return{
@@ -52,13 +52,14 @@
         },
         created(){
             this.user = this.$store.getters.getStorge.user
-            this.hasJoin();
         },
         watch:{
             course:function(val){
-                console.log(val.img)
                 if(val.img){
                     this.getImgCol(val.img);
+                }
+                if(val.id){
+                    this.hasJoin();
                 }
             }
         },
@@ -83,6 +84,7 @@
                 router.push({path: `/course/${this.course.id}/learn`});
             },
             hasJoin(){
+                console.log("course",this.course)
                 axios.get('/action/course/hasJoined.action', {
                     params: {
                         courseId:this.course.id
@@ -105,10 +107,12 @@
                         arrColor[0]+=15;arrColor[1]+=15;arrColor[2]+=15;
                     }
                     console.log(arrColor);
-                    document.querySelector('.course-card').style.backgroundColor = "rgb("+arrColor[0]+","+arrColor[1]+","+arrColor[2]+")"
+                    this.$emit("changeBackgroundColor","rgb("+arrColor[0]+","+arrColor[1]+","+arrColor[2]+")")
+                    // document.querySelector('.course-card').style.backgroundColor = "rgb("+arrColor[0]+","+arrColor[1]+","+arrColor[2]+")"
                 }catch (e) {
                     console.log(e)
-                    document.querySelector('.course-card').style.backgroundColor = "#fff"
+                    this.$emit("changeBackgroundColor","#fff")
+                    // document.querySelector('.course-card').style.backgroundColor = "#fff"
                 }
             }
         }
@@ -118,18 +122,20 @@
 <style scoped>
     .course-card{
         height: 20rem;
-        padding-top: 5rem;
+        padding-top: 1rem;
         border-radius: 0 0 20px 20px;
         box-shadow: 0 0 10px #B09999;
     }
-    .intro-img{
-        width: 100%;
-        height: 100%;
-    }
     .course-img{
-        background-color: #ddd;
-        height: 260px;
+        /* width: 100%; */
+        height: 17rem;
+    }
+    .course-img-div{
+        background-color:white;
+        height: 17rem;
+        width: 90%;
         margin: 20px;
+        overflow: hidden;
     }
     .course-info{
         margin: 20px;

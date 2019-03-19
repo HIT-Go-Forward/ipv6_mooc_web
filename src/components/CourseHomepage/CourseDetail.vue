@@ -3,7 +3,7 @@
         <el-tab-pane label="课程详情" name="courseDetail">
             <course-info :course="course"/>
         </el-tab-pane>
-        <el-tab-pane label="课程评价" name="courseComment">
+        <el-tab-pane label="课程评论" name="courseComment">
             <course-comment  :courseId="course.id" commentType="course"/>
         </el-tab-pane>
     </el-tabs>

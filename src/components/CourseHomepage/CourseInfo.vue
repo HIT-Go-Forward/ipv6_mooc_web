@@ -2,15 +2,17 @@
     <div class="course-info">
         <div v-if="course.intro" class="info-item">
             <div class="info-title"><i class="el-icon-setting"></i>课程概述</div>
-            <div class="info-main">{{course.intro}}</div>
+            <div class="info-main">
+                <mavon-editor :toolbarsFlag="false" :value="course.intro" :subfield="false" :defaultOpen="'preview'"></mavon-editor>
+            </div>
         </div>
         <div v-if="course.needs" class="info-item">
             <div class="info-title"><i class="el-icon-setting"></i>课程要求</div>
-            <div class="info-main">{{course.needs}}</div>
+                <mavon-editor class="info-main" :toolbarsFlag="false" :value="course.needs" :subfield="false" :defaultOpen="'preview'"></mavon-editor>
         </div>
         <div v-if="course.books" class="info-item">
             <div class="info-title"><i class="el-icon-setting"></i>参考资料</div>
-            <div class="info-main">{{course.books}}</div>
+                <mavon-editor class="info-main" :toolbarsFlag="false" :value="course.books" :subfield="false" :defaultOpen="'preview'"></mavon-editor>
         </div>
     </div>
 </template>

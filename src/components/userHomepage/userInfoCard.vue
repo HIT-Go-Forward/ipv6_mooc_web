@@ -73,14 +73,11 @@
 
 <style scoped>
     .userInfoCard {
-        height: 12rem;
+        height: 17rem;
         background-image: url("../../assets/image/show3.jpg");
         color: #fff;
-        border-radius: 0 0 20px 20px;
+        border-radius:20px 20px 20px 20px;
         box-shadow: 0 0 10px #B09999;
-    }
-    .userinfo-row{
-
     }
     .userImg {
         width: 80px;
@@ -115,7 +112,7 @@
     }
     .info{
         display: inline-block;
-        margin-top: 40px;
+        margin-top: 7rem;
         text-align: left;
     }
     .name{

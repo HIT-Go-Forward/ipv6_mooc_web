@@ -106,7 +106,7 @@
                         }
                         break;
                     case 'releaseRecord':
-                        if(!this.releaseCourseRecordrejected&&!this.releaseCourseRecordApplying&&!this.releaseCourseRecordreleased){
+                        if(this.releaseCourseRecordrejected.length===0&&this.releaseCourseRecordApplying.length===0&&this.releaseCourseRecordreleased.length===0){
                             this.getCourseRecord();
                         }
                         break;

@@ -53,6 +53,7 @@
             }
 
             axios.get('/action/course/getAllCourseType.action').then((res)=>{
+                console.log(res)
                 if(res.data.status===200){
                     for(let i=0;i<res.data.data.length;i++){
                         if (!res.data.data[i].parent){
@@ -78,6 +79,6 @@
 
 <style scoped>
 .home{
-    padding-top: 5rem;
+    /*padding-top: 5rem;*/
 }
 </style>

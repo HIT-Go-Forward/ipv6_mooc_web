@@ -2,7 +2,7 @@
     <el-row class="release-course-part">
         <el-col :span="16" :offset="6" class="release-course-container">
             <el-form ref="form" :model="form" label-width="6em">
-                <el-form-item label="课程头像：">
+                <!-- <el-form-item label="课程头像：">
                     <el-upload
                             action=""
                             ref="courseImgUpload"
@@ -17,19 +17,30 @@
                         <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
                         <div class="el-upload__tip" slot="tip">只能上传jpg/png/gif文件，且不超过2MB</div>
                     </el-upload>
-                </el-form-item>
+                    <div class="upload-img">
+                        <div class="upload-box">
+                            <input id="img" class="img" type="file" accept="image/*">
+                            <label for="img" class="img-label">
+                                <i class="el-icon-upload"></i>点击上传图片
+                            </label>
+                        </div>
+                        <div class="upload-info">
+
+                        </div>
+                    </div>
+                </el-form-item> -->
                 <el-form-item label="课程名称：">
                     <el-input v-model="form.courseName" placeholder="请输入课程名称"></el-input>
                 </el-form-item>
                 <el-form-item label="课程简介：">
-                    <el-input v-model="form.courseBrief" placeholder="请输入课程简介"></el-input>
+                    <el-input type="textarea" :autosize="{minRows: 4}" v-model="form.courseBrief" placeholder="请输入课程简介"></el-input>
                 </el-form-item>
-                <el-form-item label="课程介绍：">
+                <!-- <el-form-item label="课程介绍：">
                     <el-input type="textarea" :autosize="{ minRows: 4 }" v-model="form.courseIntro" placeholder="请输入课程介绍"></el-input>
                 </el-form-item>
                 <el-form-item label="课程要求：">
                     <el-input type="textarea" :autosize="{ minRows: 4 }" v-model="form.courseNeeds" placeholder="请输入课程要求"></el-input>
-                </el-form-item>
+                </el-form-item> -->
                 <el-form-item label="课程标签：">
                     <el-tag
                             :key="tag"
@@ -104,11 +115,11 @@
                 courseId:'',
                 form:{
                     courseName:'',
-                    courseIntro:'',
+                    // courseIntro:'',
                     note: '',
                     courseBrief:'',
-                    courseBook:'',
-                    courseNeeds:'',
+                    // courseBook:'',
+                    // courseNeeds:'',
                     courseTypeId:''
                 },
                 inputVisible: false,
@@ -135,10 +146,10 @@
                 axios.get("/action/course/addNewCourse.action",{
                     params: {
                         'courseName': this.form.courseName,
-                        'courseIntro': this.form.courseIntro,
+                        // 'courseIntro': this.form.courseIntro,
                         'brief': this.form.courseBrief,
-                        'books': this.form.courseBook,
-                        'needs': this.form.courseNeeds,
+                        // 'books': this.form.courseBook,
+                        // 'needs': this.form.courseNeeds,
                         'typeId': this.courseType?this.courseType:this.courseParentType,
                         'note': this.form.note,
                         'label': this.label.join(';')
@@ -148,10 +159,10 @@
                     if(res.data.status===200){
                         //router.push('course/courseEdit')
                         this.courseId=res.data.data.course_id
-                        this.$message.success("课程提交审核成功！5秒后跳转到课程详情页面")
-                        this.$refs.courseImgUpload.submit()
+                        this.$message.success("课程提交审核成功！5秒后跳转到课程信息编辑页面，请完善课程信息。")
+                        // this.$refs.courseImgUpload.submit()
                         setTimeout(()=>{
-                            router.push('/course/'+this.courseId+'/Homepage')
+                            router.push('/course/'+this.courseId+'/courseEdit')
                         },5000)
                     } else {
                         this.$message.error(res.data.data)
@@ -178,42 +189,43 @@
                 this.inputVisible = false;
                 this.inputValue = '';
             },
-            handlePost(file){
-                const isJPG = (file.type === 'image/jpeg') || (file.type === 'image/png') || (file.type === 'image/gif');
-                const isLt2M = file.size / 1024 / 1024 < 2;
+            // handlePost(file){
+            //     const isJPG = (file.type === 'image/jpeg') || (file.type === 'image/png') || (file.type === 'image/gif');
+            //     const isLt2M = file.size / 1024 / 1024 < 2;
 
-                if (!isJPG) {
-                    this.$message.error('图片格式错误！可在课程编辑页面修改.');
-                    return false
-                }
-                if (!isLt2M) {
-                    this.$message.error('图片过大!可在课程编辑页面修改.');
-                    return false
-                }
-                let fd = new FormData()
-                fd.append('file', file)
-                fd.append('courseId',this.courseId)
-                fd.append('type','courseImg')
-                console.log(file)
-                axios({
-                    url: '/action/resource/upload.action',
-                    method:'post',
-                    data: fd
-                }).then((res) => {
-                    console.log(res)
-                    if(res.data.status===200){
-                        setTimeout(()=>{
-                            this.$message.success("图片上传成功!")
-                        },1000)
-                    } else {
-                        this.$message.error("图片上传失败！")
-                    }
-                }).catch((err)=>{
-                    this.$message.error("网络连接错误！")
-                    console.log(err)
-                })
-                return false;
-            },
+            //     if (!isJPG) {
+            //         this.$message.error('图片格式错误！可在课程编辑页面修改.');
+            //         return false
+            //     }
+            //     if (!isLt2M) {
+            //         this.$message.error('图片过大!可在课程编辑页面修改.');
+            //         return false
+            //     }
+            //     let fd = new FormData()
+            //     fd.append('file', file)
+            //     fd.append('courseId',this.courseId)
+            //     fd.append('type','courseImg')
+            //     console.log(file)
+            //     axios({
+            //         url: '/upload/resource/uploadResource.action',
+            //         method:'post',
+            //         data: fd
+            //     }).then((res) => {
+            //         console.log("这里是图片上传返回信息")
+            //         console.log(res)
+            //         if(res.data.status===200){
+            //             setTimeout(()=>{
+            //                 this.$message.success("图片上传成功!")
+            //             },1000)
+            //         } else {
+            //             this.$message.error("图片上传失败！")
+            //         }
+            //     }).catch((err)=>{
+            //         this.$message.error("网络连接错误！")
+            //         console.log(err)
+            //     })
+            //     return false;
+            // },
             getCourseType(){
                 axios.get('/action/course/getAllCourseType.action').then((res)=>{
                     console.log(res)
