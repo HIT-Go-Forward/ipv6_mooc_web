@@ -1,9 +1,9 @@
 <template>
     <div class="home">
         <carousel :courses="importantCourses"/>
-        <div v-for="category in categoryList" :key="category.id">
+        <el-row v-for="category in categoryList" :key="category.id">
             <course-by-category :type="category" :categoryList="tagList[category.id-1]" class="course-by-category"/>
-        </div>
+        </el-row>
     </div>
 </template>
 

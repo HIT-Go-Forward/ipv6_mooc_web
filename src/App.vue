@@ -107,4 +107,20 @@
     .v-note-wrapper{
         min-height: 200px!important;
     }
+    .comment-detail .v-note-wrapper{
+        min-height: 10px!important;
+    }
+    .comment-content .v-show-content{
+        padding: 0!important;
+        background-color: #eee!important;
+    }
+    .comment-content .v-note-panel{
+        box-shadow: none!important;
+    }
+    .comment-content .markdown-body{
+        font-size: 14px;
+    }
+    .reply .markdown-body p{
+        margin-bottom: 0!important;
+    }
 </style>
