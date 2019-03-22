@@ -16,6 +16,7 @@
             <el-dropdown-item command="2" class="dropdown-item">修改个人信息</el-dropdown-item>
             <el-dropdown-item command="3" class="dropdown-item">申请成为教师</el-dropdown-item>
             <el-dropdown-item command="4" class="dropdown-item">站内信息</el-dropdown-item>
+            <el-dropdown-item command="6" class="dropdown-item">我的博客</el-dropdown-item>
             <el-dropdown-item command="5" divided>退出登录</el-dropdown-item>
         </el-dropdown-menu>
     </el-dropdown>
@@ -54,6 +55,9 @@
                             this.$message.error('未连接到服务器');
                             console.log(error);
                         });
+                }
+                else if(command==='6'){
+                    router.push("")
                 }
             }
         }

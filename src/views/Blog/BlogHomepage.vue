@@ -1,18 +1,35 @@
 <template>
     <el-col :span="22" :offset="1" class="blog-container">
-        <el-col class="blog-header">
+        <el-col :span="20" class="blog-header">
             <h1>V6课堂博客区</h1>
+        </el-col>
+        <el-col :span="4" class="goto-my-blog" >
+            <el-button type="success" @click="gotoMyBlog()">进入我的博客</el-button>
         </el-col>
         <el-col class="ads-container">
             <el-col :span="18" class="auto-run-container">
                 <el-carousel trigger="click" height="22rem">
-                    <el-carousel-item v-for="item in 4" :key="item">
-                        {{item}}
+                    <el-carousel-item>
+                        <img src="./../../assets/image/blog-img1.png" class="blog-img">
+                    </el-carousel-item>
+                    <el-carousel-item>
+                        <img src="./../../assets/image/blog-img2.jpg" class="blog-img">
                     </el-carousel-item>
                 </el-carousel>
             </el-col>
-            <el-col :span="5" class="blog-filter">
-                <span>look here</span>
+            <el-col :span="5" class="blog-filter-div">
+                <div class="blog-filter-computer blog-filter">
+                    <a href="javascript:;">计算机</a>
+                </div>
+                <div class="blog-filter-financial blog-filter">
+                    <a href="javascript:;">经济学</a>
+                </div>
+                <div class="blog-filter-psychology blog-filter">
+                    <a href="javascript:;">心理学</a>
+                </div>
+                <div class="blog-filter-language blog-filter">
+                    <a href="javascript:;">语言</a>
+                </div>
             </el-col>
         </el-col>
         <el-col class="blog-main">
@@ -79,14 +96,23 @@
 </template>
 
 <script>
+    import router from './../../router'
     export default {
-        name: "BlogHomepage"
+        name: "BlogHomepage",
+        methods:{
+            gotoMyBlog(){
+                router.push({name:"myBlog"})
+            }
+        }
     }
 </script>
 
 <style scoped lang="less">
     .blog-container{
         text-align: left;   
+        .goto-my-blog{
+            margin-top: 2rem;
+        }
         .blog-header{
             h1{
                 font-size: 4rem;
@@ -95,11 +121,25 @@
         }   
         .ads-container{
             margin-top: 2rem;
-            .blog-filter{
-                background-color: yellow;
+            .blog-img{
+                height: 22rem;
+                width: 100%;
+            }
+            .blog-filter-div{
+                background-color: white;
                 margin-left: 2rem;
                 height: 22rem;
                 overflow: hidden;
+                .blog-filter{
+                    height: 3rem;
+                    padding: 1rem 0 0 2rem;
+                }
+                a{
+                    text-decoration: none;
+                    font-size: 1.2rem;
+                    font-weight: 800;
+                    color: black;
+                }
             }
         }
         .blog-main{

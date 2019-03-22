@@ -41,7 +41,7 @@
                     </el-col>
                 </el-form-item>
                 <el-form-item label="课程视频：">
-                    <div class="d-player" id="dplayer"></div>
+                    <div class="d-player" id="dplayer" ref="player"></div>
                     <div class="video-detail">
                         <h3>已上传视频文件信息</h3>
                         <strong>视频文件名：</strong><span>{{ videoName }}</span><br/>
@@ -148,12 +148,13 @@
                 fileName:'',
                 fileSize:'',
                 videoUrl:'',
+                videoDuration:'',
 
                 video:'',
                 assistFile:'',
                 uploadSuccess:'',
 
-                options: {},
+                stopRefresh:false,
             }
         },
         created:function() {
@@ -163,16 +164,16 @@
         },
         watch:{
             videoUrl: function(to,from){
-                if(to){
+                if(to&&!this.stopRefresh){
                     this.initPlayer();
+                    this.stopRefresh = true;
                 }
                 console.log(to,from)
             }
         },
         methods:{
             initPlayer(){
-                console.log(this.videoUrl)
-                this.options = new DPlayer({
+                const dplayer = new DPlayer({
                     container: document.getElementById('dplayer'),
                     video:{
                         url: "/media" + this.videoUrl,
@@ -180,6 +181,11 @@
                     screenshot: false,
                     autoplay: false,
                 });
+                dplayer.on("durationchange",function(){
+                    this.videoDuration = parseInt(dplayer.video.duration)
+                    console.log(dplayer.video.duration)
+                })
+                // console.log(this.dqlayer.video)
             },
             getCourseOutline(){
                 let newChapters = []

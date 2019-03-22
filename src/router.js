@@ -56,6 +56,21 @@ export default new Router({
           path: '/blog/homepage',
           name: 'blogHomepage',
           component:()=>import('./views/Blog/BlogHomepage'),
-      }
+      },
+      {
+          path: '/blog/myblog',
+          name: 'myBlog',
+          component:()=>import('./views/Blog/MyBlog'),
+      },
+      {
+          path: '/blog/releaseblog',
+          name: 'releaseBlog',
+          component:()=>import('./views/Blog/ReleaseBlog.vue'),
+      },
+      {
+        path: '/blog/editblog/:blogId',
+        name: 'editBlog',
+        component:()=>import('./views/Blog/ReleaseBlog.vue'),
+    }
   ]
 })
