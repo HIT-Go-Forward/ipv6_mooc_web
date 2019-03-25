@@ -74,6 +74,7 @@
             margin-top: 1rem;
             width: 100%;
             position: absolute;
+            height: 100%;
             top: 8rem;
             bottom: 2rem;
             left: 0;

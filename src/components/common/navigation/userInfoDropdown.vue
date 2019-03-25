@@ -57,7 +57,7 @@
                         });
                 }
                 else if(command==='6'){
-                    router.push("")
+                    router.push({name:"myBlog"})
                 }
             }
         }

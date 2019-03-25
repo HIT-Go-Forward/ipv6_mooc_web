@@ -113,6 +113,30 @@
                     </div>
                 </div>
             </div>
+            <div class="blog" v-for="blog in blogs" :key="blog.id">
+                <div class="blog-name-div">
+                    <span class="blog-type">原</span>
+                    <a href="javascript:" class="blog-name" @click="gotoBlog(blog.id)">{{blog.title}}</a>
+                </div>
+                <div class="blog-brief-div">
+                    <span class="blog-brief">{{blog.blog}}</span>
+                </div>
+                <div class="blog-msg-div">
+                    <div class="blog-msg">
+                        <span class="release-time">发布时间：{{blog.uploadDate}}</span>
+                        <span class="point">|</span>
+                        <span class="read-num">阅读数：{{blog.visitCount}}</span>
+                        <span class="point">|</span>
+                        <span class="comment-num">评论数：13</span>
+                    </div>
+                    <div class="blog-edit-div">
+                        <a href="javascript:" class="blog-toup">置顶</a>
+                        <a href="javascript:" class="blog-close-comment">关闭评论</a>
+                        <a href="javascript:" class="blog-edit">编辑</a>
+                        <a href="javascript:" class="blog-delete">删除</a>
+                    </div>
+                </div>
+            </div>
         </el-col>
         </el-col>
     </el-col>
@@ -120,16 +144,38 @@
 
 <script>
     import router from './../../router.js'
+    import axios from 'axios'
     export default {
         name: "MyBlog",
         data(){
             return {
                 hello:'',
+                blogs:'',
             }
         },
+        created(){
+            this.getBlogs()
+        },
         methods:{
+            getBlogs(){
+                this.blogs = [];
+                axios.get("/action/blog/getBlog.action",{
+                    params:{
+                        id:24
+                    }
+                }).then((res)=>{
+                    console.log(res)
+                    this.blogs.push(res.data.data)
+                }).catch((err)=>{
+                    console.log(err)
+                    this.$message.error("网络错误！")
+                })
+            },
             gotoRelease(){
                 router.push({name:'releaseBlog'})
+            },
+            gotoBlog(blogId){
+                router.push("/blog/"+blogId)
             }
         }
     }

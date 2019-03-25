@@ -4,6 +4,7 @@
         <div class="main" :style="width">
             <router-view v-if="isRouterAlive"/>
         </div>
+        <span style="font-size:0;">1</span>
         <el-footer/>
     </div>
 </template>
@@ -60,6 +61,7 @@
 
     body {
         margin: 0;
+        /* height: 100%; */
         /*background-color: #545c64;*/
     }
 
