@@ -11,7 +11,7 @@
                             <img :src="'/media' + course.teacher.img" alt="">
                         </div>
                         <div v-else  class="teacher-img">
-                            <img src="../../assets/image/avatar.jpg" alt="">
+                            <img src="../../../assets/image/avatar.jpg" alt="">
                         </div>
                     </el-col>
                     <el-col :span="16">

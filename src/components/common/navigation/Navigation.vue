@@ -41,30 +41,6 @@
                 IsLogin: state => state.IsLogin
             })
         },
-        mounted() {
-            if (document.cookie.indexOf("token=") !== -1 && this.$store.getters.getStorge && this.$store.getters.getStorge.user) {
-                this.$store.state.IsLogin = true;
-            }
-            else{
-                router.push({name: 'Homepage'});
-            }
-            // if(this.$route.path==='/'){
-            //     document.querySelector(".Navigation").style.position = "fixed"
-            // }
-        },
-        watch:{
-            // $route(to,from){
-            //     console.log("from:"+from.path+";"+"to:"+to.path)
-            //     if(from.path==='/'){
-            //         window.removeEventListener("scroll",this.handleScroll,true)
-            //         document.querySelector(".Navigation").style.position = "static"
-            //     }
-            //     if(to.path==='/'){
-            //         document.querySelector(".Navigation").style.position = "fixed"
-            //         window.addEventListener("scroll",this.handleScroll,true)
-            //     }
-            // }
-        },
         methods: {
             handleSelect(key) {
                 switch (key) {

@@ -20,12 +20,11 @@
             }
         },
         components: {
-            courseByCategory: ()=>import('./homepage/courseByCategory'),
-            carousel: ()=>import('./homepage/carousel'),
+            courseByCategory: ()=>import('../../components/Homepage/courseByCategory'),
+            carousel: ()=>import('../../components/Homepage/carousel'),
         },
         created(){
-            this.user = this.$store.getters.getStorge?this.$store.getters.getStorge.user:null
-            console.log(this.user)
+            this.user = this.$store.state.IsLogin?this.$store.getters.getStorge.user:null
             if(this.user && this.user.type===4){
                 axios.get('/action/course/getUserCourses.action',{
                     params:{

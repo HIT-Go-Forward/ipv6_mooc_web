@@ -125,7 +125,7 @@
                 <div>课程视频</div>
                 <video width="80%" :src="'/media'+this.lesson.video.url" controls></video>
             </div>
-            <div class="video-title" v-if="this.lesson.file.url">
+            <div class="video-title" v-if="this.lesson.file&&this.lesson.file.url">
                 <div>课程配套文件</div>
                 <a :href="'/media'+this.lesson.file.url" :download="this.lesson.file.url">点击下载</a>
             </div>
@@ -145,7 +145,7 @@
         name: "addLesson",
         data(){
             return {
-                part: 1,
+                part: 0,
                 chapters: '',
                 addChapterFlag: 0,
                 addChapterTitle: '',
@@ -296,7 +296,6 @@
                 }
             },
             submitLesson(){
-                console.log(1)
                 this.$refs['form'].validate((valid)=>{
                     if(valid){
                         let chapterNum = this.form.chapter+1

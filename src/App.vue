@@ -14,7 +14,7 @@
         name: 'app',
         components: {
             navigation: () => import('./components/common/navigation/Navigation'),
-            elFooter: () => import('./views/Homepage/Footer')
+            elFooter: () => import('./components/Homepage/Footer')
         },
         data(){
             return{
@@ -40,6 +40,9 @@
                 this.$nextTick(function(){
                     this.isRouterAlive = true;
                 })
+            },
+            getLogin(){
+                this.$store.state.IsLogin = document.cookie.indexOf("token=") !== -1 && this.$store.getters.getStorge && this.$store.getters.getStorge.user;
             }
         }
     }
@@ -48,8 +51,9 @@
 <style>
     @import "less/index.less";
     #app {
-        font-family: "Helvetica Neue", Helvetica, Arial, "Microsoft Yahei",
-                     "Hiragino Sans GB", "Heiti SC", "WenQuanYi Micro Hei", sans-serif;
+        /* font-family: "Helvetica Neue", Helvetica, Arial, "Microsoft Yahei",
+                     "Hiragino Sans GB", "Heiti SC", "WenQuanYi Micro Hei", sans-serif; */
+        font-family: -apple-system,SF UI Display,Arial,PingFang SC,Hiragino Sans GB,Microsoft YaHei,WenQuanYi Micro Hei,sans-serif;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
         text-align: center;

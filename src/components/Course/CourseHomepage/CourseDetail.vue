@@ -17,7 +17,7 @@
         },
         components:{
             courseInfo: ()=>import('./CourseInfo'),
-            courseComment: ()=>import('../common/Comment'),
+            courseComment: ()=>import('../../common/Comment'),
         },
         data(){
             return{

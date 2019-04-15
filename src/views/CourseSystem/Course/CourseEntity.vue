@@ -16,8 +16,8 @@
     export default {
         name: "course-entity",
         components:{
-            courseSideBar: ()=>import('../../components/Course/CourseEntity/CourseSideBar'),
-            courseware: ()=>import('../../components/Course/CourseEntity/Courseware')
+            courseSideBar: ()=>import('../../../components/Course/CourseEntity/CourseSideBar'),
+            courseware: ()=>import('../../../components/Course/CourseEntity/Courseware')
         },
         data(){
             return{

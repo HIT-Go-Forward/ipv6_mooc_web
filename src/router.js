@@ -10,72 +10,72 @@ export default new Router({
       {
           path: '/',
           name: 'Homepage',
-          component: () => import('./views/Homepage/Homepage'),
+          component: () => import('./views/CourseSystem/Homepage'),
       },
       {
           path: '/user/Homepage',
           name: 'userHomepage',
-          component: () => import('./views/UserHomepage'),
+          component: () => import('./views/UserSystem/UserHomepage'),
       },
       {
           path: '/user/setting',
           name: 'userSetting',
-          component: () => import('./views/UserSetting'),
+          component: () => import('./views/UserSystem/UserSetting'),
       },
       {
           path: '/course/:courseId/Homepage',
           name: 'courseHomepage',
-          component: ()=>import('./views/Course/CourseHomepage'),
+          component: ()=>import('./views/CourseSystem/Course/CourseHomepage'),
       },
       {
           path: '/course/:courseId/addLesson',
           name: 'addLesson',
-          component: ()=>import('./views/Course/Lesson/addLesson'),
+          component: ()=>import('./views/CourseSystem/Lesson/addLesson'),
       },
       {
           path: '/course/:courseId/courseEdit',
           name: 'courseEdit',
-          component: ()=>import('./views/Course/CourseEdit'),
+          component: ()=>import('./views/CourseSystem/Course/CourseEdit'),
       },
       {
           path:'/course/:courseId/:lessonId/lessonEdit',
           name: 'lessonEdit',
-          component: ()=>import('./views/Course/Lesson/lessonEdit'),
+          component: ()=>import('./views/CourseSystem/Lesson/lessonEdit'),
       },
       {
           path: '/course/:courseId/learn',
           name: 'courseEntity',
-          component: ()=>import('./views/Course/CourseEntity'),
+          component: ()=>import('./views/CourseSystem/Course/CourseEntity'),
       },
       {
           path: '/lesson/:lessonId',
           name: 'lessonPlay',
-          component: ()=>import('./views/Course/LessonPlay'),
+          component: ()=>import('./views/CourseSystem/Lesson/LessonPlay'),
       },
       {
           path: '/blog/homepage',
           name: 'blogHomepage',
-          component:()=>import('./views/Blog/BlogHomepage'),
+          component:()=>import('./views/BlogSystem/BlogHomepage'),
       },
       {
           path: '/blog/myblog',
           name: 'myBlog',
-          component:()=>import('./views/Blog/MyBlog'),
+          component:()=>import('./views/BlogSystem/MyBlog'),
       },
       {
           path: '/blog/releaseblog',
           name: 'releaseBlog',
-          component:()=>import('./views/Blog/ReleaseBlog.vue'),
+          component:()=>import('./views/BlogSystem/ReleaseBlog.vue'),
       },
       {
         path: '/blog/editblog/:blogId',
         name: 'editBlog',
-        component:()=>import('./views/Blog/ReleaseBlog.vue'),
+        component:()=>import('./views/BlogSystem/ReleaseBlog.vue'),
       },
       {
           path:'/blog/:blogId',
           name: 'blogDetail',
-          component:()=>import('./views/Blog/BlogDetail.vue'),
+          component:()=>import('./views/BlogSystem/BlogDetail.vue'),
       }
   ]
 })

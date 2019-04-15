@@ -96,7 +96,6 @@
                                    this.$store.commit('$_setStorage', {user: response.data.data});
                                    this.$store.commit('login');
                                    console.log(this.$store.getters.getLogin);
-                                   // this.loginCancel()
                                    this.reload();
                                }
                            })

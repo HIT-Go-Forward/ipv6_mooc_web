@@ -116,8 +116,8 @@
 </template>
 
 <script>
-    import axios from '../../axiosIntercepter'
-    import router from './../../router'
+    import axios from '../../../axiosIntercepter'
+    import router from '../../../router'
     export default {
         name: "CourseEdit",
         data(){

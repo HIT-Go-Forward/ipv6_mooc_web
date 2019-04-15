@@ -13,13 +13,13 @@
 </template>
 
 <script>
-    import axios from '../../axiosIntercepter'
+    import axios from '../../../axiosIntercepter'
     export default {
         name: "course-homepage",
         components:{
-            courseCard: ()=>import('../../components/CourseHomepage/CourseCard'),
-            courseDetail: ()=>import('../../components/CourseHomepage/CourseDetail'),
-            courseTeacher: ()=>import('../../components/CourseHomepage/CourseTeacher')
+            courseCard: ()=>import('../../../components/Course/CourseHomepage/CourseCard'),
+            courseDetail: ()=>import('../../../components/Course/CourseHomepage/CourseDetail'),
+            courseTeacher: ()=>import('../../../components/Course/CourseHomepage/CourseTeacher')
         },
         data(){
             return{

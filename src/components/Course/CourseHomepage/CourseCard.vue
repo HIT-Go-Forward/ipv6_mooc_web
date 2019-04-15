@@ -36,9 +36,9 @@
 </template>
 
 <script>
-    import analyze from './../../plugins/rgbaster'
-    import axios from '../../axiosIntercepter'
-    import router from '../../router'
+    import analyze from '../../../plugins/rgbaster'
+    import axios from '../../../axiosIntercepter'
+    import router from '../../../router'
     export default {
         name: "course-card",
         props:{

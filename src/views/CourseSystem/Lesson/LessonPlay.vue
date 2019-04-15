@@ -17,11 +17,11 @@
 </template>
 
 <script>
-    import axios from '../../axiosIntercepter'
+    import axios from '../../../axiosIntercepter'
     export default {
         components:{
-            DPlayer: ()=>import('../../components/Course/lessonPlayer/DPlayer'),
-            lessonComment: ()=>import('../../components/common/Comment'),
+            DPlayer: ()=>import('../../../components/Course/lessonPlayer/DPlayer'),
+            lessonComment: ()=>import('../../../components/common/Comment'),
         },
         name: "lesson-play",
         data(){

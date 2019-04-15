@@ -14,23 +14,23 @@
         <el-col :span="15" class="carousel-collect">
             <el-carousel trigger="click" class="carousel" height="25rem" @change="changeImg">
                 <el-carousel-item>
-                    <img src="./../../../assets/image/homePagePic1.png" class="main-img">
+                    <img src="../../assets/image/homePagePic1.png" class="main-img">
                 </el-carousel-item>
                 <el-carousel-item>
-                    <img src="./../../../assets/image/homePagePic2.jpg" class="main-img">
+                    <img src="../../assets/image/homePagePic2.jpg" class="main-img">
                 </el-carousel-item>
                 <el-carousel-item>
-                    <img src="./../../../assets/image/homePagePic3.png" class="main-img">
+                    <img src="../../assets/image/homePagePic3.png" class="main-img">
                 </el-carousel-item>
                 <el-carousel-item>
-                    <img src="./../../../assets/image/homePagePic4.jpg" class="main-img">
+                    <img src="../../assets/image/homePagePic4.jpg" class="main-img">
                 </el-carousel-item>
             </el-carousel>
         </el-col>
         <el-col :span="5" class="carousel-right">
             <el-col :span="18" class="user-courses" v-if="!this.IsLogin">
                 <div class="user-courses-img-div">
-                    <img src="./../../../assets/image/avatar.png" class="user-courses-img">
+                    <img src="../../assets/image/avatar.png" class="user-courses-img">
                 </div>
                 <div class="user-courses-text">
                     <span>游客，您好</span>
@@ -59,7 +59,7 @@
 
 <script>
     import {mapState} from 'vuex'
-    import analyze from './../../../plugins/rgbaster'
+    import analyze from '../../plugins/rgbaster'
     export default {
         name: "carousel",
         data(){

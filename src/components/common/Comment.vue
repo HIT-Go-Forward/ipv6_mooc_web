@@ -34,8 +34,8 @@
                                     <el-button v-if="commentType === 'lesson'" :id="comment.id" type="text" size="mini" class="replay-button" @click="startReply">回复</el-button>
                                 </div>
                                 <div class="reply" v-if="commentType === 'lesson'">
-                                    <div v-for="reply in replyList" :key="reply.id" v-if="reply.under === comment.id">
-                                        <el-row>
+                                    <div v-for="reply in replyList" :key="reply.id">
+                                        <el-row  v-if="reply.under === comment.id">
                                             <el-col :span="24" class="reply-detail">
                                                 <div class="reply-name">
                                                     <span>{{reply.user.name}}</span>
