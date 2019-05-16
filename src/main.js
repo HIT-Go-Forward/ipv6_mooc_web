@@ -37,5 +37,5 @@ new Vue({
 //     }
 // });
 router.afterEach(() => {
-    window.scroll(0, 0);
+    window.scrollTo(0, 0);
 });

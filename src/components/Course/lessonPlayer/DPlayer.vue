@@ -26,7 +26,8 @@
                 this.options = new DPlayer({
                     container: document.getElementById('dplayer'),
                     video:{
-                        url: "/media" + this.url,
+                        // url: "/media" + this.url,
+                        url: "/media/resource/45/37/36/[道兰MT][NHK纪录片][永不止步的人 宫崎骏][中日双语].mp4"
                     },
                     screenshot: false,
                     autoplay: false,
@@ -38,6 +39,12 @@
                         bottom: '15%',
                         unlimited: true
                     },
+                    contextmenu:[
+                        {
+                            text:"hello",
+                            link:"www.baidu.com"
+                        }
+                    ],
                 });
             },
         }

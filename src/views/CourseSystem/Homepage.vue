@@ -1,10 +1,10 @@
 <template>
     <div class="home">
         <carousel :courses="importantCourses"/>
-        <el-row v-for="category in categoryList" :key="category.id">
+        <div v-for="category in categoryList" :key="category.id">
             <course-by-category :type="category" :categoryList="tagList[category.id-1]" class="course-by-category"/>
-        </el-row>
-    </div>
+        </div>
+        </div>
 </template>
 
 <script>
@@ -24,6 +24,8 @@
             carousel: ()=>import('../../components/Homepage/carousel'),
         },
         created(){
+            this.categoryList = this.$store.state.categoryList;
+            this.tagList = this.$store.state.tagList;
             this.user = this.$store.state.IsLogin?this.$store.getters.getStorge.user:null
             if(this.user && this.user.type===4){
                 axios.get('/action/course/getUserCourses.action',{
@@ -50,28 +52,6 @@
                     console.log(err)
                 })
             }
-
-            axios.get('/action/course/getAllCourseType.action').then((res)=>{
-                console.log(res)
-                if(res.data.status===200){
-                    for(let i=0;i<res.data.data.length;i++){
-                        if (!res.data.data[i].parent){
-                            this.categoryList.push(res.data.data[i]);
-                        }
-                        else{
-                            while(this.tagList.length<res.data.data[i].parent){
-                                this.tagList.push([]);
-                            }
-                            this.tagList[res.data.data[i].parent-1].push(res.data.data[i]);
-                        }
-                    }
-                } else {
-                    this.$message.error(res.data.data)
-                }
-            }).catch((err)=>{
-                this.$message.error("网络连接错误！")
-                console.log(err)
-            })
         },
     }
 </script>

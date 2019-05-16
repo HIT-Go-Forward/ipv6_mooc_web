@@ -10,7 +10,9 @@ export default new Vuex.Store({
         userInfoDialogVisible: false,
         IsLogin: false,                    //是否登录
         user: null,                        //用户信息
-        token:''
+        token:'',
+        categoryList:[],
+        tagList:[],
     },
     getters: {
         getStorge(state){
@@ -19,9 +21,6 @@ export default new Vuex.Store({
             }
             return state.user;
         },
-        getLogin(state){
-            return state.IsLogin
-        }
     },
     mutations: {
         loginShow(state){

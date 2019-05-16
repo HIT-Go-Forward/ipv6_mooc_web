@@ -145,7 +145,7 @@
         name: "addLesson",
         data(){
             return {
-                part: 0,
+                part: 2,
                 chapters: '',
                 addChapterFlag: 0,
                 addChapterTitle: '',

@@ -10,6 +10,7 @@
 </template>
 
 <script>
+    import axios from './axiosIntercepter'
     export default {
         name: 'app',
         components: {
@@ -26,13 +27,16 @@
         },
         provide(){
             return {
-                reload: this.reload
+                reload: this.reload,
+                getCourse: this.getAllCourseType(),
             }
         },
         created(){
             window.addEventListener('resize', ()=>{
                 this.width.width = window.innerWidth - 100 + 'px'
             })
+            this.getAllCourseType();
+            this.getLogin();
         },
         methods:{
             reload(){
@@ -42,7 +46,28 @@
                 })
             },
             getLogin(){
-                this.$store.state.IsLogin = document.cookie.indexOf("token=") !== -1 && this.$store.getters.getStorge && this.$store.getters.getStorge.user;
+                this.$store.state.IsLogin = !!(document.cookie.indexOf("token=") !== -1 && this.$store.getters.getStorge && this.$store.getters.getStorge.user);
+            },
+            getAllCourseType(){
+                let categoryList = [];
+                let tagList = [];
+                axios.get('/action/course/getAllCourseType.action').then((res)=>{
+                    if(res.data.status===200){
+                        for(let i=0;i<res.data.data.length;i++){
+                            if (!res.data.data[i].parent){
+                                categoryList.push(res.data.data[i]);
+                            }
+                            else{
+                                while(tagList.length<res.data.data[i].parent){
+                                    tagList.push([]);
+                                }
+                                tagList[res.data.data[i].parent-1].push(res.data.data[i]);
+                            }
+                        }
+                        this.$store.state.categoryList = categoryList;
+                        this.$store.state.tagList = tagList;
+                    }
+                })
             }
         }
     }

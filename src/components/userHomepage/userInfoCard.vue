@@ -11,9 +11,6 @@
                             <div v-else>
                                 <img :src="'/media' + user.img" alt="" class="avatar">
                             </div>
-                            <!-- <div class="avatar-gray" @click="modifyAvatar">
-                                <span class="avatar-cover">更换头像</span>
-                            </div> -->
                         </div>
                     </el-col>
                     <el-col :span="16">
@@ -60,13 +57,9 @@
             }
         },
         methods:{
-            modifyAvatar(){
-                this.$refs.avatarDialog.avatarUpload();
-            }
         },
         created:function(){
-            console.log(this.user)
-            console.log(this.user.name)
+
         }
     }
 </script>
