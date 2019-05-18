@@ -8,24 +8,30 @@
 </template>
 
 <script>
+    import { mapState } from 'vuex'
     import axios from '../../axiosIntercepter'
     export default {
         name: 'home',
+        inject:['getCourse'],
         data(){
             return {
-                categoryList: [],
-                tagList: [],
+                // categoryList: [],
+                // tagList: [],
                 importantCourses:[],
                 user:'',
             }
+        },
+        computed: {
+            ...mapState({
+                categoryList : state => state.categoryList,
+                tagList : state => state.tagList,
+            })
         },
         components: {
             courseByCategory: ()=>import('../../components/Homepage/courseByCategory'),
             carousel: ()=>import('../../components/Homepage/carousel'),
         },
         created(){
-            this.categoryList = this.$store.state.categoryList;
-            this.tagList = this.$store.state.tagList;
             this.user = this.$store.state.IsLogin?this.$store.getters.getStorge.user:null
             if(this.user && this.user.type===4){
                 axios.get('/action/course/getUserCourses.action',{

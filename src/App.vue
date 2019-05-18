@@ -68,6 +68,7 @@
                         this.$store.state.tagList = tagList;
                     }
                 })
+                return {categoryList:categoryList,tagList:tagList}
             }
         }
     }

@@ -9,7 +9,7 @@
             </div>
         </div>
         <div class="body">
-            <mavon-editor class="editor" v-model="blogContent"></mavon-editor>
+            <mavon-editor class="editor" v-model="blogContent" @imgAdd="addImg" ref=editor></mavon-editor>
         </div>
         <el-dialog
             :visible.sync="dialogVisible"
@@ -185,6 +185,20 @@
                     this.reload()
                 }).catch((err)=>{
                     console.log(err)
+                })
+            },
+            //删除没有
+            addImg(pos, $file){
+                var formdata = new FormData();
+                formdata.append('image', $file);
+                axios({
+                    url: '/upload/resource/uploadBlogImg.action',
+                    method: 'post',
+                    data: formdata,
+                    headers: { 'Content-Type': 'multipart/form-data' },
+                }).then((url) => {
+                    // eslint-disable-next-line
+                    $vm.$img2Url(pos, url);
                 })
             }
         }
