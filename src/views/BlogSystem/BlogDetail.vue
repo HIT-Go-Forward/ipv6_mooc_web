@@ -36,9 +36,10 @@
             </div>
         </div>
         <div class="like">
-            <a href="javascript:">
-                <img class="like-png" src="./../../assets/image/before-like.png" v-show="like">
-                <img class="like-png" src="./../../assets/image/after-like.png" v-show="!like">
+            <a href="javascript:" @click="likeBlog">
+                &nbsp;
+                <img class="like-png" src="./../../assets/image/before-like.png" v-show="!like">
+                <img class="like-png" src="./../../assets/image/after-like.png" v-show="like">
                 &nbsp;喜欢 | 236</a>
         </div>
         <div class="comment">
@@ -71,11 +72,10 @@
                                         <mavon-editor v-model="comment.content" :toolbarsFlag="false" :subfield="false" defaultOpen="preview"/>
                                     </div>
                                     <div class="comment-time">
-                                        <span v-if="commentType === 'lesson'">{{comment.date}}</span>
-                                        <p v-else>{{comment.date}}</p>
-                                        <el-button v-if="commentType === 'lesson'" :id="comment.id" type="text" size="mini" class="replay-button" @click="startReply">回复</el-button>
+                                        <span>{{comment.date}}</span>
+                                        <el-button :id="comment.id" type="text" size="mini" class="replay-button" @click="startReply">回复</el-button>
                                     </div>
-                                    <div class="reply" v-if="commentType === 'lesson'">
+                                    <div class="reply">
                                         <div v-for="reply in replyList" :key="reply.id">
                                             <el-row  v-if="reply.under === comment.id">
                                                 <el-col :span="24" class="reply-detail">
@@ -175,33 +175,45 @@ import axios from 'axios'
         methods:{
             getBlog(){
                 this.blogId = this.$route.params.blogId;
-                axios.get("/action/blog/getBlog.action",{
-                    params:{
-                        id:this.blogId,
-                    }
-                }).then((res)=>{
-                    console.log(res.data.data)
-                    this.blog = res.data.data
-                })
-                // axios.get("/action/blog/viewBlogById.action",{
+                // axios.get("/action/blog/getBlog.action",{
                 //     params:{
-                //         blogId:'5cdc23dcd8cb515883ccc7e4'
+                //         id:this.blogId,
                 //     }
                 // }).then((res)=>{
-                //     console.log(res)
-                //     // this.blog = res.data.data
+                //     this.blog = res.data.data
+                //     this.like = res.data.data.like
                 // })
+                axios.get("/action/blog/viewBlogById.action",{
+                    params:{
+                        blogId:'5cdfdcc99cea76772ea2e9c7'
+                    }
+                }).then((res)=>{
+                    console.log(res)
+                    // this.blog = res.data.data
+                })
+            },
+            likeBlog(){
+                axios.get('/action/blog/likeBlog.action',{
+                    params:{
+                        blogId:this.blogId,
+                        operation:this.like?'cancel':'like',
+                    }
+                }).then((res)=>{
+                    if(res.data.status===200){
+                        this.like = !this.like
+                    }
+                }).catch((err)=>{
+                    console.log(err)
+                })
             },
             addComment(){
-                let type = this.commentType==='lesson'?0:1;
                 if(this.newCommon === ''){
                     this.$message.warning('评论不能为空！')
                 }else{
                     axios.get('/action/CommentAndBarrage/sendComment.action', {
                         params:{
-                            type: type,
-                            lessonId: this.$route.params.lessonId,
-                            courseId: this.courseId,
+                            type: 3,
+                            blogId:this.blogId,
                             content: this.newCommon,
                         }})
                         .then((res)=>{
@@ -290,9 +302,8 @@ import axios from 'axios'
             getComment(){
                 axios.get('/action/CommentAndBarrage/getComment.action', {
                     params:{
-                        type: this.commentType,
-                        lessonId: this.$route.params.lessonId,
-                        courseId: this.courseId,
+                        type: 'blog',
+                        blogId:this.blogId,
                     }})
                     .then((res)=>{
                         if(res.data.status===200){
@@ -411,7 +422,7 @@ import axios from 'axios'
         .like{
             a{
                 text-decoration: none;
-                color: #000;
+                color: red;
             }
             margin: 2rem auto;
             font-size: 2rem;
@@ -424,4 +435,64 @@ import axios from 'axios'
             }
         }
     }
+    .avatar{
+        border-radius: 50%;
+        width: 60px;
+        float: right;
+        margin: 15px 10px 0 0;
+    }
+    .replay-button{
+        margin-left: 15px;
+    }
+    .comment-time{
+        line-height: 4px;
+        font-size: 14px;
+        font-weight: 300;
+    }
+    .comment-item{
+        margin: 10px;
+    }
+    .comment-name{
+        line-height: 16px;
+        font-size: 16px;
+        font-weight: 600;
+    }
+    .reply-detail{
+        border-top: 1px dashed #c0ccda;
+        padding: 5px 0 0;
+    }
+    .reply-name{
+        line-height: 14px;
+        font-size: 14px;
+        font-weight: 600;
+    }
+    .comment-content{
+        font-weight: 400;
+    }
+    .comment-detail{
+        padding: 0 0 20px;
+        border-bottom: 1px solid #c0ccda;
+    }
+    .comment{
+        background-color: #eee;
+        text-align: left;
+        min-height: 400px;
+        padding: 10px;
+        border-radius: 10px 10px 10px 10px;
+        box-shadow: 0 0 5px #B09999;
+    }
+    .all-comment{
+        margin: 10px;
+    }
+    .add-button{
+        margin: 10px 10px 0;
+        float: right;
+    }
+    .common-editor{
+        margin: 10px 10px 0;
+        border-radius: 0 10px 10px 10px;
+        overflow: hidden;
+        box-shadow: 0 0 5px #B09999;
+    }
+
 </style>

@@ -80,6 +80,7 @@
 
 <script>
     import axios from '../../axiosIntercepter'
+    import router from './../../router'
     export default {
         name: "ReleaseBlog",
         data(){
@@ -159,13 +160,19 @@
                 axios.post("/action/blog/saveBlog.action",{
                     title:this.blogTitle,
                     blog:this.blogContent,
-                    // kind:this.blogKind,
+                    kind:this.blogKind,
                     type:this.blogType,
-                    // private:this.blogPrivate,
+                    open:this.blogPrivate,
                     label:this.blogLabel.join(';'),
                     operation:"draft"
                 }).then((res)=>{
-                    console.log(res)
+                    if(res.data.status===200){
+                        this.$message.success("保存成功！")
+                        router.push("/blog/editblog/"+res.data.data)
+                        this.reload();
+                    } else{
+                        this.$message.error(res.data.data)
+                    }
                     this.reload()
                 }).catch((err)=>{
                     console.log(err)
@@ -175,15 +182,20 @@
                 axios.post("/action/blog/saveBlog.action",{
                     title:this.blogTitle,
                     blog:this.blogContent,
-                    // kind:this.blogKind,
+                    kind:this.blogKind,
                     type:this.blogType,
-                    // private:this.blogPrivate,
+                    open:this.blogPrivate,
                     label:this.blogLabel.join(';'),
                     operation:"release"
                 }).then((res)=>{
-                    console.log(res)
-                    this.reload()
+                    if(res.data.status===200){
+                        this.$message.success("发布成功！")
+                        router.push("/blog/myblog")
+                    } else{
+                        this.$message.error(res.data.data)
+                    }
                 }).catch((err)=>{
+                    this.$message.error("网络错误！")
                     console.log(err)
                 })
             },

@@ -32,6 +32,9 @@
                 <course-audit :rejected="rejectCourseApply" :accept="acceptCourseApply" :applying="applyingCourseApply"></course-audit>
             </el-tab-pane>
             <el-tab-pane label="举报审核" name="informAudit" v-if="user.type===2"></el-tab-pane>
+            <el-tab-pane label="博客审核" name="blogAudit" v-if="user.type===2">
+                <blog-audit :blogs="blogList"></blog-audit>
+            </el-tab-pane>
         </el-tabs>
     </div>
 </template>
@@ -61,7 +64,8 @@
                 releaseCourseRecordApplying:[],
                 releaseCourseRecordreleased:[],
                 releaseCourseRecordrejected:[],
-                user: this.$store.getters.getStorge.user
+                user: this.$store.getters.getStorge.user,
+                blogList:[],
             }
         },
         components: {
@@ -73,7 +77,8 @@
             teacherAudit: ()=>import('./teacherAudit'),
             courseAudit: ()=>import('./courseAudit'),
             releaseCourse: ()=>import('./releaseCourse'),
-            releaseRecord: ()=>import('./courseRecord')
+            releaseRecord: ()=>import('./courseRecord'),
+            blogAudit:()=>import('./blogAudit')
         },
         created(){
             this.tabName = this.$route.query.tabName?this.$route.query.tabName:'learningCourse';
@@ -90,6 +95,7 @@
                     case 'teacherAudit':this.teacherAuditAll();break;
                     case 'courseAudit':this.courseAuditAll();break;
                     case 'releaseRecord':this.getCourseRecord();break;
+                    case 'blogAudit':this.getBlogs();
                 }
             },
             handleClick(tab) {
@@ -130,6 +136,11 @@
                             this.courseAuditAll();
                         }
                         break;
+                    case 'blogAudit':
+                        if(this.blogList.length===0){
+                            this.getBlogs()
+                        }
+                        break;
                 }
                 console.log(tab.name)
             },
@@ -155,6 +166,14 @@
                         this.$message.error('未连接到服务器');
                         console.log(error);
                     });
+            },
+            getBlogs(){
+                this.blogList = []
+                axios.get('/action/apply/getBlogApplies.action').then((res)=>{
+                    if(res.data.status===200){
+                        this.blogList = res.data.data;
+                    }
+                })
             },
             getVisitCourse(){
                 this.visitCourse = [];
