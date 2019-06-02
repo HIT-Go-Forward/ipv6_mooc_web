@@ -34,13 +34,12 @@
         </el-col>
         <el-col class="blog-main">
             <el-col :span="18" class="blogs">
-                <div class="blog">
+                <div class="blog" v-for="blog in showBlogs" :key="blog.id" @click="gotoBlog(blog.id)">
                     <div class="blog-header-div">
-                        <span class="blog-header">这里是头头</span>
+                        <a href="javascript:" class="blog-header">{{blog.title}}</a>
                     </div>
                     <div class="blog-body-div">
-                        <span class="blog-body">这里是抽取的正文这里是抽取的正文
-                            这里是抽取的正文这里是抽取的正文这里是抽取的正文这里是抽取的正文
+                        <span class="blog-body">{{blog.blog}}
                         </span>
                     </div>
                     <hr>
@@ -96,14 +95,58 @@
 </template>
 
 <script>
+    import axios from './../../axiosIntercepter'
     import router from './../../router'
+    import { mapState } from 'vuex'
+
     export default {
         name: "BlogHomepage",
+        inject:["reload"],
+        data(){
+            return {
+                blogs:[],
+                showBlogs:[],
+            }
+        },
+        created(){
+            this.reload();
+            this.getBlogs();
+            document.querySelector("#app").style.backgroundColor="#fff";
+        },
+        beforeDestroy(){
+            document.querySelector("#app").style.backgroundColor="#ddd";
+        },
+        computed:{
+            ...mapState({
+                categoryList : state => state.categoryList,
+            })
+        },
         methods:{
+            gotoBlog(blogId){
+                router.push('/blog/'+blogId)
+            },
             gotoMyBlog(){
                 router.push({name:"myBlog"})
-            }
-        }
+            },
+            getBlogs(){
+                this.blogs=[];
+                this.showBlogs=[];
+                for(let type of this.categoryList){
+                    axios.get("/action/blog/queryBlogByType.action",{
+                        params:{
+                            typeId:type.id
+                        }
+                    }).then((res)=>{
+                        if(res.data.status===200){
+                            this.blogs.push(res.data.data);
+                            this.showBlogs.push(...res.data.data);
+                            console.log(type)
+                        }
+                    })
+                }
+            },
+        },
+
     }
 </script>
 
@@ -151,7 +194,7 @@
                         margin-bottom: 1rem;
                         .blog-header{
                             font-size: 2rem;
-                            font-weight: 1000;
+                            font-weight: 900;
                             color:black;
                         }
                     }
@@ -172,7 +215,7 @@
                     .blog-recommender-header-div{
                         .blog-recommender-header{
                             font-size: 1.5rem;
-                            font-weight: 1000;
+                            font-weight: 900;
                         }
                     }
                     .blog-recommender-body{
@@ -189,7 +232,7 @@
                     .bloger-recommender-header-div{
                         .bloger-recommender-header{
                             font-size: 1.5rem;
-                            font-weight: 1000;
+                            font-weight: 900;
                         }
                     }
                     .bloger-recommender-body{
@@ -215,7 +258,7 @@
                     .course-recommender-header-div{
                         .course-recommender-header{
                             font-size: 1.5rem;
-                            font-weight: 1000;
+                            font-weight: 900;
                         }
                     }
                     .course-recommender-body{
