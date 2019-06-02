@@ -7,13 +7,14 @@
             <el-tab-pane v-for="category in categoryList" :key="category.id" :label="category.name" :name="category.name">
                 <course-item  v-for="courseItem in courseItemList" :key="courseItem.id" :courseItem="courseItem"/>
             </el-tab-pane>
-            <el-tab-pane label="查看全部 >>" :key="-1" name="click-for-more"> </el-tab-pane>
+            <el-tab-pane label="查看全部 >>" :key="-1" :type="type.id" name="click-for-more"> </el-tab-pane>
         </el-tabs>
     </el-col>
 </template>
 
 <script>
     import axios from "axios"
+    import router from '../../router'
     export default {
         name: "course-by-category",
         components:{
@@ -53,7 +54,7 @@
             },
             handleClick(tab){
                 if(tab.$vnode.data.key===-1){
-                    //TODO 跳转分类界面
+                    router.push({path: `/course/classify/${tab.$vnode.data.attrs.type}`});
                 }else{
                     this.getCourseList(tab.$vnode.data.key);
                 }
