@@ -68,7 +68,7 @@ export default new Router({
           component:()=>import('./views/BlogSystem/ReleaseBlog.vue'),
       },
       {
-        path: '/blog/editblog/:blogId',
+        path: '/blog/blogEdit/:blogId',
         name: 'editBlog',
         component:()=>import('./views/BlogSystem/ReleaseBlog.vue'),
       },

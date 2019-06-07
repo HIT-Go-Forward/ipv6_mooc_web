@@ -105,6 +105,7 @@
         created(){
             this.labelErrorVisible = false;
             this.allBlogTypes = this.$store.state.categoryList
+            console.log(this.$route.params.blogId)
             if(this.$route.params.blogId){
                 this.blogEdit = true;
                 this.getBlog();

@@ -1,7 +1,7 @@
 <template>
-    <el-col :span="22" :offset="1" class="blog-container">
+    <el-col class="blog-container">
         <el-col :span="20" class="blog-header">
-            <h1>V6课堂博客区</h1>
+            <h1 @click="getBlogs">V6课堂博客区</h1>
         </el-col>
         <el-col :span="4" class="goto-my-blog" >
             <el-button type="success" @click="gotoMyBlog()">进入我的博客</el-button>
@@ -19,16 +19,29 @@
             </el-col>
             <el-col :span="5" class="blog-filter-div">
                 <div class="blog-filter-computer blog-filter">
-                    <a href="javascript:;">计算机</a>
+                    <a href="javascript:;" @click="getBlogByType(114)">
+                        <img src="./../../assets/image/blog_img/计算机.png" class="blog-filter-img">
+                    </a>
                 </div>
                 <div class="blog-filter-financial blog-filter">
-                    <a href="javascript:;">经济学</a>
+                    <a href="javascript:;">
+                        <img src="./../../assets/image/blog_img/经济学.png" class="blog-filter-img">
+                    </a>
                 </div>
                 <div class="blog-filter-psychology blog-filter">
-                    <a href="javascript:;">心理学</a>
+                    <a href="javascript:;">
+                        <img src="./../../assets/image/blog_img/艺术设计.png" class="blog-filter-img">
+                    </a>
                 </div>
                 <div class="blog-filter-language blog-filter">
-                    <a href="javascript:;">语言</a>
+                    <a href="javascript:;">
+                        <img src="./../../assets/image/blog_img/文学历史.png" class="blog-filter-img">
+                    </a>
+                </div>
+                <div class="blog-filter-language blog-filter">
+                    <a href="javascript:;">
+                        <img src="./../../assets/image/blog_img/心理学.png" class="blog-filter-img">
+                    </a>
                 </div>
             </el-col>
         </el-col>
@@ -109,16 +122,11 @@
             }
         },
         created(){
-            this.reload();
             this.getBlogs();
-            document.querySelector("#app").style.backgroundColor="#fff";
-        },
-        beforeDestroy(){
-            document.querySelector("#app").style.backgroundColor="#ddd";
         },
         computed:{
             ...mapState({
-                categoryList : state => state.categoryList,
+                tagList : state => state.categoryList,
             })
         },
         methods:{
@@ -128,23 +136,64 @@
             gotoMyBlog(){
                 router.push({name:"myBlog"})
             },
+            getBlogByType(id){
+                this.showBlogs = [];
+                axios.get("/action/blog/queryBlogByType.action",{
+                    params:{
+                        typeId:id
+                    }
+                }).then((res)=>{
+                    this.showBlogs = res.data.data;
+                })
+            },
             getBlogs(){
                 this.blogs=[];
                 this.showBlogs=[];
-                for(let type of this.categoryList){
-                    axios.get("/action/blog/queryBlogByType.action",{
-                        params:{
-                            typeId:type.id
-                        }
-                    }).then((res)=>{
-                        if(res.data.status===200){
-                            this.blogs.push(res.data.data);
-                            this.showBlogs.push(...res.data.data);
-                            console.log(type)
-                        }
-                    })
-                }
+                axios.get("/action/blog/queryBlog.action",{
+                    params:{
+                        start:0,
+                        length:10,
+                    }
+                }).then((res)=>{
+                    this.blogs=[...res.data.data];
+                    this.showBlogs = this.blogs;
+                })
+                // let reqList=[];
+                // for(let type of this.tagList){
+                //     let req = axios.get("/action/blog/queryBlogByType.action",{
+                //         params:{
+                //             typeId:type.id
+                //         }
+                //     })
+                //     reqList.push(req)
+                // }
+                // axios.all(reqList).then(axios.spread((...resList)=>{
+                //     let blogList = [];
+                //     console.log(resList)
+                //     resList.forEach(function(item){
+                //         blogList.push(...item.data.data)
+                //     })
+                //     console.log(blogList)
+                //     for(let blog of blogList){
+                //         if(!this.containBlog(blog)){
+                //             this.showBlogs.push(blog)
+                //         }
+                //     }
+                //     console.log("show")
+                //     console.log(this.showBlogs)
+                // }))
             },
+            // containBlog(blog){
+            //     if(this.showBlogs.length===0){
+            //         return false;
+            //     }
+            //     for(let showblog of this.showBlogs){
+            //         if(blog.id===showblog.id){
+            //             return true;
+            //         }
+            //     }
+            //     return false;
+            // },
         },
 
     }
@@ -170,18 +219,15 @@
             }
             .blog-filter-div{
                 background-color: white;
-                margin-left: 2rem;
+                margin-left: 5px;
                 height: 22rem;
                 overflow: hidden;
                 .blog-filter{
                     height: 3rem;
-                    padding: 1rem 0 0 2rem;
+                    padding: 0 0 1.5rem 1rem;
                 }
-                a{
-                    text-decoration: none;
-                    font-size: 1.2rem;
-                    font-weight: 800;
-                    color: black;
+                .blog-filter-img{
+                    width: 100%;
                 }
             }
         }

@@ -28,7 +28,8 @@
                         </div>
                         <div class="course-join">
                             <el-button v-if="hasJoinedCourse" class="join-button" plain type="primary" @click="joinCourse">立即加入</el-button>
-                            <el-button v-if="user.type===2||user.id===course.teacher.id" class="join-button" plain type="primary" @click="enterCourse">进入课程</el-button>
+                            <el-button v-if="user.type===2||user.id===course.teacher.id" class="join-button" plain type="info" @click="enterCourse">进入课程</el-button>
+                            <el-button v-if="user.id===course.teacher.id" class="join-button" plain type="success" @click="editCourse">编辑课程</el-button>
                         </div>
                     </div>
                 </el-col>
@@ -127,6 +128,9 @@
             this.getCourse()
         },
         methods:{
+            editCourse(){
+                router.push({path: `/course/${this.course.id}/courseEdit`})
+            },
             getCourse(){
                 axios.get('/action/course/getCourseById.action', {
                     params: {

@@ -168,10 +168,6 @@ import axios from 'axios'
         created(){
             this.getBlog();
             this.getComment();
-            document.querySelector("#app").style.backgroundColor="#fff";
-        },
-        beforeDestroy(){
-            document.querySelector("#app").style.backgroundColor="#ddd";
         },
         methods:{
             getBlog(){

@@ -55,7 +55,7 @@ new Vue({
 //
 //     }
 // });
-router.afterEach(() => {
+router.afterEach((to) => {
     window.scrollTo(0, 0);
 });
 
