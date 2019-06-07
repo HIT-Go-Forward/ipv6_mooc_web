@@ -13,6 +13,11 @@ export default new Router({
           component: () => import('./views/CourseSystem/Homepage'),
       },
       {
+          path: '/course/classify/:type',
+          name: 'courseClassify',
+          component: () => import('./views/CourseSystem/CourseClassify'),
+      },
+      {
           path: '/user/Homepage',
           name: 'userHomepage',
           component: () => import('./views/UserSystem/UserHomepage'),
