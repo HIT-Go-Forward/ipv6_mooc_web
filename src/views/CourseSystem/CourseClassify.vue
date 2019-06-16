@@ -8,14 +8,19 @@
         <el-row justify="center">
             <el-col :span="21" class="main-class">
                 <el-tabs v-model="activeName" @tab-click="handleClick">
-                    <el-tab-pane v-for="category in categoryList" :key="category.id" :label="category.name" :name="category.name">
+                    <el-tab-pane class="category" v-for="category in categoryList" :key="category.id" :label="category.name" :name="category.name">
+                        <el-button
+                                :data-id="tag.id"
+                                @click="clickTag"
+                                class="tag"
+                                :type="tag.id === tagId?'success':'text'"
+                                v-for="tag in tagList[categoryId]"
+                                :key="tag.id">
+                        {{tag.name}}
+                        </el-button>
                     </el-tab-pane>
                 </el-tabs>
-                <!--<el-row class="categoryList">-->
-                    <!--<el-button :data-id="category.id" @click="clickCategory"  class="category" :type="category.id == categoryId?'success':'text'" v-for="category in categoryList" :key="category.id">-->
-                        <!--{{category.name}}-->
-                    <!--</el-button>-->
-                <!--</el-row>-->
+
             </el-col>
         </el-row>
     </div>
@@ -28,7 +33,8 @@
         name: "course-classify",
         data() {
             return{
-                categoryId : this.$route.params.type,
+                categoryId : parseInt(this.$route.params.type),
+                tagId: parseInt(this.$route.params.type),
                 activeName: null
             }
         },
@@ -45,7 +51,10 @@
             clickCategory: function(event){
                 this.categoryId = event.currentTarget.dataset.id
             },
-            handleClick: function () {
+            handleClick: function (tab) {
+                this.categoryId = tab.$vnode.data.key
+            },
+            getCourseByTag: function () {
 
             }
         }
@@ -55,8 +64,7 @@
 
 <style scoped>
     .category{
-        font-size: 24px;
-        margin-right: 20px;
+        font-size: 30px;
     }
     .breadcrunmb{
         margin: 0 0 20px 30px;
