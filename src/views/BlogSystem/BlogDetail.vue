@@ -1,51 +1,51 @@
 <template>
-    <el-col class="blog-container" :span="15" :offset="4">
+    <el-col class="blog-container" :span="18" :offset="3">
         <div class="header">
             <span>{{blog.title}}</span>
         </div>
-        <div class="blog-msg" v-if="blog.user">
-                <img v-if="blog.user.img" :src="blog.user.img" class="blog-author-img">
+        <div class="blog-msg" v-if="user">
+                <img v-if="user.img" :src="'/media'+user.img" class="blog-author-img">
                 <img v-else src="./../../assets/image/avatar.png" class="blog-author-img">
-                <span class="blog-user-name">{{blog.user.name}}</span><br/>
+                <span class="blog-user-name">{{user.name}}</span><br/>
                 <span class="blog-msg-date">发布时间：{{blog.uploadDate}} </span>
-                <span class="blog-msg-word">字数：{{blog.word}} </span>
-                <span class="blog-msg-readed">阅读：{{blog.readnum}} </span>
-                <span class="blog-msg-comment">评论：{{blog.commentnum}} </span>
-                <span class="blog-msg-like">喜欢：{{blog.like}}</span>
+                <span class="blog-msg-word">汉字数：{{blog.wordNum}} </span>
+                <span class="blog-msg-readed">阅读：{{blog.visitNum}} </span>
+                <span class="blog-msg-comment" v-if="blog.kind==='original'">原创</span>
+                <span class="blog-msg-comment" v-if="blog.kind==='reprint'">转载</span>
         </div>
         <div class="body">
-            <mavon-editor :boxShadow="false" :toolbarsFlag="false" :value="blog.blog" :subfield="false" :defaultOpen="'preview'"></mavon-editor>
+            <mavon-editor fontSize="18px" :boxShadow="false" :toolbarsFlag="false" :value="blog.blog" :subfield="false" :defaultOpen="'preview'"></mavon-editor>
         </div>
         <div class="copyright">
             <span class="copyright-text">© 著作权归作者所有</span>
         </div>
-        <div class="author">
-            <div class="author-header">
-                <img class="author-img" src="./../../assets/image/avatar.png">
-                <div class="author-text">
-                    <span class="author-name">李志琛</span>
-                    <img class="author-img-male" src="./../../assets/image/male.png">
-                    <img class="author-img-female" src="./../../assets/image/female.png">
-                        <br/>
-                    <span class="author-his">写了 492639 字，被 415442 人关注，获得了 53737 个喜欢</span>
-                </div>
-            </div>
-            <hr width="90%"/>
-            <div class="author-msg">
-                <span class="author-msg-text">前500强企业营销策划，体验教育行业品牌经理，分享职场、成长与个人管理，已出版《撑过去，你终将成为更好的自己》 个人公众号：厦九九（xia991990) 微博@厦九九Joy</span>
-            </div>
-        </div>
+        <!--<div class="author">-->
+            <!--<div class="author-header">-->
+                <!--<img class="author-img" src="./../../assets/image/avatar.png">-->
+                <!--<div class="author-text">-->
+                    <!--<span class="author-name">李志琛</span>-->
+                    <!--<img class="author-img-male" src="./../../assets/image/male.png">-->
+                    <!--<img class="author-img-female" src="./../../assets/image/female.png">-->
+                        <!--<br/>-->
+                    <!--<span class="author-his">写了 492639 字，被 415442 人关注，获得了 53737 个喜欢</span>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<hr width="90%"/>-->
+            <!--<div class="author-msg">-->
+                <!--<span class="author-msg-text">前500强企业营销策划，体验教育行业品牌经理，分享职场、成长与个人管理，已出版《撑过去，你终将成为更好的自己》 个人公众号：厦九九（xia991990) 微博@厦九九Joy</span>-->
+            <!--</div>-->
+        <!--</div>-->
         <div class="like">
             <a href="javascript:" @click="likeBlog">
                 &nbsp;
                 <img class="like-png" src="./../../assets/image/before-like.png" v-show="!like">
                 <img class="like-png" src="./../../assets/image/after-like.png" v-show="like">
-                &nbsp;喜欢 | 236</a>
+                &nbsp;喜欢 | {{this.blog.likeCount}}</a>
         </div>
         <div class="comment">
             <div class="add-common">
                 <el-row>
-                    <mavon-editor :subfield="false" class="common-editor" v-model="newCommon" placeholder="请输入评论..." :toolbars="toolbars"/>
+                    <mavon-editor font-size="1.1rem" :subfield="false" class="common-editor" v-model="newCommon" placeholder="请输入评论..." :toolbars="toolbars"/>
                     <el-button type="primary" round size="medium" @click="addComment" class="add-button">发送评论</el-button>
                 </el-row>
             </div>
@@ -119,6 +119,7 @@ import axios from 'axios'
                 blogId: '',
                 blog: '',
                 like: false,
+                user:{},
 
                 activeTab: "all",
                 commentList: Array,
@@ -167,29 +168,22 @@ import axios from 'axios'
         created(){
             this.getBlog();
             this.getComment();
-            document.querySelector("#app").style.backgroundColor="#fff";
-        },
-        destroyed(){
-            document.querySelector("#app").style.backgroundColor="#ddd";
         },
         methods:{
             getBlog(){
                 this.blogId = this.$route.params.blogId;
-                // axios.get("/action/blog/getBlog.action",{
-                //     params:{
-                //         id:this.blogId,
-                //     }
-                // }).then((res)=>{
-                //     this.blog = res.data.data
-                //     this.like = res.data.data.like
-                // })
                 axios.get("/action/blog/viewBlogById.action",{
                     params:{
-                        blogId:'5cdfdcc99cea76772ea2e9c7'
+                        blogId:this.blogId
                     }
                 }).then((res)=>{
                     console.log(res)
-                    // this.blog = res.data.data
+                    if(res.data.status===200){
+                        this.blog = res.data.data;
+                        this.getUserInfo();
+                        let obj=this.blog.blog.match(/[\u4e00-\u9fa5]/g);
+                        this.blog.wordNum = obj.length;
+                    }
                 })
             },
             likeBlog(){
@@ -299,6 +293,29 @@ import axios from 'axios'
             },
             handleClick(){
             },
+            getUserInfo(){
+                let userInfo = {}
+                axios.get('/action/authority/getUserInfo.action',{
+                    params:{
+                        userId:parseInt(this.blog.userId)
+                    }
+                }).then((res1)=>{
+                    if(res1.data.status===200){
+                        userInfo = res1.data.data;
+                        axios.get('/action/blog/getUserBlogSummary.action',{
+                            params:{
+                                userId:parseInt(this.blog.userId)
+                            }
+                        }).then((res2)=>{
+                            if(res2.data.status===200){
+                                this.user = Object.assign(userInfo,res2.data.data)
+                                this.user.img = this.user.img+"?"+Math.random();
+                            }
+                        })
+                    }
+                })
+
+            },
             getComment(){
                 axios.get('/action/CommentAndBarrage/getComment.action', {
                     params:{
@@ -360,6 +377,10 @@ import axios from 'axios'
                 height: 5rem;
                 float:left;
                 margin-right: 1rem;
+            }
+            .blog-msg-comment{
+                float: right;
+                color: red;
             }
             .blog-author-name{
                 font-size: 2rem;

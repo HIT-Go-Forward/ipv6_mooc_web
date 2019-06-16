@@ -33,7 +33,7 @@
             </el-tab-pane>
             <el-tab-pane label="举报审核" name="informAudit" v-if="user.type===2"></el-tab-pane>
             <el-tab-pane label="博客审核" name="blogAudit" v-if="user.type===2">
-                <blog-audit :blogs="blogList"></blog-audit>
+                <blog-audit :blogs="blogList" @getBlogs="getBlogs"></blog-audit>
             </el-tab-pane>
         </el-tabs>
     </div>
@@ -172,6 +172,17 @@
                 axios.get('/action/apply/getBlogApplies.action').then((res)=>{
                     if(res.data.status===200){
                         this.blogList = res.data.data;
+                        for(let blog of this.blogList){
+                            axios.get('/action/authority/getUserInfo.action',{
+                                params:{
+                                    userId:blog.userId
+                                }
+                            }).then((res)=>{
+                                blog.user = res.data.data
+                                this.blogList.push('');
+                                this.blogList.pop();
+                            })
+                        }
                     }
                 })
             },

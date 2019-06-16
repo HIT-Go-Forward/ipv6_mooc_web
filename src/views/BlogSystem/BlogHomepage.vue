@@ -1,7 +1,7 @@
 <template>
-    <el-col :span="22" :offset="1" class="blog-container">
+    <el-col class="blog-container">
         <el-col :span="20" class="blog-header">
-            <h1>V6课堂博客区</h1>
+            <h1 @click="getBlogs">V6课堂博客区</h1>
         </el-col>
         <el-col :span="4" class="goto-my-blog" >
             <el-button type="success" @click="gotoMyBlog()">进入我的博客</el-button>
@@ -19,28 +19,40 @@
             </el-col>
             <el-col :span="5" class="blog-filter-div">
                 <div class="blog-filter-computer blog-filter">
-                    <a href="javascript:;">计算机</a>
+                    <a href="javascript:;" @click="getBlogByType(114)">
+                        <img src="./../../assets/image/blog_img/计算机.png" class="blog-filter-img">
+                    </a>
                 </div>
                 <div class="blog-filter-financial blog-filter">
-                    <a href="javascript:;">经济学</a>
+                    <a href="javascript:;">
+                        <img src="./../../assets/image/blog_img/经济学.png" class="blog-filter-img">
+                    </a>
                 </div>
                 <div class="blog-filter-psychology blog-filter">
-                    <a href="javascript:;">心理学</a>
+                    <a href="javascript:;">
+                        <img src="./../../assets/image/blog_img/艺术设计.png" class="blog-filter-img">
+                    </a>
                 </div>
                 <div class="blog-filter-language blog-filter">
-                    <a href="javascript:;">语言</a>
+                    <a href="javascript:;">
+                        <img src="./../../assets/image/blog_img/文学历史.png" class="blog-filter-img">
+                    </a>
+                </div>
+                <div class="blog-filter-language blog-filter">
+                    <a href="javascript:;">
+                        <img src="./../../assets/image/blog_img/心理学.png" class="blog-filter-img">
+                    </a>
                 </div>
             </el-col>
         </el-col>
         <el-col class="blog-main">
             <el-col :span="18" class="blogs">
-                <div class="blog">
+                <div class="blog" v-for="blog in showBlogs" :key="blog.id" @click="gotoBlog(blog.id)">
                     <div class="blog-header-div">
-                        <span class="blog-header">这里是头头</span>
+                        <a href="javascript:" class="blog-header">{{blog.title}}</a>
                     </div>
                     <div class="blog-body-div">
-                        <span class="blog-body">这里是抽取的正文这里是抽取的正文
-                            这里是抽取的正文这里是抽取的正文这里是抽取的正文这里是抽取的正文
+                        <span class="blog-body">{{blog.blog}}
                         </span>
                     </div>
                     <hr>
@@ -96,14 +108,94 @@
 </template>
 
 <script>
+    import axios from './../../axiosIntercepter'
     import router from './../../router'
+    import { mapState } from 'vuex'
+
     export default {
         name: "BlogHomepage",
+        inject:["reload"],
+        data(){
+            return {
+                blogs:[],
+                showBlogs:[],
+            }
+        },
+        created(){
+            this.getBlogs();
+        },
+        computed:{
+            ...mapState({
+                tagList : state => state.categoryList,
+            })
+        },
         methods:{
+            gotoBlog(blogId){
+                router.push('/blog/'+blogId)
+            },
             gotoMyBlog(){
                 router.push({name:"myBlog"})
-            }
-        }
+            },
+            getBlogByType(id){
+                this.showBlogs = [];
+                axios.get("/action/blog/queryBlogByType.action",{
+                    params:{
+                        typeId:id
+                    }
+                }).then((res)=>{
+                    this.showBlogs = res.data.data;
+                })
+            },
+            getBlogs(){
+                this.blogs=[];
+                this.showBlogs=[];
+                axios.get("/action/blog/queryBlog.action",{
+                    params:{
+                        start:0,
+                        length:10,
+                    }
+                }).then((res)=>{
+                    this.blogs=[...res.data.data];
+                    this.showBlogs = this.blogs;
+                })
+                // let reqList=[];
+                // for(let type of this.tagList){
+                //     let req = axios.get("/action/blog/queryBlogByType.action",{
+                //         params:{
+                //             typeId:type.id
+                //         }
+                //     })
+                //     reqList.push(req)
+                // }
+                // axios.all(reqList).then(axios.spread((...resList)=>{
+                //     let blogList = [];
+                //     console.log(resList)
+                //     resList.forEach(function(item){
+                //         blogList.push(...item.data.data)
+                //     })
+                //     console.log(blogList)
+                //     for(let blog of blogList){
+                //         if(!this.containBlog(blog)){
+                //             this.showBlogs.push(blog)
+                //         }
+                //     }
+                //     console.log("show")
+                //     console.log(this.showBlogs)
+                // }))
+            },
+            // containBlog(blog){
+            //     if(this.showBlogs.length===0){
+            //         return false;
+            //     }
+            //     for(let showblog of this.showBlogs){
+            //         if(blog.id===showblog.id){
+            //             return true;
+            //         }
+            //     }
+            //     return false;
+            // },
+        },
+
     }
 </script>
 
@@ -127,18 +219,15 @@
             }
             .blog-filter-div{
                 background-color: white;
-                margin-left: 2rem;
+                margin-left: 5px;
                 height: 22rem;
                 overflow: hidden;
                 .blog-filter{
                     height: 3rem;
-                    padding: 1rem 0 0 2rem;
+                    padding: 0 0 1.5rem 1rem;
                 }
-                a{
-                    text-decoration: none;
-                    font-size: 1.2rem;
-                    font-weight: 800;
-                    color: black;
+                .blog-filter-img{
+                    width: 100%;
                 }
             }
         }
@@ -151,7 +240,7 @@
                         margin-bottom: 1rem;
                         .blog-header{
                             font-size: 2rem;
-                            font-weight: 1000;
+                            font-weight: 900;
                             color:black;
                         }
                     }
@@ -172,7 +261,7 @@
                     .blog-recommender-header-div{
                         .blog-recommender-header{
                             font-size: 1.5rem;
-                            font-weight: 1000;
+                            font-weight: 900;
                         }
                     }
                     .blog-recommender-body{
@@ -189,7 +278,7 @@
                     .bloger-recommender-header-div{
                         .bloger-recommender-header{
                             font-size: 1.5rem;
-                            font-weight: 1000;
+                            font-weight: 900;
                         }
                     }
                     .bloger-recommender-body{
@@ -215,7 +304,7 @@
                     .course-recommender-header-div{
                         .course-recommender-header{
                             font-size: 1.5rem;
-                            font-weight: 1000;
+                            font-weight: 900;
                         }
                     }
                     .course-recommender-body{

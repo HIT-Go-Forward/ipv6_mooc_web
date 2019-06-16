@@ -104,9 +104,8 @@
         inject:["reload"],
         created(){
             this.labelErrorVisible = false;
-            for(let tags of this.$store.state.tagList){
-                this.allBlogTypes.push(...tags)
-            }
+            this.allBlogTypes = this.$store.state.categoryList
+            console.log(this.$route.params.blogId)
             if(this.$route.params.blogId){
                 this.blogEdit = true;
                 this.getBlog();

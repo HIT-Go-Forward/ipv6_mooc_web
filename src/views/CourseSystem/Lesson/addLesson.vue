@@ -145,7 +145,7 @@
         name: "addLesson",
         data(){
             return {
-                part: 2,
+                part: 0,
                 chapters: '',
                 addChapterFlag: 0,
                 addChapterTitle: '',
@@ -252,7 +252,6 @@
             uploadVideo(file){
                 this.videoUploadState = 1
                 const isLt1024M = file.size / 1024 / 1024 /1024 < 2;
-                console.log("look here")
                 if (!isLt1024M) {
                     this.$message.error('文件过大！');
                     return false
